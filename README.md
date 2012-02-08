@@ -18,7 +18,7 @@ Bombero should work out of the box for
 ## Getting started
 
 ### We assume you already installed the addon (if not, go right away!)
-The gem will then be added to your bundle on deployment.
+No need to add the gem to your Gemfile, it will be added to your bundle during deployment.
 
 By convention, we assume your maintenance page is located at
 
@@ -33,7 +33,7 @@ If you want a page for maintenance and another for when your app is broken, we e
 /public/503.error.html
 ```
 
-On the fist publish after the addon install, your html file(s) and every internal assets linked will be pushed to s3.
+On the fist publish after the addon install, your html file(s) and every internal assets linked will be pushed to our server so that we can store them properly on S3.
 On the next publications, only modified assets will be published.
 
 

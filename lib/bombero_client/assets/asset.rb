@@ -37,9 +37,6 @@ module BomberoClient
       end
 
       protected
-        def validate_and_save path
-          
-        end
         def read_file
           begin
             return file.read

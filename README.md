@@ -30,11 +30,15 @@ If you want a page for maintenance and another for when your app is broken, we e
 
 ```console
 /public/503.html
-/public/503.error.html
+/public/503-error.html
 ```
 
-On the fist publish after the addon install, your html file(s) and every internal assets linked will be pushed to our server so that we can store them properly on S3.
-On the next publications, only modified assets will be published.
+503 for maintenance and 503-error.html for a broken app.
+
+Aften the add-on is installed:
+
+* On the fist publish,  your html file(s) and every internal assets referenced by your pages(s) will be pushed to our server so that we can store them properly on S3.
+* On the next publications, only modified assets will be published and renamed/missing assets will be handled.
 
 
 Override conventions? (add something here)

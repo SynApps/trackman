@@ -1,7 +1,6 @@
 # Bombero
 
-Bombero is a heroku addon that host your maintenance and error pages on amazon s3.
-Devise is a flexible authentication solution for Rails based on Warden. It:
+Bombero is a heroku addon that host your maintenance and error pages on Amazon S3.
 
 * It works with rails-like conventions that can be overriden
 * It is rack based;
@@ -38,7 +37,7 @@ On the fist publish after the addon install, your html file(s) and every interna
 On the next publications, only modified assets will be published.
 
 
-override conventions? (add something here)
+Override conventions? (add something here)
 
 ### Bug reports
 

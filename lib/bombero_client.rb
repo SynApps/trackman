@@ -6,7 +6,12 @@ module BomberoClient
   autoload :Assets, 'bombero_client/assets'
   
   def run
-    @provider = AssetProvider.new
+    
+    #if Asset.maintenance_path.exist?
+    #  maintenance_page = Asset.create('/public/503.html')
+    #  
+    #end
+     
     @server = Server.new
     
     assets = @provider.assets

@@ -36,6 +36,30 @@ module BomberoClient
         other && path.realpath == other.path.realpath
       end
 
+      def self.maintenance_path
+        Pathname.new '/public/503.html'
+      end
+      def self.error_path
+        Pathname.new '/public/503-error.html'
+      end  
+      def self.maintenance_page
+        @@maintenance_page ||= Asset.create(maintenance_path)
+      end
+      def self.error_page
+        @@error_page ||= Asset.create(error_path)
+      end 
+      
+      def self.all
+        if maintenance_path.exist?
+          assets = [maintenance_page] + maintenance_page.assets 
+          assets = assets + [error_page] + error_page.assets if error_path.exist?
+           
+          return assets.uniq{|a| a.path.realpath }
+        else
+          return []
+        end  
+      end
+        
       protected
         def read_file
           begin

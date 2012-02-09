@@ -3,7 +3,7 @@
 Bombero is a Heroku add-on that lets you handle your maintenance and error pages with the rest of your app and hosts the production version of those files on Amazon S3.
 
 * It works with rails-like conventions that can be overriden if necessary.
-* It is rack-based;
+* It is rack-based.
 * It will push your pages and all their internal assets upon application initialization. 
 
 ## Information

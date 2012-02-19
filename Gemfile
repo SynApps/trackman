@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 gem 'rack'
 gem 'nokogiri'
-gem 'rest-client'
+gem 'activeresource'
 
 group :test do
   gem 'rspec'

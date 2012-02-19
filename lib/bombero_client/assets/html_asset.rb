@@ -3,6 +3,11 @@ module BomberoClient
   module Assets
     class HtmlAsset < Asset
       
+      def initialize attributes = {}
+        super
+        @assets = nil
+      end
+        
       def document
         @doc ||= Nokogiri::HTML(file)     
       end  

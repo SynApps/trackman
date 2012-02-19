@@ -24,12 +24,12 @@ module BomberoClient
         def to_assets nodes, attr
           nodes.collect{ |n| n[attr] }
             .select{|p| internal? p }
-            .collect { |p| Asset.create(to_path p) }
+            .collect { |p| Asset.create(:path => to_path(p)) }
             .to_a
         end  
         def to_path(img)
           return Pathname.new img if File.exist? img
-          Pathname.new("#{path.parent}/#{img}")
+          Pathname.new "#{path.parent}/#{img}"
         end 
         def internal? path
           path !~ /(\/|http)/

@@ -2,7 +2,8 @@ require 'digest/md5'
 module BomberoClient
   module Assets
     class Asset
-      def initialize path
+      def initialize attributes = {}
+        path = attributes[:path]
         path = Pathname.new path unless path.is_a? Pathname
         raise AssetNotFoundError, "The path '#{path}' is invalid or is not a file" unless path.exist? && path.file?
         
@@ -10,17 +11,18 @@ module BomberoClient
         super  
       end
       
-      def self.create(path)
-        asset = HtmlAsset.new(path) if File.extname(path) == '.html'
-        asset ||= Asset.new(path)
+      attr_accessor :path
+
+      def self.create attributes = {}
+        path = attributes[:path]
+        asset = HtmlAsset.new attributes if File.extname(path) == '.html'
+        asset ||= Asset.new(attributes)
       end  
       
       def assets
         []
       end
-      def path 
-        @path
-      end 
+      
       def file
         @file ||= File.open(@path)
       end
@@ -43,10 +45,10 @@ module BomberoClient
         Pathname.new '/public/503-error.html'
       end  
       def self.maintenance_page
-        @@maintenance_page ||= Asset.create(maintenance_path)
+        @@maintenance_page ||= Asset.create(:path => maintenance_path)
       end
       def self.error_page
-        @@error_page ||= Asset.create(error_path)
+        @@error_page ||= Asset.create(:path => error_path)
       end 
       
       def self.all

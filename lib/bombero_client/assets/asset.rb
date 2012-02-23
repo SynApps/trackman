@@ -24,7 +24,10 @@ module BomberoClient
       end  
       
       def ==(other)
-        other && path.realpath == other.path.realpath
+        return false if other.nil?
+
+        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path) 
+        path.realpath == other_path.realpath
       end
       
       def self.all

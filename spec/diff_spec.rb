@@ -27,8 +27,7 @@ describe BomberoClient::Assets::Diffable do
     actual.should eq(expected)
   end
 
-  it "returns the file to create if it is missing remotely" do  
-    
+  it "returns the file to create if it is missing remotely" do
     expected = { 
       :create => [Asset.create(:path => 'spec/test_data/test1.jpeg')], 
       :update => [], 

@@ -1,25 +1,41 @@
-#require 'activeresource'
+require 'rest-client'
+require 'json'
+
 module BomberoClient
   module Assets
-    class RemoteAsset # < ActiveResource::Base
-      extend Conventions
-      include Hashable
-      include Diffable
+    class RemoteAsset < Asset
+      @@user = ENV['BOMBERO_USERNAME']
+      @@pass = ENV['BOMBERO_PASSWORD']
+      @@app_id = ENV['BOMBERO_APPLICATION_ID']
+      
+      @@site = "http://#{@@user}:#{@@pass}@127.0.0.1:3000/heroku/resources/#{@@app_id}/assets"
 
-      #self.site = "http://127.0.0.1:3000/"
-
+      attr_reader :id
       def initialize attributes = {}
-        path = attributes[:path]
-        path = Pathname.new path unless path.is_a? Pathname 
-        
-        @path = path
-        @hash = attributes[:hash]
+        super
+        @id = attributes[:id]
+        @hash = attributes[:file_fingerprint]
+      end
+      def hash
+        @hash || super
       end
 
-      attr_reader :hash, :path
+      def create!
+        response = RestClient.post @@site, :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
+        path = response.headers[:location]
+        @id = path[/\d+$/].to_i
+      end
+ 
+      def self.find id
+        response = RestClient.get "#{@@site}/#{id}"
+        body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
+        RemoteAsset.new(body)
+      end
 
       def ==(other)
-        other && path.realpath == other.path.realpath
+        super && 
+          other.respond_to?(:id) && other.id == id &&
+          other.respond_to?(:hash) && other.hash == hash 
       end
     end 
   end

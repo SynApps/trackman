@@ -1,3 +1,4 @@
+require 'bombero-client'
 module BomberoClient
   class RackMiddleware
     def initialize(app)

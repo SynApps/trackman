@@ -4,9 +4,7 @@ module BomberoClient
   module Assets
     module Hashable
       
-      def file
-        @file ||= File.open(path)
-      end
+     
       def data
         @data ||= read_file
       end
@@ -18,6 +16,7 @@ module BomberoClient
       protected
         def read_file
           begin
+            file = File.open(path)
             return file.read
           rescue
             return nil

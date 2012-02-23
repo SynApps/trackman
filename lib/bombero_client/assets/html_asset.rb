@@ -9,7 +9,7 @@ module BomberoClient
       end
         
       def document
-        @doc ||= Nokogiri::HTML(file)     
+        @doc ||= Nokogiri::HTML(data)     
       end  
       
       def assets

@@ -33,10 +33,19 @@ module BomberoClient
       end
 
       def ==(other)
-        super && 
-          other.respond_to?(:id) && other.id == id &&
-          other.respond_to?(:hash) && other.hash == hash 
+        result = super
+        if result
+          if other.is_a? RemoteAsset
+            result = other.id == id && other.hash == hash 
+          end
+          return result
+        end
+        false 
       end
+
+      private
+        def eql_remote?
+        end
     end 
   end
 end

@@ -29,11 +29,10 @@ describe BomberoClient::Assets::Asset do
     asset1.should == asset2
   end
   
-  it "should return the data as a stream" do
+  it "should return the data" do
     path = "./spec/spec_helper.rb"
     asset = Asset.new(:path => path)
     
-    asset.file.should be_a_kind_of IO
     asset.data.should eq(File.open(path).read)    
   end
   

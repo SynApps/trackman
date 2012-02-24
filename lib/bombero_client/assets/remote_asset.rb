@@ -14,7 +14,7 @@ module BomberoClient
       def initialize attributes = {}
         super
         @id = attributes[:id]
-        @hash = attributes[:file_fingerprint]
+        @hash = attributes[:file_hash]
 
         path = attributes[:path]
         path = Pathname.new path unless path.nil? || path.is_a?(Pathname)

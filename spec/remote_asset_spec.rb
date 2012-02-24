@@ -26,6 +26,7 @@ describe BomberoClient::Assets::RemoteAsset do
     
     lambda { RemoteAsset.find expected.id }.should raise_error(RestClient::ResourceNotFound)
   end
+  
   it "returns all assets on the server" do
     expected = ['/public/503-error.html', '/public/503.html', 'spec/test_data/y.css', 'spec/test_data/a.js', 'spec/test_data/sample.html']
     assets = expected.map { |f| RemoteAsset.new(:path => f) }.to_a

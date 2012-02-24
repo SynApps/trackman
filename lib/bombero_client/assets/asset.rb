@@ -6,13 +6,19 @@ module BomberoClient
       include Hashable
 
       def initialize attributes = {}
+        super
+
         path = attributes[:path]
-        path = Pathname.new path unless path.is_a? Pathname
-        raise AssetNotFoundError, "The path '#{path}' is invalid or is not a file" unless path.exist? && path.file?
-        
+        path = Pathname.new path unless path.nil? || path.is_a?(Pathname)
+
+        if validate_path?
+          unless path && path.exist? && path.file?
+            raise AssetNotFoundError, "The path '#{path}' is invalid or is not a file"
+          end
+        end
+
         @path = path
-        @assets = []
-        super  
+        @assets = []  
       end
       
       attr_reader :path, :assets
@@ -25,9 +31,8 @@ module BomberoClient
       
       def ==(other)
         return false if other.nil?
-
         other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path) 
-        path.realpath == other_path.realpath
+        other_path.to_s == path.to_s || path.realpath == other_path.realpath
       end
       
       def self.all
@@ -40,6 +45,11 @@ module BomberoClient
           return []
         end  
       end
+
+      protected
+        def validate_path?
+          true
+        end
     end 
   end
 end

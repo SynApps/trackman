@@ -15,22 +15,40 @@ module BomberoClient
         super
         @id = attributes[:id]
         @hash = attributes[:file_fingerprint]
+
+        path = attributes[:path]
+        path = Pathname.new path unless path.nil? || path.is_a?(Pathname)
+        
+        @path = path
+        @assets = []  
       end
       def hash
         @hash || super
       end
-
+      def validate_path?
+        false
+      end
       def create!
         response = RestClient.post @@site, :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
         path = response.headers[:location]
         @id = path[/\d+$/].to_i
       end
- 
+      def delete
+        response = RestClient.delete "#{@@site}/#{id}"
+        true
+      end
+
       def self.find id
         response = RestClient.get "#{@@site}/#{id}"
         body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
         RemoteAsset.new(body)
       end
+      def self.all
+        JSON.parse(RestClient.get @@site)
+          .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
+          .map { |r| RemoteAsset.new(r) }
+          .to_a
+      end 
 
       def ==(other)
         result = super
@@ -42,10 +60,6 @@ module BomberoClient
         end
         false 
       end
-
-      private
-        def eql_remote?
-        end
     end 
   end
 end

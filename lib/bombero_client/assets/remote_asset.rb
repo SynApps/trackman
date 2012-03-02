@@ -7,8 +7,9 @@ module BomberoClient
       @@user = ENV['BOMBERO_USERNAME']
       @@pass = ENV['BOMBERO_PASSWORD']
       @@app_id = ENV['BOMBERO_APPLICATION_ID']
-      
-      @@site = "http://#{@@user}:#{@@pass}@127.0.0.1:3000/heroku/resources/#{@@app_id}/assets"
+      @@server = ENV['BOMBERO_SERVER']
+
+      @@site = "http://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
 
       attr_reader :id
       def initialize attributes = {}
@@ -22,17 +23,24 @@ module BomberoClient
         @path = path
         @assets = []  
       end
+      
       def hash
         @hash || super
       end
+      
       def validate_path?
         false
       end
+
       def create!
         response = RestClient.post @@site, :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
         path = response.headers[:location]
         @id = path[/\d+$/].to_i
       end
+
+      def update!
+        RestClient.put "#{@@site}/#{id}", :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
+      end  
       def delete
         response = RestClient.delete "#{@@site}/#{id}"
         true
@@ -43,10 +51,12 @@ module BomberoClient
         body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
         RemoteAsset.new(body)
       end
+
       def self.all
         JSON.parse(RestClient.get @@site)
           .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
           .map { |r| RemoteAsset.new(r) }
+          .sort
           .to_a
       end 
 

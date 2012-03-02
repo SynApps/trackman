@@ -7,6 +7,8 @@ describe BomberoClient::Assets::RemoteAsset do
     RemoteAsset.all.each do |a|
       a.delete
     end
+
+    File.open('spec/test_data/y.css', 'w') {|f| f.write @old_file } unless @old_file.nil?
   end  
 
   it "creates assets on the server" do
@@ -28,11 +30,28 @@ describe BomberoClient::Assets::RemoteAsset do
   end
   
   it "returns all assets on the server" do
-    expected = ['/public/503-error.html', '/public/503.html', 'spec/test_data/y.css', 'spec/test_data/a.js', 'spec/test_data/sample.html']
-    assets = expected.map { |f| RemoteAsset.new(:path => f) }.to_a
+    expected = ['spec/test_data/y.css', 'spec/test_data/a.js', '/public/503-error.html', '/public/503.html','spec/test_data/sample.html']
+    
+    assets = ['spec/test_data/y.css', 'spec/test_data/a.js', 'spec/test_data/sample.html']
+      .map { |f| RemoteAsset.new(:path => f) }
+      .to_a
 
-    assets.drop(2).each{|f| f.create! }
+    assets.each{|f| f.create! }
 
     RemoteAsset.all.map{|a| a.path.to_s }.should eq(expected)
+  end
+
+  it "updates assets on the server" do
+    expected = RemoteAsset.new(:path => 'spec/test_data/y.css')
+    
+    expected.create! 
+    
+    @old_file = File.open(expected.path) { |f| f.read }
+    File.open(expected.path, 'w') { |f| f.write "wassup cutie pie?" }
+  
+    expected.update!
+    actual = RemoteAsset.find(expected.id)
+
+    actual.should eq(expected)
   end  
 end

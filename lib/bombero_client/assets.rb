@@ -9,5 +9,6 @@ module BomberoClient
     autoload :Conventions, 'bombero_client/assets/conventions'
     autoload :Hashable, 'bombero_client/assets/hashable'
     autoload :Diffable, 'bombero_client/assets/diffable'
+    autoload :Shippable, 'bombero_client/assets/shippable'
   end
 end

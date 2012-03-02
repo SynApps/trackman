@@ -4,6 +4,8 @@ module BomberoClient
       extend Conventions
       extend Diffable
       include Hashable
+      include Comparable
+      extend Shippable
 
       def initialize attributes = {}
         super
@@ -40,12 +42,24 @@ module BomberoClient
           assets = [maintenance_page] + maintenance_page.assets 
           assets = assets + [error_page] + error_page.assets if error_path.exist?
            
-          return assets.uniq{|a| a.path.realpath }
+          return assets.uniq{|a| a.path.realpath }.sort
         else
           return []
         end  
       end
+      
+      def to_remote
+        RemoteAsset.new(:path => path)
+      end
 
+      
+      def <=>(another)
+        result = 0
+        result += 1 if self.class == HtmlAsset
+        result -= 1 if another.class == HtmlAsset
+        result
+      end
+      
       protected
         def validate_path?
           true

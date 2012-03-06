@@ -30,7 +30,7 @@ describe BomberoClient::Assets::RemoteAsset do
   end
   
   it "returns all assets on the server" do
-    expected = ['spec/test_data/y.css', 'spec/test_data/a.js', '/public/503-error.html', '/public/503.html','spec/test_data/sample.html']
+    expected = ['spec/test_data/y.css', 'spec/test_data/a.js', '/public/503.html', '/public/503-error.html','spec/test_data/sample.html']
     
     assets = ['spec/test_data/y.css', 'spec/test_data/a.js', 'spec/test_data/sample.html']
       .map { |f| RemoteAsset.new(:path => f) }

@@ -56,9 +56,8 @@ module BomberoClient
         JSON.parse(RestClient.get @@site)
           .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
           .map { |r| RemoteAsset.new(r) }
-          .sort
-          .to_a
-      end 
+          .sort.to_a
+      end
 
       def ==(other)
         result = super

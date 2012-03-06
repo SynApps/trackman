@@ -55,8 +55,8 @@ module BomberoClient
       
       def <=>(another)
         result = 0
-        result += 1 if self.class == HtmlAsset
-        result -= 1 if another.class == HtmlAsset
+        result += 1 if self.path.extname == '.html'
+        result -= 1 if another.path.extname == '.html'
         result
       end
       

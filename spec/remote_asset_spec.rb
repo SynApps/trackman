@@ -14,7 +14,7 @@ describe BomberoClient::Assets::RemoteAsset do
     user = json['config']['TRACKMAN_USER']
     pass = json['config']['TRACKMAN_PASSWORD']
     app_id = json['id']
-    
+
     RemoteAsset.class_variable_set :@@app_id, app_id 
     RemoteAsset.class_variable_set :@@user, user
     RemoteAsset.class_variable_set :@@pass, pass
@@ -74,10 +74,10 @@ describe BomberoClient::Assets::RemoteAsset do
 
   it "throws if a config is missing" do
     configs = {
-      '@@server' => 'RACKMAN_SERVER_URL', 
-      '@@user' => 'RACKMAN_USER', 
-      '@@pass' => 'RACKMAN_PASSWORD', 
-      '@@app_id' => 'RACKMAN_APP_ID'
+      '@@server' => 'TRACKMAN_SERVER_URL', 
+      '@@user' => 'TRACKMAN_USER', 
+      '@@pass' => 'TRACKMAN_PASSWORD', 
+      '@@app_id' => 'TRACKMAN_APP_ID'
     }
     begin
       configs.each {|k,v| RemoteAsset.class_variable_set k, nil }

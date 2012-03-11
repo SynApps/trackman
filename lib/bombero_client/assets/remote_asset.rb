@@ -4,15 +4,16 @@ require 'json'
 module BomberoClient
   module Assets
     class RemoteAsset < Asset
-      @@user = ENV['BOMBERO_USERNAME']
-      @@pass = ENV['BOMBERO_PASSWORD']
-      @@app_id = ENV['BOMBERO_APPLICATION_ID']
-      @@server = ENV['BOMBERO_SERVER']
+      @@user = ENV['TRACKMAN_USER']
+      @@pass = ENV['TRACKMAN_PASSWORD']
+      @@app_id = ENV['TRACKMAN_APP_ID']
+      @@server = ENV['TRACKMAN_SERVER_URL']
 
       @@site = "http://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
 
       attr_reader :id
       def initialize attributes = {}
+        ensure_config
         super
         @id = attributes[:id]
         @hash = attributes[:file_hash]
@@ -69,6 +70,14 @@ module BomberoClient
         end
         false 
       end
+
+      private 
+        def ensure_config
+          if @@user.nil? || @@pass.nil? || @@app_id.nil? || @@server.nil?
+            config_missing = ['TRACKMAN_USER', 'TRACKMAN_PASSWORD', 'TRACKMAN_APP_ID', 'TRACKMAN_SERVER_URL'].first{|c| ENV[c].nil? }
+            raise ConfigNotFoundError, "The config '#{config_missing}' is missing."
+          end            
+        end
     end 
   end
 end

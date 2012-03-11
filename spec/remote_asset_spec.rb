@@ -3,6 +3,23 @@ require 'bombero_client'
 describe BomberoClient::Assets::RemoteAsset do
   RemoteAsset = BomberoClient::Assets::RemoteAsset
   
+  before :all do
+    user = RemoteAsset.class_variable_get :@@user
+    pass = RemoteAsset.class_variable_get :@@pass
+    server = RemoteAsset.class_variable_get :@@server
+
+    response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
+    json = JSON.parse response
+    
+    user = json['config']['TRACKMAN_USER']
+    pass = json['config']['TRACKMAN_PASSWORD']
+    app_id = json['id']
+    
+    RemoteAsset.class_variable_set :@@app_id, app_id 
+    RemoteAsset.class_variable_set :@@user, user
+    RemoteAsset.class_variable_set :@@pass, pass
+    RemoteAsset.class_variable_set :@@site, "http://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"
+  end
   after :each do
     RemoteAsset.all.each do |a|
       a.delete
@@ -53,5 +70,23 @@ describe BomberoClient::Assets::RemoteAsset do
     actual = RemoteAsset.find(expected.id)
 
     actual.should eq(expected)
-  end  
+  end 
+
+  it "throws if a config is missing" do
+    configs = {
+      '@@server' => 'RACKMAN_SERVER_URL', 
+      '@@user' => 'RACKMAN_USER', 
+      '@@pass' => 'RACKMAN_PASSWORD', 
+      '@@app_id' => 'RACKMAN_APP_ID'
+    }
+    begin
+      configs.each {|k,v| RemoteAsset.class_variable_set k, nil }
+      configs.each do |k,v|
+        lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(BomberoClient::Assets::ConfigNotFoundError)
+        RemoteAsset.class_variable_set k, ENV[v]
+      end
+    ensure 
+      configs.each {|k,v| RemoteAsset.class_variable_set k, ENV[v] }
+    end
+  end
 end

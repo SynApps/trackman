@@ -8,7 +8,7 @@ module BomberoClient
       extend Shippable
 
       def initialize attributes = {}
-        super
+        super()
 
         path = attributes[:path]
         path = Pathname.new path unless path.nil? || path.is_a?(Pathname)

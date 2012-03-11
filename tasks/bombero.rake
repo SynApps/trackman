@@ -6,7 +6,11 @@ namespace :bombero do
 
   desc "Uploads modified assets to the server"
   task :update do
-    Asset.ship
+    local = Asset.all
+    remote = RemoteAsset.all
+    
+    diff = Asset.diff local, remote
+    Asset.ship diff
   end
 
   desc "Setups the configs required by Bombero" 

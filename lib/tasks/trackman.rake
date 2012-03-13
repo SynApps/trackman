@@ -4,11 +4,12 @@ namespace :trackman do
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
 
-  desc "Syncs all your modified assets with the server. This is what gets executed server-side when you push a new version to heroku"
+  desc "Syncs your assets with the server. This is what gets executed when you deploy to heroku"
   task :sync do
     Trackman::Assets::Asset.sync
   end
 
+  #TODO : check if heroku is installed and if app is deployed?
   desc "Setups the heroku configs required by Trackman" 
   task :setup do
     # ensures that custom_error_pages addon is present

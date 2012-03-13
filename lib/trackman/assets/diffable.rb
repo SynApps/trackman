@@ -1,4 +1,4 @@
-module TrackmanClient
+module Trackman
   module Assets
     module Diffable
       def diff local, remote 

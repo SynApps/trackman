@@ -1,5 +1,5 @@
 require 'nokogiri'
-module TrackmanClient
+module Trackman
   module Assets
     class HtmlAsset < Asset
       

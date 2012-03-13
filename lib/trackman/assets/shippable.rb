@@ -1,4 +1,4 @@
-module TrackmanClient
+module Trackman
   module Assets
     module  Shippable
       def ship diff

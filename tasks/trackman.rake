@@ -6,7 +6,7 @@ namespace :trackman do
 
   desc "Syncs modified assets to the server"
   task :sync do
-    TrackmanClient::Assets::Asset.sync
+    Trackman::Assets::Asset.sync
   end
 
   desc "Setups the configs required by Bombero" 

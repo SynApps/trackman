@@ -1,4 +1,4 @@
-module TrackmanClient
+module Trackman
   module Assets
     @@asset_path = 'trackman_client/assets'
     

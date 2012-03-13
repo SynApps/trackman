@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TrackmanClient::Assets::Asset do
-  Asset = TrackmanClient::Assets::Asset
+describe Trackman::Assets::Asset do
+  Asset = Trackman::Assets::Asset
   
   before :each do
     @@called = false

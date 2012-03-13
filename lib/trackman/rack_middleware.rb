@@ -1,10 +1,10 @@
 require 'trackman_client'
-module TrackmanClient
+module Trackman
   class RackMiddleware
     def initialize(app)
       @app = app
       
-      TrackmanClient::Assets::Asset.autosync
+      Trackman::Assets::Asset.autosync
     end
     
     def call(env)

@@ -1,6 +1,6 @@
 require 'digest/md5'
  
-module TrackmanClient
+module Trackman
   module Assets
     module Hashable
       

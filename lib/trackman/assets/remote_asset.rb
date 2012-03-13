@@ -1,7 +1,7 @@
 require 'rest-client'
 require 'json'
 
-module TrackmanClient
+module Trackman
   module Assets
     class RemoteAsset < Asset
       @@user = ENV['TRACKMAN_USER']

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe TrackmanClient::Assets::Asset do
+describe Trackman::Assets::Asset do
   describe "#all" do
-    Asset = TrackmanClient::Assets::Asset 
+    Asset = Trackman::Assets::Asset 
     it "returns every asset for a given maintenance path" do
       class Asset
         def self.maintenance_page

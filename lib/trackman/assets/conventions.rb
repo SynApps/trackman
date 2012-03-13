@@ -1,7 +1,7 @@
-module TrackmanClient
+module Trackman
   module Assets
     module Conventions
-      Asset = TrackmanClient::Assets::Asset
+      Asset = Trackman::Assets::Asset
       
       def maintenance_path
         Pathname.new 'public/503.html'

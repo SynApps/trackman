@@ -1,4 +1,4 @@
-module TrackmanClient
+module Trackman
   module Assets
     class AssetNotFoundError < StandardError
     end

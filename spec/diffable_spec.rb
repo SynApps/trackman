@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe TrackmanClient::Assets::Diffable do
-  RemoteAsset = TrackmanClient::Assets::RemoteAsset 
+describe Trackman::Assets::Diffable do
+  RemoteAsset = Trackman::Assets::RemoteAsset 
   
   class TestDiff
-    extend TrackmanClient::Assets::Diffable
+    extend Trackman::Assets::Diffable
   end
  
   it "specify the html to update and the image to delete" do    

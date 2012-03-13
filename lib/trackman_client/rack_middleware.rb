@@ -3,6 +3,8 @@ module TrackmanClient
   class RackMiddleware
     def initialize(app)
       @app = app
+      
+      TrackmanClient::Assets::Asset.autosync
     end
     
     def call(env)

@@ -4,10 +4,10 @@ module TrackmanClient
       Asset = TrackmanClient::Assets::Asset
       
       def maintenance_path
-        Pathname.new '/public/503.html'
+        Pathname.new 'public/503.html'
       end
       def error_path
-        Pathname.new '/public/503-error.html'
+        Pathname.new 'public/503-error.html'
       end  
       def maintenance_page
         @@maintenance_page ||= Asset.create(:path => maintenance_path)

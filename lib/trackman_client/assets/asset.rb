@@ -68,6 +68,13 @@ module TrackmanClient
         true
       end
 
+      def self.autosync
+        autosync = ENV['TRACKMAN_AUTOSYNC'] || true
+        autosync = autosync !~ /(0|false|FALSE)/ unless autosync.is_a? TrueClass
+        
+        return sync if autosync
+        autosync
+      end
       protected
         def validate_path?
           true

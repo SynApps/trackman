@@ -4,7 +4,6 @@ module TrackmanClient
   module Assets
     module Hashable
       
-     
       def data
         @data ||= read_file
       end

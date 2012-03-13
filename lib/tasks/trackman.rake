@@ -4,12 +4,12 @@ namespace :trackman do
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
 
-  desc "Syncs modified assets to the server"
+  desc "Syncs all your modified assets with the server. This is what gets executed server-side when you push a new version to heroku"
   task :sync do
     Trackman::Assets::Asset.sync
   end
 
-  desc "Setups the configs required by Bombero" 
+  desc "Setups the heroku configs required by Trackman" 
   task :setup do
     # ensures that custom_error_pages addon is present
     #`heroku addons:add #{CEP}` unless `heroku addons`.include? CEP
@@ -21,7 +21,7 @@ namespace :trackman do
     end
     remove_configs
     add_configs 
-    puts "done! Thank you for using Bombero!"
+    puts "done! Thank you for using Trackman!"
   end
 
   def remove_configs

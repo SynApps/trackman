@@ -1,6 +1,6 @@
 module Trackman
   module Assets
-    @@asset_path = 'trackman_client/assets'
+    @@asset_path = 'trackman/assets'
     
     @@classes = [:Asset, :HtmlAsset, :AssetNotFoundError, :ConfigNotFoundError, :RemoteAsset]
     @@modules = [:Conventions, :Hashable, :Diffable, :Shippable]

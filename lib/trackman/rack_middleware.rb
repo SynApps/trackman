@@ -1,4 +1,4 @@
-require 'trackman_client'
+require 'trackman'
 module Trackman
   class RackMiddleware
     def initialize(app)

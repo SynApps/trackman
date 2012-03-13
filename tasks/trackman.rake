@@ -1,4 +1,4 @@
-require 'trackman_client'
+require 'trackman'
 namespace :trackman do
   CEP = 'custom_error_pages'
   ERROR = 'ERROR_PAGE_URL'

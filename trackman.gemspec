@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Jeremy Fabre", "Emanuel Petre"]
   s.email       = ["jeremy.fabre@hotmail.com", "epetre@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Client version of the Trackman addon on Heroku}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = "Client version of the Trackman addon on Heroku"
+  s.description = "Trackman hosts your maintenance and appdown pages and lets you keep them in your current environment so that you can blah."
 
   s.rubyforge_project = "trackman"
 

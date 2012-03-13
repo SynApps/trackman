@@ -22,7 +22,7 @@ describe Trackman::Assets::Asset do
 
   it "is equal if the path points to the same place" do
     path1 = "spec/spec_helper.rb"
-    path2 = "../bombero-client/spec/spec_helper.rb"
+    path2 = "spec/../spec/spec_helper.rb"
     
     asset1 = Asset.new(:path => path1)
     asset2 = Asset.new(:path => path2)

@@ -1,4 +1,4 @@
-module BomberoClient
+module TrackmanClient
   module Assets
     module Diffable
       def diff local, remote 

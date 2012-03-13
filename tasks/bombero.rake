@@ -15,7 +15,7 @@ namespace :bombero do
 
   desc "Setups the configs required by Bombero" 
   task :setup do
-    #ensures that custom_error_pages is present
+    # ensures that custom_error_pages addon is present
     #`heroku addons:add #{CEP}` unless `heroku addons`.include? CEP
     
     puts "verifying if #{CEP} addon is installed..."

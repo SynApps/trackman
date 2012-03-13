@@ -1,11 +1,12 @@
-module BomberoClient
+module TrackmanClient
   module Assets
     class Asset
       extend Conventions
       extend Diffable
+      extend Shippable
       include Hashable
       include Comparable
-      extend Shippable
+      
 
       def initialize attributes = {}
         super()

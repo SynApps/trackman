@@ -1,9 +1,8 @@
 require 'spec_helper'
-require 'bombero_client'
 
-describe BomberoClient::Assets::Shippable do
+describe TrackmanClient::Assets::Shippable do
   class Test
-    extend BomberoClient::Assets::Shippable
+    extend TrackmanClient::Assets::Shippable
 
     @@events = []
     def self.events

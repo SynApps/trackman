@@ -1,4 +1,4 @@
-module BomberoClient
+module TrackmanClient
   module Assets
     module  Shippable
       def ship diff

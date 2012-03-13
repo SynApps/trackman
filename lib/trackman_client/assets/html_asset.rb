@@ -1,5 +1,5 @@
 require 'nokogiri'
-module BomberoClient
+module TrackmanClient
   module Assets
     class HtmlAsset < Asset
       

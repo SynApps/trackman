@@ -1,5 +1,5 @@
-require 'bombero-client'
-module BomberoClient
+require 'trackman_client'
+module TrackmanClient
   class RackMiddleware
     def initialize(app)
       @app = app

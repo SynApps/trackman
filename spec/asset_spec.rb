@@ -1,14 +1,13 @@
 require 'spec_helper'
-require 'bombero_client'
 require 'digest/md5'
 
-describe BomberoClient::Assets::Asset do
+describe TrackmanClient::Assets::Asset do
   
-  Asset = BomberoClient::Assets::Asset 
-  RemoteAsset = BomberoClient::Assets::RemoteAsset 
+  Asset = TrackmanClient::Assets::Asset 
+  RemoteAsset = TrackmanClient::Assets::RemoteAsset 
   it "should raise an exception if the path is not good" do 
     wrong_path = "./wrong_path.html"
-    lambda { Asset.new(:path => wrong_path) }.should raise_error BomberoClient::Assets::AssetNotFoundError
+    lambda { Asset.new(:path => wrong_path) }.should raise_error TrackmanClient::Assets::AssetNotFoundError
   end
 
   it "is equal if the path is the same" do

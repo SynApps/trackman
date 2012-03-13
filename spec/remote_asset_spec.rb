@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'bombero_client'
-describe BomberoClient::Assets::RemoteAsset do
-  RemoteAsset = BomberoClient::Assets::RemoteAsset
+
+describe TrackmanClient::Assets::RemoteAsset do
+  RemoteAsset = TrackmanClient::Assets::RemoteAsset
   
   before :all do
     user = RemoteAsset.class_variable_get :@@user
@@ -82,7 +82,7 @@ describe BomberoClient::Assets::RemoteAsset do
     begin
       configs.each {|k,v| RemoteAsset.class_variable_set k, nil }
       configs.each do |k,v|
-        lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(BomberoClient::Assets::ConfigNotFoundError)
+        lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(TrackmanClient::Assets::ConfigNotFoundError)
         RemoteAsset.class_variable_set k, ENV[v]
       end
     ensure 

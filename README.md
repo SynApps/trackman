@@ -1,6 +1,6 @@
-# Bombero
+# Trackman
 
-Bombero is a Heroku add-on that lets you handle your maintenance and error pages with the rest of your app and hosts the production version of those files on Amazon S3.
+Trackman is a Heroku add-on that lets you handle your maintenance and error pages with the rest of your app and hosts the production version of those files on Amazon S3.
 
 * It works with rails-like conventions that can be overriden if necessary.
 * It is rack-based.
@@ -10,7 +10,7 @@ Bombero is a Heroku add-on that lets you handle your maintenance and error pages
 
 ### Platform support
 
-Bombero should work out of the box for
+Trackman should work out of the box for
 
 * Rails 2.x/3.x
 * Sinatra v?
@@ -60,4 +60,7 @@ We strongly encourage you to submit a failing test (if possible) to prove your i
 
 ## License
 
-  ...
+  Trackman client is released under the MIT license:
+
+    www.opensource.org/licenses/MIT
+

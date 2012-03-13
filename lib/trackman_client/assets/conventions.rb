@@ -1,7 +1,7 @@
-module BomberoClient
+module TrackmanClient
   module Assets
     module Conventions
-      Asset = BomberoClient::Assets::Asset
+      Asset = TrackmanClient::Assets::Asset
       
       def maintenance_path
         Pathname.new '/public/503.html'

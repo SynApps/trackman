@@ -1,9 +1,8 @@
 require 'spec_helper'
-require 'bombero_client'
 
-describe BomberoClient::Assets::Asset do
+describe TrackmanClient::Assets::Asset do
   describe "#all" do
-    Asset = BomberoClient::Assets::Asset 
+    Asset = TrackmanClient::Assets::Asset 
     it "returns every asset for a given maintenance path" do
       class Asset
         def self.maintenance_page

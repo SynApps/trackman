@@ -1,6 +1,6 @@
 require 'digest/md5'
  
-module BomberoClient
+module TrackmanClient
   module Assets
     module Hashable
       

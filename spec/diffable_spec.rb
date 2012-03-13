@@ -1,11 +1,10 @@
 require 'spec_helper'
-require 'bombero_client'
 
-describe BomberoClient::Assets::Diffable do
-  RemoteAsset = BomberoClient::Assets::RemoteAsset 
+describe TrackmanClient::Assets::Diffable do
+  RemoteAsset = TrackmanClient::Assets::RemoteAsset 
   
   class TestDiff
-    extend BomberoClient::Assets::Diffable
+    extend TrackmanClient::Assets::Diffable
   end
  
   it "specify the html to update and the image to delete" do    

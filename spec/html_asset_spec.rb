@@ -1,7 +1,7 @@
-require 'bombero_client'
+require 'spec_helper'
 
-describe BomberoClient::Assets::HtmlAsset do
-  Asset = BomberoClient::Assets::Asset
+describe TrackmanClient::Assets::HtmlAsset do
+  Asset = TrackmanClient::Assets::Asset
   
   it "should contains every image within the html as assets" do
     asset = Asset.create(:path => 'spec/test_data/sample.html')

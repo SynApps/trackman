@@ -1,7 +1,7 @@
 require 'rest-client'
 require 'json'
 
-module BomberoClient
+module TrackmanClient
   module Assets
     class RemoteAsset < Asset
       @@user = ENV['TRACKMAN_USER']

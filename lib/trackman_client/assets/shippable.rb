@@ -10,7 +10,6 @@ module TrackmanClient
           x[:proc].call
         end 
       end
-    
     private 
       def build_proc symbol, instance 
         case symbol

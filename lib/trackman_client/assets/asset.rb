@@ -7,7 +7,6 @@ module TrackmanClient
       include Hashable
       include Comparable
       
-
       def initialize attributes = {}
         super()
 
@@ -26,18 +25,29 @@ module TrackmanClient
       
       attr_reader :path, :assets
 
-      def self.create attributes = {}
-        path = attributes[:path]
-        asset = HtmlAsset.new attributes if File.extname(path) == '.html'
-        asset ||= Asset.new(attributes)
-      end  
-      
+      def to_remote
+        RemoteAsset.new(:path => path)
+      end
+
       def ==(other)
         return false if other.nil?
         other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path) 
         other_path.to_s == path.to_s || path.realpath == other_path.realpath
       end
+
+      def <=>(another)
+        result = 0
+        result += 1 if self.path.extname == '.html'
+        result -= 1 if another.path.extname == '.html'
+        result
+      end
       
+      def self.create attributes = {}
+        path = attributes[:path]
+        asset = HtmlAsset.new attributes if File.extname(path) == '.html'
+        asset ||= Asset.new(attributes)
+      end  
+
       def self.all
         if maintenance_path.exist?
           assets = [maintenance_page] + maintenance_page.assets 
@@ -48,19 +58,16 @@ module TrackmanClient
           return []
         end  
       end
-      
-      def to_remote
-        RemoteAsset.new(:path => path)
+
+      def self.sync
+        local = Asset.all
+        remote = RemoteAsset.all
+    
+        ship diff(local, remote)
+        
+        true
       end
 
-      
-      def <=>(another)
-        result = 0
-        result += 1 if self.path.extname == '.html'
-        result -= 1 if another.path.extname == '.html'
-        result
-      end
-      
       protected
         def validate_path?
           true

@@ -1,16 +1,12 @@
-require 'bombero_client'
-namespace :bombero do
+require 'trackman_client'
+namespace :trackman do
   CEP = 'custom_error_pages'
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
 
-  desc "Uploads modified assets to the server"
-  task :update do
-    local = Asset.all
-    remote = RemoteAsset.all
-    
-    diff = Asset.diff local, remote
-    Asset.ship diff
+  desc "Syncs modified assets to the server"
+  task :sync do
+    Asset.sync
   end
 
   desc "Setups the configs required by Bombero" 

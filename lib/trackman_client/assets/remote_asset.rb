@@ -12,6 +12,7 @@ module TrackmanClient
       @@site = "http://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
 
       attr_reader :id
+      
       def initialize attributes = {}
         ensure_config
         super
@@ -47,6 +48,17 @@ module TrackmanClient
         true
       end
 
+      def ==(other)
+        result = super
+        if result
+          if other.is_a? RemoteAsset
+            result = other.id == id && other.hash == hash 
+          end
+          return result
+        end
+        false 
+      end
+
       def self.find id
         response = RestClient.get "#{@@site}/#{id}"
         body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
@@ -58,17 +70,6 @@ module TrackmanClient
           .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
           .map { |r| RemoteAsset.new(r) }
           .sort.to_a
-      end
-
-      def ==(other)
-        result = super
-        if result
-          if other.is_a? RemoteAsset
-            result = other.id == id && other.hash == hash 
-          end
-          return result
-        end
-        false 
       end
 
       private 

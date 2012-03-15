@@ -18,15 +18,15 @@ Trackman works out of the box for
 
 ### Setup
 No need to add the gem to your Gemfile, it will be added to your bundle during the deployment.
-Step 1 (Install the addon)
+#### Step 1 (Install the addon)
 ```console
 heroku addons:add trackman
 ```
-Step 2 (Install the gem) by adding this to your Gemfile
+#### Step 2 (Install the gem) by adding this to your Gemfile
 ```console
 gem 'trackman'
 ```
-Step 3 (Setup) this will setup your initial configuration and add custom error page addon provided by heroku
+#### Step 3 (Setup) this will setup your initial configuration and add custom error page addon provided by heroku
 ```console
 rake trackman:setup
 ```

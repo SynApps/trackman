@@ -19,7 +19,7 @@ Trackman works out of the box for
 ```console
 heroku addons:add trackman
 ```
-### Step 2 - Install
+### Step 2 - Install the gem
 ```console
 gem install 'trackman'
 ```

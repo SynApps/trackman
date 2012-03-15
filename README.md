@@ -25,12 +25,13 @@ gem install 'trackman'
 ```
 
 ### Step 3 - Setup
+sets up your initial configuration and add custom error page addon provided by heroku
 ```console
 rake trackman:setup
 ```
-this will setup your initial configuration and add custom error page addon provided by heroku
 
-### Optional, to perform a manual sync of your error/maintenance pages and assets
+### Optional
+performs a manual sync of your error/maintenance pages and assets
 ```console
 rake trackman:sync
 ```

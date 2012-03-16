@@ -19,16 +19,16 @@ Trackman works out of the box for
 ```console
 heroku addons:add trackman
 ```
-### Step 2 - Install the gem
+### Step 2 - Add the client gem to your Gemfile
 ```console
-gem install 'trackman'
+gem 'trackman'
 ```
 
 ### Step 3 - Setup
 ```console
 rake trackman:setup
 ```
-sets up your initial configuration and add custom error page addon provided by heroku
+sets up your initial configuration and add custom error page addon if you don't have it yet.
 
 ### Optional
 ```console
@@ -43,15 +43,17 @@ By convention, we assume your maintenance page is located at
 public/503.html
 ```
 
-If you want different pages for maintenance and when your app is down, we expect 
+If you want two different pages for maintenance and when your app is down, we expect:
+
+- For maintenance
 ```console
 public/503.html
 public/503-error.html
 ```
-
-503 for maintenance and 503-error.html for a broken app.
-
-Otherwise just leave one of the two and we will serve it for maintenance and when the app is down
+- Broken app
+```console
+public/503-error.html
+```
 
 After the add-on installation
 

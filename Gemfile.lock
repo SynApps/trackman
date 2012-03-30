@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trackman (0.0.1)
+    trackman (0.0.2)
       json (>= 1.6.5)
       nokogiri (>= 1.5.0)
       rack (>= 1.4.1)
@@ -13,7 +13,7 @@ GEM
     diff-lcs (1.1.3)
     json (1.6.5)
     mime-types (1.17.2)
-    nokogiri (1.5.0)
+    nokogiri (1.5.2)
     rack (1.4.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)

@@ -4,7 +4,7 @@ namespace :trackman do
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
 
-  desc "Syncs your assets with the server. This is what gets executed when you deploy to heroku"
+  desc "Syncs your assets with the server, this is what gets executed when you deploy to heroku"
   task :sync do
     Trackman::Assets::Asset.sync
   end
@@ -22,8 +22,8 @@ namespace :trackman do
     end
     remove_configs
     add_configs 
-    puts "done! Thank you for using Trackman!"
-  end
+    puts "done! Thank you for using Trackman!"`
+  endrspec 
 
   def remove_configs
     configs = `heroku config` 

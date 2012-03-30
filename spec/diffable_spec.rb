@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Diffable do
+  Asset = Trackman::Assets::Asset 
   RemoteAsset = Trackman::Assets::RemoteAsset 
   
   class TestDiff
@@ -38,6 +39,21 @@ describe Trackman::Assets::Diffable do
     local = [html_asset, Asset.create(:path => 'spec/test_data/test1.jpeg')]
 
     actual = TestDiff.diff local, remote
+
+    actual.should eq(expected)
+  end
+
+  it "can not mark html remotes as deleted" do
+    expected = { 
+      :create => [], 
+      :update => [], 
+      :delete => []
+    }
+
+    asset1 = RemoteAsset.create(:path => 'spec/test_data/sample.html')
+    asset2 = RemoteAsset.create(:path => 'spec/test_data/external_paths/1.html')
+
+    actual = TestDiff.diff([], [asset1, asset2])
 
     actual.should eq(expected)
   end

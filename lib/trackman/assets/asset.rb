@@ -62,8 +62,13 @@ module Trackman
       def self.sync
         local = Asset.all
         remote = RemoteAsset.all
-    
-        ship diff(local, remote)
+        
+        puts "local: #{local.inspect}"
+        puts "remote: #{remote.inspect}"
+
+        diff_result = diff(local, remote) 
+        puts diff_result.inspect
+        ship diff_result
         
         true
       end
@@ -71,8 +76,11 @@ module Trackman
       def self.autosync
         autosync = ENV['TRACKMAN_AUTOSYNC'] || true
         autosync = autosync !~ /(0|false|FALSE)/ unless autosync.is_a? TrueClass
-        
-        return sync if autosync
+        begin
+          return sync if autosync
+        rescue
+          return false
+        end
         autosync
       end
       protected

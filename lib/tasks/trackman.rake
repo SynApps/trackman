@@ -22,8 +22,8 @@ namespace :trackman do
     end
     remove_configs
     add_configs 
-    puts "done! Thank you for using Trackman!"`
-  endrspec 
+    puts "done! Thank you for using Trackman!"
+  end 
 
   def remove_configs
     configs = `heroku config` 

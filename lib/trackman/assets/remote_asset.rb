@@ -76,7 +76,7 @@ module Trackman
         def ensure_config
           if @@user.nil? || @@pass.nil? || @@app_id.nil? || @@server.nil?
             config_missing = ['TRACKMAN_USER', 'TRACKMAN_PASSWORD', 'TRACKMAN_APP_ID', 'TRACKMAN_SERVER_URL'].first{|c| ENV[c].nil? }
-            raise ConfigNotFoundError, "The config '#{config_missing}' is missing."
+            raise Errors::ConfigNotFoundError, "The config '#{config_missing}' is missing."
           end            
         end
     end 

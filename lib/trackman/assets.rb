@@ -1,10 +1,5 @@
 module Trackman
   module Assets
-    @@asset_path = 'trackman/assets'
-    
-    @@classes = [:Asset, :HtmlAsset, :AssetNotFoundError, :ConfigNotFoundError, :RemoteAsset]
-    @@modules = [:Conventions, :Hashable, :Diffable, :Shippable]
-
     
     def self.underscore(camel_cased_word)
       word = camel_cased_word.to_s.dup
@@ -15,8 +10,22 @@ module Trackman
       word
     end
 
-    @@classes.concat(@@modules).each do |s|
-      autoload s, "#{@@asset_path}/#{underscore(s)}" 
+    #TODO do something better than this to share the scope
+    def self.autoloads path, items
+      items.each { |s|
+        if block_given? 
+          yield(s, "#{path}/#{underscore(s)}" ) 
+        else
+          puts "autoloading #{s} for #{self}... on path #{path}/#{underscore(s)}"
+          autoload s, "#{path}/#{underscore(s)}" 
+        end
+      }
     end
+
+    @@classes = [:Asset, :HtmlAsset, :RemoteAsset]
+    @@modules = [:Components, :Errors]
+
+
+    autoloads 'trackman/assets', @@classes.concat(@@modules)
   end
 end

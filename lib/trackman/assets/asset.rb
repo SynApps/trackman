@@ -1,10 +1,10 @@
 module Trackman
   module Assets
     class Asset
-      extend Conventions
-      extend Diffable
-      extend Shippable
-      include Hashable
+      extend Components::Conventions
+      extend Components::Diffable
+      extend Components::Shippable
+      include Components::Hashable
       include Comparable
       
       def initialize attributes = {}
@@ -15,7 +15,7 @@ module Trackman
 
         if validate_path?
           unless path && path.exist? && path.file?
-            raise AssetNotFoundError, "The path '#{path}' is invalid or is not a file"
+            raise Errors::AssetNotFoundError, "The path '#{path}' is invalid or is not a file"
           end
         end
 
@@ -63,10 +63,8 @@ module Trackman
         local = Asset.all
         remote = RemoteAsset.all
         
-        puts "local: #{local.inspect}"
-        puts "remote: #{remote.inspect}"
-
         diff_result = diff(local, remote) 
+        puts "DIFFFFFFFF -----------------"
         puts diff_result.inspect
         ship diff_result
         

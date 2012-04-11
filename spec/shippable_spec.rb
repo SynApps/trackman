@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Trackman::Assets::Shippable do
+describe Trackman::Assets::Components::Shippable do
   class Test
-    extend Trackman::Assets::Shippable
+    extend Trackman::Assets::Components::Shippable
 
     @@events = []
     def self.events

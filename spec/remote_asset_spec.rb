@@ -4,8 +4,8 @@ describe Trackman::Assets::RemoteAsset do
   RemoteAsset = Trackman::Assets::RemoteAsset
   
   before :all do
-    user = RemoteAsset.class_variable_get :@@user
-    pass = RemoteAsset.class_variable_get :@@pass
+    user = ENV['HEROKU_USERNAME']
+    pass = ENV['HEROKU_PASSWORD']
     server = RemoteAsset.class_variable_get :@@server
 
     response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
@@ -82,7 +82,7 @@ describe Trackman::Assets::RemoteAsset do
     begin
       configs.each {|k,v| RemoteAsset.class_variable_set k, nil }
       configs.each do |k,v|
-        lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Assets::ConfigNotFoundError)
+        lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Assets::Errors::ConfigNotFoundError)
         RemoteAsset.class_variable_set k, ENV[v]
       end
     ensure 

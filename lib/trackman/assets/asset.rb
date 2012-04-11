@@ -45,6 +45,13 @@ module Trackman
       def self.create attributes = {}
         path = attributes[:path]
         asset = HtmlAsset.new attributes if File.extname(path) == '.html'
+        
+        if const_defined?(:Rails) 
+          if ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
+            asset ||= Rails32Asset.new(attributes)
+          end
+        end
+
         asset ||= Asset.new(attributes)
       end  
 

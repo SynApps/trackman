@@ -32,9 +32,9 @@ module Trackman
             .collect { |p| Asset.create(:path => to_path(p)) }
             .to_a
         end  
-        def to_path(img)
-          return Pathname.new img if File.exist? img
-          Pathname.new "#{path.parent}/#{img}"
+        def to_path(str_path)
+          return Pathname.new img if File.exist? str_path
+          Pathname.new "#{path.parent}/#{str_path}"
         end 
         def internal? path
           path !~ /(\/|http)/

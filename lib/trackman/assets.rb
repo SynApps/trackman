@@ -16,13 +16,12 @@ module Trackman
         if block_given? 
           yield(s, "#{path}/#{underscore(s)}" ) 
         else
-          puts "autoloading #{s} for #{self}... on path #{path}/#{underscore(s)}"
           autoload s, "#{path}/#{underscore(s)}" 
         end
       }
     end
 
-    @@classes = [:Asset, :HtmlAsset, :RemoteAsset]
+    @@classes = [:Asset, :HtmlAsset, :RemoteAsset, :Rails32Asset]
     @@modules = [:Components, :Errors]
 
 

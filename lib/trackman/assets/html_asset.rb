@@ -3,12 +3,7 @@ module Trackman
   module Assets
     class HtmlAsset < Asset
       include Components::CompositeAsset
-      
-      def initialize attributes = {}
-        super
-        
-      end
-        
+
       def document
         @doc ||= Nokogiri::HTML(data)     
       end  

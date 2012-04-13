@@ -1,0 +1,13 @@
+table {
+    background-color: black;
+    border: 1px solid #39F;
+    width: 100%;
+    }
+td {
+    border: 0px;
+    text-align: center;
+    }
+p {
+    color:#09F;
+    text-indent: 20px;   
+    }

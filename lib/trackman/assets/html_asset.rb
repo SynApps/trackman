@@ -31,9 +31,10 @@ module Trackman
             .select{|p| internal? p }
             .collect { |p| Asset.create(:path => to_path(p)) }
             .to_a
-        end  
+        end 
+
         def to_path(str_path)
-          return Pathname.new img if File.exist? str_path
+          return Pathname.new str_path if File.exist? str_path
           Pathname.new "#{path.parent}/#{str_path}"
         end 
         def internal? path

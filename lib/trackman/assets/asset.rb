@@ -23,6 +23,10 @@ module Trackman
         @assets = []  
       end
       
+      def file
+        File.open(path)
+      end
+      
       attr_reader :path, :assets
 
       def to_remote
@@ -68,10 +72,11 @@ module Trackman
 
       def self.sync
         local = Asset.all
+        puts "local: #{local.collect{|x| x.path}}"
         remote = RemoteAsset.all
-        
+        puts "remote: #{remote.collect{|x| x.path}}"
         diff_result = diff(local, remote) 
-        puts "DIFFFFFFFF -----------------"
+        puts "\n\n\nDIFFFFFFFF -----------------"
         puts diff_result.inspect
         ship diff_result
         

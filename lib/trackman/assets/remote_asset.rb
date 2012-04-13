@@ -35,13 +35,13 @@ module Trackman
       end
 
       def create!
-        response = RestClient.post @@site, :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
+        response = RestClient.post @@site, :asset => {:path => path, :file => file}, :content_type => :json, :accept => :json
         path = response.headers[:location]
         @id = path[/\d+$/].to_i
       end
 
       def update!
-        RestClient.put "#{@@site}/#{id}", :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
+        RestClient.put "#{@@site}/#{id}", :asset => {:path => path, :file => file}, :content_type => :json, :accept => :json
       end  
       def delete
         response = RestClient.delete "#{@@site}/#{id}"

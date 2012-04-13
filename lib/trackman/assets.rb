@@ -21,7 +21,7 @@ module Trackman
       }
     end
 
-    @@classes = [:Asset, :HtmlAsset, :RemoteAsset, :Rails32Asset]
+    @@classes = [:Asset, :HtmlAsset, :RemoteAsset, :Rails32Asset, :CssAsset]
     @@modules = [:Components, :Errors]
 
 

@@ -1,9 +1,9 @@
 module Trackman
   module Assets
     module Components
-      @@classes = [:Conventions, :Diffable, :Hashable, :Shippable]
+      @@modules = [:Conventions, :Diffable, :Hashable, :Shippable, :CompositeAsset]
      
-      ::Trackman::Assets.autoloads 'trackman/assets/components', @@classes do |s,p|
+      ::Trackman::Assets.autoloads 'trackman/assets/components', @@modules do |s,p|
           autoload s, p 
       end
     end

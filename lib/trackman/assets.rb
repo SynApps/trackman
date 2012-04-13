@@ -24,7 +24,6 @@ module Trackman
     @@classes = [:Asset, :HtmlAsset, :RemoteAsset, :Rails32Asset, :CssAsset]
     @@modules = [:Components, :Errors]
 
-
     autoloads 'trackman/assets', @@classes.concat(@@modules)
   end
 end

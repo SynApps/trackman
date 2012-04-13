@@ -25,4 +25,16 @@ describe CssAsset do
 
     actual.assets.should == expected
   end
+
+  it "returns a all recursive css imports under the css file" do
+    expected = 
+      [
+        CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl2.css'),
+        CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl3.css')
+      ]
+    asset = CssAsset.new(:path => 'spec/test_data/css/recursive/imported-recursive.css')
+    actual = asset.assets
+
+    actual.should == expected
+  end
 end

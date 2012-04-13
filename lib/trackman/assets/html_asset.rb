@@ -6,30 +6,32 @@ module Trackman
       
       def initialize attributes = {}
         super
-        @assets = nil
+        
       end
         
       def document
         @doc ||= Nokogiri::HTML(data)     
       end  
-        
-      def images        
-        @images ||= to_assets(document.css('img'), 'src')
+      
+      def img_paths        
+        @images_paths ||= refine_path(document.css('img'), 'src')
       end
-      def javascripts
-        @js ||= to_assets(document.xpath('//script'), 'src')
+      def js_paths
+        @js_paths ||= refine_path(document.xpath('//script'), 'src')
       end
-      def stylesheets
-        @css ||= to_assets(document.xpath('//link[@type="text/css"]'), 'href')
+      def css_paths
+        @css_paths ||= refine_path(document.xpath('//link[@type="text/css"]'), 'href')
       end
 
-      def assets
-        @assets ||= javascripts + stylesheets + images
+      def children_paths
+         @children_paths ||= img_paths + js_paths + css_paths
       end
-      
-      protected
-        def to_assets nodes, attr
-          super nodes.collect{ |n| n[attr] }
+
+      protected 
+        def refine_path(paths, node)
+          paths.collect{|n| n[node].to_s }
+            .select{|p| p.internal_path? }
+            .collect{|n| to_path(n).to_s }
         end
     end 
   end

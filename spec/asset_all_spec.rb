@@ -13,7 +13,7 @@ describe Trackman::Assets::Asset do
         end
       end 
 
-      expected = [Asset.create(:path => 'spec/test_data/all/2.gif'), Asset.create(:path => 'spec/test_data/all/1.css'), Asset.maintenance_page]
+      expected = [Asset.create(:path => 'spec/test_data/all/1.css'), Asset.create(:path => 'spec/test_data/all/2.gif'),  Asset.maintenance_page]
       Asset.all.should eq(expected)
     end
 
@@ -37,8 +37,8 @@ describe Trackman::Assets::Asset do
 
       expected = [
         Asset.create(:path => 'spec/test_data/all/3.js'),
-        Asset.create(:path => 'spec/test_data/all/1.css'),
         Asset.create(:path => 'spec/test_data/all/2.gif'), 
+        Asset.create(:path => 'spec/test_data/all/1.css'),
         Asset.error_page,
         Asset.maintenance_page
       ]
@@ -63,8 +63,8 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        Asset.create(:path => 'spec/test_data/all/2.gif'), 
         Asset.create(:path => 'spec/test_data/all/1.css'), 
+        Asset.create(:path => 'spec/test_data/all/2.gif'), 
         Asset.maintenance_page, 
         Asset.error_page
       ]

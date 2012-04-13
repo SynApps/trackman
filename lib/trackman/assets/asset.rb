@@ -62,8 +62,10 @@ module Trackman
 
       def self.all
         if maintenance_path.exist?
+          
           assets = [maintenance_page] + maintenance_page.assets 
           assets = assets + [error_page] + error_page.assets if error_path.exist?
+          
            
           return assets.uniq{|a| a.path.realpath }.sort
         else

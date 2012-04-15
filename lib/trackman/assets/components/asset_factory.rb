@@ -16,7 +16,6 @@ module Trackman
           
           if const_defined?(:Rails) 
             if ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
-              puts "GOT HERE SOMEHOW"
               to_include << Rails32Asset
             end
           end

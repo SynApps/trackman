@@ -6,8 +6,8 @@ task :create_app do
   require 'trackman'
   RemoteAsset = Trackman::Assets::RemoteAsset  
 
-  user = RemoteAsset.class_variable_get :@@user
-  pass = RemoteAsset.class_variable_get :@@pass
+  user = ENV['HEROKU_USERNAME']
+  pass = ENV['HEROKU_PASSWORD']
   server = RemoteAsset.class_variable_get :@@server
 
   url = "http://#{user}:#{pass}@#{server}/heroku/resources"

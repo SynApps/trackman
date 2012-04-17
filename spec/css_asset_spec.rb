@@ -26,13 +26,14 @@ describe CssAsset do
     actual.assets.should == expected
   end
 
-  it "returns a all recursive css imports under the css file" do
+  it "returns all recursive css imports and images under the css file" do
     expected = 
       [
         CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl2.css'),
-        CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl3.css')
+        CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl3.css'),
+        Asset.new(:path => 'spec/test_data/css/recursive/riding-you.jpg')
       ]
-    asset = CssAsset.new(:path => 'spec/test_data/css/recursive/imported-recursive.css')
+    asset = Asset.create(:path => 'spec/test_data/css/recursive/imported-recursive.css')
     actual = asset.assets
 
     actual.should == expected

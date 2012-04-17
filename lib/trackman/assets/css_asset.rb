@@ -5,10 +5,7 @@ module Trackman
 
       protected
         def children_paths
-          @@url ||= /url\(['"]?(?<url>[^'")]+)['"]?\)/
-          @@import ||= /url\(['"]?[^'"]+['"]?\)/
-
-          data.scan(@@import).collect{|x| @@url.match(x)[:url] }
+          inner_css_paths
         end
     end
   end

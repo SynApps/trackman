@@ -1,7 +1,10 @@
 require 'spec_helper'
 
+Asset = Trackman::Assets::Asset
+CssAsset = Trackman::Assets::CssAsset 
+
 describe Trackman::Assets::HtmlAsset do
-  Asset = Trackman::Assets::Asset
+
   
   it "should contains every image within the html as assets" do
     asset = Asset.create(:path => 'spec/test_data/sample.html')
@@ -26,5 +29,19 @@ describe Trackman::Assets::HtmlAsset do
     expected = ['y', 'z'].collect{|x| "spec/test_data/#{x}.css" } 
     
     asset.css_paths.should eq(expected)
+  end
+
+  it "returns all recursive css imports and images under the html file that contains css" do
+    expected = 
+      [
+        CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl2.css'),
+        CssAsset.new(:path => 'spec/test_data/css/recursive/imported-lvl3.css'),
+        Asset.new(:path => 'spec/test_data/css/recursive/riding-you.jpg')
+      ]
+    asset = Asset.create(:path => 'spec/test_data/css/recursive/html-with-css.html')
+
+    actual = asset.assets
+
+    actual.should == expected
   end
 end

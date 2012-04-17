@@ -19,7 +19,7 @@ module Trackman
       end
 
       def children_paths
-         @children_paths ||= img_paths + js_paths + css_paths
+         @children_paths ||= img_paths + js_paths + css_paths + inner_css_paths
       end
 
       protected 

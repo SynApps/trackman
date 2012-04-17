@@ -10,7 +10,6 @@ module Trackman
       
       def initialize attributes = {}
         super()
-
         path = attributes[:path]
         path = Pathname.new path unless path.nil? || path.is_a?(Pathname)
 

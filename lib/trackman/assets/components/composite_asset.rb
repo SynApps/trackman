@@ -20,6 +20,13 @@ module Trackman
           my_assets
         end
         
+        def inner_css_paths
+          @@url ||= /url\(['"]?(?<url>[^'")]+)['"]?\)/
+          @@import ||= /url\(['"]?[^'"]+['"]?\)/
+
+          data.scan(@@import).collect{|x| @@url.match(x)[:url] }
+        end
+        
         protected
           def to_path(str_path)
             return Pathname.new str_path if File.exist? str_path

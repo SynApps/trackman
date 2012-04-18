@@ -17,6 +17,8 @@ module Trackman
             components.insert(0, 'app')
 
             file = components.last
+
+            components.insert(1, 'assets') if components.index('assets').nil?
             index = components.index('assets') + 1
             subfolder = subfolder(file)
             

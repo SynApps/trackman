@@ -25,6 +25,13 @@ describe Trackman::Assets::Frameworks::Rails32Asset do
     actual.path.to_s.should == expected
   end
 
+  it "should transform the path for an image when assets is not specified" do
+    expected = 'app/assets/images/img.png'
+    actual = TestRails32.new(:path => 'img.png')
+
+    actual.path.to_s.should == expected
+  end
+
   it "should transform the path for a js" do
     expected = 'app/assets/javascripts/test.js'
     actual = TestRails32.new(:path => 'assets/test.js')

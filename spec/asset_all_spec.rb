@@ -1,10 +1,14 @@
 require 'spec_helper'
+Asset = Trackman::Assets::Asset 
 
 describe Trackman::Assets::Asset do
+  class TestAsset < Asset
+
+  end
+  
   describe "#all" do
-    Asset = Trackman::Assets::Asset 
     it "returns every asset for a given maintenance path" do
-      class Asset
+      class TestAsset
         def self.maintenance_page
           Asset.create(:path => 'spec/test_data/all/all.html')
         end 
@@ -13,18 +17,18 @@ describe Trackman::Assets::Asset do
         end
       end 
 
-      expected = [Asset.create(:path => 'spec/test_data/all/1.css'), Asset.create(:path => 'spec/test_data/all/2.gif'),  Asset.maintenance_page]
-      Asset.all.should eq(expected)
+      expected = [TestAsset.create(:path => 'spec/test_data/all/1.css'), TestAsset.create(:path => 'spec/test_data/all/2.gif'),  TestAsset.maintenance_page]
+      TestAsset.all.should eq(expected)
     end
 
 
     it "includes assets from error page if it is also specified" do
-      class Asset
+      class TestAsset
         def self.maintenance_page
-          Asset.create(:path => 'spec/test_data/all/all.html')
+          TestAsset.create(:path => 'spec/test_data/all/all.html')
         end
         def self.error_page
-          Asset.create(:path => 'spec/test_data/all/all2.html')
+          TestAsset.create(:path => 'spec/test_data/all/all2.html')
         end 
 
         def self.maintenance_path
@@ -36,23 +40,23 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        Asset.create(:path => 'spec/test_data/all/3.js'),
-        Asset.create(:path => 'spec/test_data/all/2.gif'), 
-        Asset.create(:path => 'spec/test_data/all/1.css'),
-        Asset.error_page,
-        Asset.maintenance_page
+        TestAsset.create(:path => 'spec/test_data/all/3.js'),
+        TestAsset.create(:path => 'spec/test_data/all/2.gif'), 
+        TestAsset.create(:path => 'spec/test_data/all/1.css'),
+        TestAsset.error_page,
+        TestAsset.maintenance_page
       ]
 
-      Asset.all.should eq(expected)
+      TestAsset.all.should eq(expected)
     end
 
     it "does not include the same asset twice" do
-      class Asset
+      class TestAsset
         def self.maintenance_page
-          Asset.create(:path => 'spec/test_data/all/all.html')
+          TestAsset.create(:path => 'spec/test_data/all/all.html')
         end
         def self.error_page
-          Asset.create(:path => 'spec/test_data/all/all3.html')
+          TestAsset.create(:path => 'spec/test_data/all/all3.html')
         end
         def self.maintenance_path
           Pathname.new('spec/test_data/all/all.html')
@@ -63,24 +67,24 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        Asset.create(:path => 'spec/test_data/all/1.css'), 
-        Asset.create(:path => 'spec/test_data/all/2.gif'), 
-        Asset.maintenance_page, 
-        Asset.error_page
+        TestAsset.create(:path => 'spec/test_data/all/1.css'), 
+        TestAsset.create(:path => 'spec/test_data/all/2.gif'), 
+        TestAsset.maintenance_page, 
+        TestAsset.error_page
       ]
       
-      actual = Asset.all
+      actual = TestAsset.all
       
       actual.should eq(expected)
     end
 
     it "does not include external assets" do
-      class Asset
+      class TestAsset
         def self.maintenance_page
-          Asset.create(:path => 'spec/test_data/external_paths/1.html')
+          TestAsset.create(:path => 'spec/test_data/external_paths/1.html')
         end
         def self.error_page
-          Asset.create(:path => '/invalid/path')
+          TestAsset.create(:path => '/invalid/path')
         end
         def self.maintenance_path
           Pathname.new('spec/test_data/external_paths/1.html')
@@ -90,18 +94,18 @@ describe Trackman::Assets::Asset do
         end  
       end 
 
-      expected = [Asset.create(:path => 'spec/test_data/external_paths/1.css'), Asset.maintenance_page]
+      expected = [TestAsset.create(:path => 'spec/test_data/external_paths/1.css'), TestAsset.maintenance_page]
       
-      Asset.all.should eq(expected)
+      TestAsset.all.should eq(expected)
     end
 
     it "return html assets always at the end" do
-      class Asset
+      class TestAsset
         def self.maintenance_page
-          Asset.create(:path => 'spec/test_data/external_paths/1.html')
+          TestAsset.create(:path => 'spec/test_data/external_paths/1.html')
         end
         def self.error_page
-          Asset.create(:path => 'spec/test_data/external_paths/1.html')
+          TestAsset.create(:path => 'spec/test_data/external_paths/1.html')
         end
         def self.maintenance_path
           Pathname.new('spec/test_data/external_paths/1.html')
@@ -111,8 +115,8 @@ describe Trackman::Assets::Asset do
         end  
       end
      
-      expected = [Asset.create(:path => 'spec/test_data/external_paths/1.css'), Asset.maintenance_page] 
-      Asset.all.should eq(expected)
+      expected = [TestAsset.create(:path => 'spec/test_data/external_paths/1.css'), TestAsset.maintenance_page] 
+      TestAsset.all.should eq(expected)
     end
   end
 end

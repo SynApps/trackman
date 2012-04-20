@@ -41,11 +41,22 @@ module Trackman
 
       def <=>(another)
         result = 0
-        result += 1 if self.path.extname == '.html'
-        result -= 1 if another.path.extname == '.html'
+        if self.path.extname == '.html' || another.path.extname == '.html' 
+          result += 1 if self.path.extname == '.html'
+          result -= 1 if another.path.extname == '.html'
+        elsif is_child_of(another)
+          result += -1
+        elsif another.is_child_of(self)
+          result += 1
+        end  
+
         result
       end
       
+      def is_child_of(parent)
+        parent.is_a?(Components::CompositeAsset) && parent.assets.include?(self)
+      end
+
       def self.all
         if maintenance_path.exist?
           

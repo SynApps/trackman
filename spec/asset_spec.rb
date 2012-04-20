@@ -52,8 +52,16 @@ describe Trackman::Assets::Asset do
   
 
   describe "#remote" do
+    
+    class TestAsset < Asset
+      def self.maintenance_page
+        Asset.create(:path => 'spec/test_data/sample.html')
+      end
+    end
+
     it "returns a remote asset equal to the previous one" do
-      local = Asset.maintenance_page
+      local = TestAsset.maintenance_page
+      
       remote = local.to_remote
       
       local.should eq(remote)
@@ -74,5 +82,13 @@ describe Trackman::Assets::Asset do
     asset2 = Asset.create(:path => 'spec/test_data/sample.html')
 
     (asset1 <=> asset2).should == 0
+  end
+
+  it "compares a css asset higher than its dependencies" do
+    dependent = Asset.create(:path => 'spec/test_data/css/with-asset.css')
+    dependency = dependent.assets.first
+
+    (dependent <=> dependency).should == 1
+    (dependency <=> dependent).should == -1
   end
 end

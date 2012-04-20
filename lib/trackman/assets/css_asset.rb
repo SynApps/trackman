@@ -4,9 +4,8 @@ module Trackman
       include Components::CompositeAsset
 
       protected
-        def children_paths
-          inner_css_paths
-        end
+		alias children_paths inner_css_paths
+		
     end
   end
 end

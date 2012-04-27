@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Asset do
-  Asset = Trackman::Assets::Asset
-  
   before :each do
     @@called = false
   end

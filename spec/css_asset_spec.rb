@@ -1,6 +1,4 @@
 require 'spec_helper'
-CssAsset = Trackman::Assets::CssAsset
-Asset = Trackman::Assets::Asset
 
 describe CssAsset do
   it "returns its assets when it has import in it" do

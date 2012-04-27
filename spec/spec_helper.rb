@@ -10,3 +10,10 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 end
+
+
+Asset = Trackman::Assets::Asset unless defined?(Asset)
+CssAsset = Trackman::Assets::CssAsset unless defined?(CssAsset)
+HtmlAsset = Trackman::Assets::HtmlAsset unless defined?(HtmlAsset)
+Rails32Asset = Trackman::Assets::Frameworks::Rails32Asset unless defined?(Rails32Asset)
+RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)

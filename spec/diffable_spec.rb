@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Components::Diffable do
-  Asset = Trackman::Assets::Asset 
-  RemoteAsset = Trackman::Assets::RemoteAsset 
-  
   class TestDiff
     extend Trackman::Assets::Components::Diffable
   end

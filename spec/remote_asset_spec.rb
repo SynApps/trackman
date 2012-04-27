@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-describe Trackman::Assets::RemoteAsset do
-  RemoteAsset = Trackman::Assets::RemoteAsset
-  
+describe Trackman::Assets::RemoteAsset do  
   before :all do
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
@@ -20,6 +18,7 @@ describe Trackman::Assets::RemoteAsset do
     RemoteAsset.class_variable_set :@@pass, pass
     RemoteAsset.class_variable_set :@@site, "http://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"
   end
+  
   after :each do
     RemoteAsset.all.each do |a|
       a.delete

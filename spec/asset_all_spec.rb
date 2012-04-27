@@ -1,9 +1,7 @@
 require 'spec_helper'
-Asset = Trackman::Assets::Asset 
 
 describe Trackman::Assets::Asset do
   class TestAsset < Asset
-
   end
   
   describe "#all" do

@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Components::AssetFactory do
-  Asset = Trackman::Assets::Asset
-  HtmlAsset = Trackman::Assets::HtmlAsset
-  Rails32Asset = Trackman::Assets::Frameworks::Rails32Asset
-  CssAsset = Trackman::Assets::CssAsset
-  
   class TestFactory
     extend Trackman::Assets::Components::AssetFactory
   end
@@ -25,7 +20,6 @@ describe Trackman::Assets::Components::AssetFactory do
     end
     Object.send(:remove_const, :Rails)
   end
-
 
   it "returns an HtmlAsset" do
     asset = TestFactory.create(:path => 'spec/test_data/sample.html')

@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Frameworks::Rails32Asset do
-  Rails32Asset = Trackman::Assets::Frameworks::Rails32Asset
-  
   class TestRails32 < Trackman::Assets::Asset
     include Rails32Asset
 

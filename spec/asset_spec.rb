@@ -2,9 +2,6 @@ require 'spec_helper'
 require 'digest/md5'
 
 describe Trackman::Assets::Asset do
-  
-  Asset = Trackman::Assets::Asset 
-  RemoteAsset = Trackman::Assets::RemoteAsset 
   it "should raise an exception if the path is not good" do 
     wrong_path = "./wrong_path.html"
     lambda { Asset.new(:path => wrong_path) }.should raise_error Trackman::Assets::Errors::AssetNotFoundError

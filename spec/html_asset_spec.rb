@@ -1,11 +1,6 @@
 require 'spec_helper'
 
-Asset = Trackman::Assets::Asset
-CssAsset = Trackman::Assets::CssAsset 
-
-describe Trackman::Assets::HtmlAsset do
-
-  
+describe Trackman::Assets::HtmlAsset do  
   it "should contains every image within the html as assets" do
     asset = Asset.create(:path => 'spec/test_data/sample.html')
 

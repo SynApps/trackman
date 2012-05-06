@@ -12,22 +12,27 @@ module Trackman
           else
             parent = Asset
           end 
-          to_include = []
-          
-          if const_defined?(:Rails) 
-            if ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
-              to_include << Rails32Asset
-            end
-          end
-
-          klass = Class.new(parent) do
-            to_include.each do |f|
-              include f
-            end
-          end
+          klass = build_class_from(parent)
 
           klass.new attributes
         end
+
+        protected 
+          def uses_rails32?
+            const_defined?(:Rails)  &&  ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
+          end
+
+          def build_class_from(parent)
+            to_include = []
+            to_include << Rails32Asset if uses_rails32?
+          
+            klass = Class.new(parent) do
+              to_include.each do |f|
+                include f
+              end
+            end
+            klass
+          end
       end
     end
   end

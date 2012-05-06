@@ -48,7 +48,6 @@ If you want two different pages for maintenance and when your app is down, we ex
 - For maintenance
 ```console
 public/503.html
-public/503-error.html
 ```
 - Broken app
 ```console
@@ -77,5 +76,5 @@ https://github.com/epetre/Bombero/issues
 
   Trackman client is released under the MIT license:
 
-    www.opensource.org/licenses/MIT
+  [www.opensource.org/licenses/MIT](www.opensource.org/licenses/MIT)
 

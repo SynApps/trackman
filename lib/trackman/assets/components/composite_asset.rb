@@ -9,13 +9,7 @@ module Trackman
           children_paths.select{|p| p.internal_path? }.each do |p| 
             asset = Asset.create(:path => to_path(p))  
             my_assets << asset 
-              
-            if asset.respond_to? :assets
-              not_inside = asset.assets.select{|a| !my_assets.include?(a) } 
-              not_inside.each do |a|
-                my_assets << a
-              end
-            end
+            my_assets = my_assets.concat(asset.assets.select{|a| !my_assets.include?(a) })   
           end
           my_assets
         end

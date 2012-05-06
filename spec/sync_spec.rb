@@ -1,6 +1,23 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Asset do
+  before :all do
+    class Asset
+      class << self
+        alias :old_sync :sync
+      end
+    end
+
+    def Asset.sync
+      @@called = true
+    end
+  end
+  after :all do
+    def Asset.sync
+      old_sync
+    end
+  end
+  
   before :each do
     @@called = false
   end
@@ -9,20 +26,12 @@ describe Trackman::Assets::Asset do
   end
   
   it "syncs without any special config" do
-    def Asset.sync
-      @@called = true
-    end
-    
     Asset.autosync
 
     @@called.should be_true
   end  
   
   it "doesnt autosync if ENV is set to false/0/FALSE" do
-    def Asset.sync
-      @@called = true
-    end
-    
     ['false', '0', 'FALSE'].each do |v|
       ENV['TRACKMAN_AUTOSYNC'] = v
       Asset.autosync

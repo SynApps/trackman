@@ -9,28 +9,14 @@ module Trackman
       include Comparable
       
       def initialize attributes = {}
-        super()
-        path = attributes[:path]
-        path = Pathname.new path unless path.nil? || path.is_a?(Pathname)
-
-        if validate_path?
-          unless path && path.exist? && path.file?
-            raise Errors::AssetNotFoundError, "The path '#{path}' is invalid or is not a file"
-          end
-        end
-
-        @path = path
-        @assets = []  
-      end
-      
-      def file
-        File.open(path)
+        @assets = []
+        self.path = attributes[:path]
       end
       
       attr_reader :path, :assets
 
       def to_remote
-        RemoteAsset.new(:path => path)
+        RemoteAsset.new(:path => @path)
       end
 
       def ==(other)
@@ -41,7 +27,7 @@ module Trackman
 
       def <=>(another)
         result = 0
-        if self.path.extname == '.html' || another.path.extname == '.html' 
+        if @path.extname == '.html' || another.path.extname == '.html' 
           result += 1 if self.path.extname == '.html'
           result -= 1 if another.path.extname == '.html'
         elsif is_child_of(another)
@@ -71,12 +57,8 @@ module Trackman
 
       def self.sync
         local = Asset.all
-        #puts "local: #{local.collect{|x| x.path}}"
         remote = RemoteAsset.all
-        #puts "remote: #{remote.collect{|x| x.path}}"
         diff_result = diff(local, remote) 
-        #puts "\n\n\nDIFFFFFFFF -----------------"
-        #puts diff_result.inspect
         ship diff_result
         
         true
@@ -92,9 +74,19 @@ module Trackman
         end
         autosync
       end
+
       protected
         def validate_path?
           true
+        end
+        def path=(value)
+          value = Pathname.new value unless value.nil? || value.is_a?(Pathname)
+          if validate_path?
+            unless value && value.exist? && value.file?
+              raise Errors::AssetNotFoundError, "The path '#{value}' is invalid or is not a file"
+            end
+          end
+          @path = value
         end
     end 
   end

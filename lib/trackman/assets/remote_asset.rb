@@ -29,6 +29,19 @@ module Trackman
         false
       end
 
+      def self.find id
+        response = RestClient.get "#{@@site}/#{id}"
+        body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
+        RemoteAsset.new(body)
+      end
+
+      def self.all
+        JSON.parse(RestClient.get @@site)
+          .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
+          .map { |r| RemoteAsset.new(r) }
+          .sort
+      end
+
       def create!
         response = RestClient.post @@site, :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
         path = response.headers[:location]
@@ -54,18 +67,7 @@ module Trackman
         false 
       end
 
-      def self.find id
-        response = RestClient.get "#{@@site}/#{id}"
-        body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
-        RemoteAsset.new(body)
-      end
-
-      def self.all
-        JSON.parse(RestClient.get @@site)
-          .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
-          .map { |r| RemoteAsset.new(r) }
-          .sort.to_a
-      end
+      
 
       private 
         def ensure_config

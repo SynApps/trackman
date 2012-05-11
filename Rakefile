@@ -21,3 +21,15 @@ task :create_app do
   
   puts "Have fun!"
 end
+
+namespace :setup do
+  namespace :rails32 do
+
+    desc "runs rails new for a given name and removes useless files"
+    task :fixture, :name do |t, args| 
+      name = response = args[:name]
+      puts "rails new spec/fixtures/rails32/#{name} -G -O -T"
+      `rails new spec/fixtures/rails32/#{name} -G -O -T`
+    end
+  end
+end

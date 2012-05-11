@@ -11,13 +11,13 @@ module Trackman
 end
 
 class ActLikeRails32
-  def self.switch_on
+  def self.switch_on(pre_path)
     Trackman::Assets::Components::AssetFactory.module_eval do
       define_method :uses_rails32? do
         true
       end
     end
-    Fakeable.switch_on
+    Fakeable.switch_on(pre_path)
   end
   def self.switch_off
     Trackman::Assets::Components::AssetFactory.module_eval do

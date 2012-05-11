@@ -27,7 +27,9 @@ module Trackman
 
       def <=>(another)
         result = 0
-        if @path.extname == '.html' || another.path.extname == '.html' 
+        if self.path.extname == '.html' && another.path.extname == '.html'
+          result = self.path.to_s <=> another.path.to_s  
+        elsif @path.extname == '.html' || another.path.extname == '.html'  
           result += 1 if self.path.extname == '.html'
           result -= 1 if another.path.extname == '.html'
         elsif is_child_of(another)
@@ -45,7 +47,6 @@ module Trackman
 
       def self.all
         if maintenance_path.exist?
-          
           assets = [maintenance_page] + maintenance_page.assets 
           assets = assets + [error_page] + error_page.assets if error_path.exist?
           

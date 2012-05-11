@@ -81,6 +81,14 @@ describe Trackman::Assets::Asset do
     (asset1 <=> asset2).should == 0
   end
 
+  it "compares two htmls by their path" do
+    asset1 = Asset.create(:path => 'spec/test_data/all/all.html')
+    asset2 = Asset.create(:path => 'spec/test_data/all/all2.html')
+
+    (asset1 <=> asset2).should == -1
+  end
+
+
   it "compares a css asset higher than its dependencies" do
     dependent = Asset.create(:path => 'spec/test_data/css/with-asset.css')
     dependency = dependent.assets.first

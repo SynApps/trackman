@@ -4,14 +4,14 @@ module Trackman
       module CompositeAsset
         
         def assets
-          my_assets = []
-
-          children_paths.select{|p| p.internal_path? }.each do |p| 
-            asset = Asset.create(:path => to_path(p))  
-            my_assets << asset 
-            my_assets = my_assets.concat(asset.assets.select{|a| !my_assets.include?(a) })   
-          end
-          my_assets
+          children_paths
+            .select{|p| p.internal_path? }
+            .inject([]) do |array, p|
+              asset = Asset.create(:path => to_path(p))  
+              array << asset 
+              array.concat(asset.assets.select{|a| !array.include?(a) })
+              array   
+            end
         end
         
         def inner_css_paths

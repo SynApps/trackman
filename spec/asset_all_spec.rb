@@ -41,8 +41,8 @@ describe Trackman::Assets::Asset do
         TestAsset.create(:path => 'spec/test_data/all/3.js'),
         TestAsset.create(:path => 'spec/test_data/all/2.gif'), 
         TestAsset.create(:path => 'spec/test_data/all/1.css'),
-        TestAsset.error_page,
-        TestAsset.maintenance_page
+        TestAsset.maintenance_page,
+        TestAsset.error_page
       ]
 
       TestAsset.all.should eq(expected)

@@ -28,27 +28,35 @@ class Fakeable
       end
     end
 
-    Trackman::Assets::Components::CompositeAsset.module_eval do
-      define_method :to_path do |str_path|
+    #Trackman::Assets::Components::CompositeAsset.module_eval do
+    #  define_method :to_path do |str_path|
         # TODO: evil way to get it done, it's going to break when the implementation changes but for now...
-        Fakeable.setup(pre_path, old_to_path(str_path)) do |p|
-          index = p.index(pre_path) + pre_path.size
-          p.insert(index, path.parent)  
-          p
-        end
-      end
-    end
+
+    #    Fakeable.setup(pre_path, old_to_path(str_path)) do |p|  
+          # index = p.index(pre_path) + pre_path.size 
+          # #puts "PATH p: #{p}"
+          # p.insert(index, path.parent.to_s)  
+          # p
+    #    end
+    #  end
+    #end
   end
 
   def self.setup(pre_path, path)
     p = ""
+    puts "+++++++++++++++++++++++++++++++++ "
+    puts "for paths : pre => #{pre_path}, path => #{path}"
     unless path.to_s.include? pre_path
-      p << pre_path.to_s.dup 
+      puts "Inside my lone less p = #{p} " 
+      p << pre_path.to_s.dup
       p << '/' if p[-1] != '/' && path[0] != '/'
     end
     p << path.to_s.dup    
-    p = yield p if block_given?
+    #p = yield p if block_given?
 
+    puts "after treatment p = #{p} " 
+    puts "------------------------------ " 
+    
     Pathname.new p
   end
 
@@ -68,11 +76,11 @@ class Fakeable
       end
     end
 
-    Trackman::Assets::Components::CompositeAsset.module_eval do
-      define_method :to_path do |val|
-        old_to_path(val)
-      end
-    end
+    #Trackman::Assets::Components::CompositeAsset.module_eval do
+    #  define_method :to_path do |val|
+    #    old_to_path(val)
+    #  end
+    #end
   end
 end
 

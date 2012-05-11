@@ -36,7 +36,7 @@ module Trackman
             subfolder
           end
           def is_local? path
-            path[0..3].to_s.include? 'app'
+            path[0..3].include? 'app'
           end
       end
     end 

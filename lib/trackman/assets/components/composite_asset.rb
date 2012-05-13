@@ -24,8 +24,8 @@ module Trackman
         protected
           def to_path(str_path)
             return Pathname.new str_path if File.exist? str_path
-            puts "parent path added ====> #{path.parent}/#{str_path}"
-            Pathname.new "#{path.parent}/#{str_path}"         
+            puts "parent path added ====> app/assets/#{str_path}"
+            Pathname.new "#{path.parent}/#{str_path}"
           end    
       end
     end

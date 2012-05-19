@@ -6,13 +6,6 @@ class AppCreator
   end
 
   def self.create
-    #  @@user = ENV['TRACKMAN_USER']
-    #  @@pass = ENV['TRACKMAN_PASSWORD']
-    #  @@app_id = ENV['TRACKMAN_APP_ID']
-    #  @@server = ENV['TRACKMAN_SERVER_URL']
-
-    #  @@site = "http://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
-    
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
     

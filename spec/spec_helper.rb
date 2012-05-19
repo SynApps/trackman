@@ -16,7 +16,7 @@ end
 Asset = Trackman::Assets::Asset unless defined?(Asset)
 CssAsset = Trackman::Assets::CssAsset unless defined?(CssAsset)
 HtmlAsset = Trackman::Assets::HtmlAsset unless defined?(HtmlAsset)
-Rails32Asset = Trackman::Assets::Frameworks::Rails32Asset unless defined?(Rails32Asset)
 RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
+
 PathMan = Trackman::Assets::Components::PathMan unless defined?(PathMan)
 Rails32PathMan = Trackman::Assets::Components::Rails32PathMan unless defined?(Rails32PathMan)

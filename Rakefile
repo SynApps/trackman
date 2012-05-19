@@ -24,12 +24,29 @@ end
 
 namespace :setup do
   namespace :rails32 do
-
     desc "runs rails new for a given name and removes useless files"
     task :fixture, :name do |t, args| 
       name = response = args[:name]
-      puts "rails new spec/fixtures/rails32/#{name} -G -O -T"
-      `rails new spec/fixtures/rails32/#{name} -G -O -T`
+      puts "rails _3.2.0_ new spec/fixtures/rails32/#{name} -G -O -T"
+      `rails _3.2.0_ new spec/fixtures/rails32/#{name} -G -O -T`
+    end
+  end
+
+  namespace :rails309 do
+    desc "runs rails new for a given name and removes useless files"
+    task :fixture, :name do |t, args| 
+      name = response = args[:name]
+      puts "rails _3.0.9_ new spec/fixtures/rails309/#{name} -G -O -T"
+      `rails _3.0.9_ new spec/fixtures/rails309/#{name} -G -O -T`
+    end
+  end
+
+  namespace :rails2311 do
+    desc "runs rails new for a given name and removes useless files"
+    task :fixture, :name do |t, args| 
+      name = response = args[:name]
+      puts "cp spec/fixtures/rails2311/template spec/fixtures/rails2311/#{name}"
+      `cp -r spec/fixtures/rails2311/template spec/fixtures/rails2311/#{name}`
     end
   end
 end

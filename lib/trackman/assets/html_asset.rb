@@ -25,7 +25,6 @@ module Trackman
       def refine_path(paths, node)
         paths.collect{|n| n[node].to_s }
           .select{|p| p.internal_path? }
-          #.collect{|n| translate(n, path).to_s }
       end
     end 
   end

@@ -26,13 +26,13 @@ class FakablePathManTester
       alias :real_maintenance_path :maintenance_path 
       alias :real_error_path :error_path
        
-       define_method :maintenance_path do
-         Pathname.new(prepath + real_maintenance_path.to_s)
-       end
+      define_method :maintenance_path do
+        Pathname.new(prepath + real_maintenance_path.to_s)
+      end
 
-       define_method :error_path do
-         Pathname.new(prepath + real_error_path.to_s)
-       end
+      define_method :error_path do
+        Pathname.new(prepath + real_error_path.to_s)
+      end
     end 
   end
 
@@ -56,5 +56,35 @@ class FakablePathManTester
       remove_method :real_maintenance_path
       remove_method :real_error_path
     end 
+  end
+end
+
+
+module Trackman
+  module Assets
+    module Components
+      module AssetFactory
+        alias :old_uses_rails32? :uses_rails32?
+      end
+    end
+  end
+end
+
+class ActLikeRails32
+  def self.switch_on
+    Trackman::Assets::Components::AssetFactory.module_eval do
+      alias :old_uses_rails32? :uses_rails32?
+      
+      define_method :uses_rails32? do
+        true
+      end
+    end
+  end
+
+  def self.switch_off
+    Trackman::Assets::Components::AssetFactory.module_eval do
+      alias :uses_rails32? :old_uses_rails32?
+      remove_method :old_uses_rails32?
+    end
   end
 end

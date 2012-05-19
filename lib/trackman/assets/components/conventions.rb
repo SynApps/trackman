@@ -11,10 +11,10 @@ module Trackman
           Pathname.new 'public/503-error.html'
         end  
         def maintenance_page
-          @@maintenance_page ||= HtmlAsset.new(:path => maintenance_path)
+          Asset.create(:path => maintenance_path)
         end
         def error_page
-          @@error_page ||= HtmlAsset.new(:path => error_path)
+          Asset.create(:path => error_path)
         end 
       end
     end

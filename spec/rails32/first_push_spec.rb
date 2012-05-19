@@ -52,6 +52,7 @@ end
 describe 'full path' do
   before :all do
     FakablePathManTester.switch_on 'spec/fixtures/rails32/fully-loaded/'
+    ActLikeRails32.switch_on
   end
   before :each do
     AppCreator.create
@@ -60,19 +61,17 @@ describe 'full path' do
   after :all do
     AppCreator.reset
     FakablePathManTester.switch_off
-  end
-
-  it "replaces paths correctly" do
-    actual = Asset.all
+    ActLikeRails32.switch_off
   end
 
   #right now it doesn't work
-  #it "replaces all images" do
-  #  expected = Asset.all
-  #  Asset.sync
-  #  actual = RemoteAsset.all
+  it "replaces all images" do
+   expected = Asset.all
+   puts expected.map{|x| x.path.to_s }
+   Asset.sync
+   actual = RemoteAsset.all
 
-  #  actual.count.should == 8
-  #  actual.should == expected
-  #end
+   actual.count.should == 7
+   actual.should == expected
+  end
 end

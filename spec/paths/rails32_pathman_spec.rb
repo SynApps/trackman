@@ -67,4 +67,14 @@ describe Rails32PathResolver do
 
     actual.should == expected
   end
+
+  it "public is not buggy" do
+    parent_url = 'public/500.html'
+    url = 'assets/rails.png'
+
+    actual = Rails32Tester.translate url, parent_url
+    expected = 'public/assets/rails.png'
+
+    actual.should == expected
+  end
 end

@@ -32,7 +32,6 @@ class AppCreator
     RemoteAsset.class_variable_set(:@@app_id, id)
     RemoteAsset.class_variable_set(:@@site, site)
 
-    puts "8888888888888888888 APP ID #{id}"
     get_config
   end
 

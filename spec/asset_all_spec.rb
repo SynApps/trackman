@@ -15,7 +15,14 @@ describe Trackman::Assets::Asset do
         end
       end 
 
-      expected = [TestAsset.create(:path => 'spec/test_data/all/1.css'), TestAsset.create(:path => 'spec/test_data/all/2.gif'),  TestAsset.maintenance_page]
+      expected = [
+        TestAsset.create(:path => 'spec/test_data/all/1.css'), 
+        TestAsset.create(:path => 'spec/test_data/all/2.gif'),  
+        TestAsset.maintenance_page
+      ]
+
+      TestAsset.all
+      
       TestAsset.all.should eq(expected)
     end
 

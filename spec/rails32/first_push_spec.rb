@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'helpers/app_creator.rb'
-require 'helpers/act_like_rails32'
+require 'helpers/app_creator'
+require 'helpers/fakable_pathman_tester'
 
 describe 'first push' do
   before :all do
-    ActLikeRails32.switch_on 'spec/fixtures/rails32/clean-install'
+    FakablePathManTester.switch_on 'spec/fixtures/rails32/clean-install/'
   end
   before :each do
     AppCreator.create
@@ -12,7 +12,7 @@ describe 'first push' do
 
   after :all do
     AppCreator.reset
-    ActLikeRails32.switch_off
+    FakablePathManTester.switch_off
   end
 
   it "does not do anything on a clean install" do  
@@ -28,7 +28,7 @@ end
 
 describe 'happy path' do
   before :all do
-    ActLikeRails32.switch_on 'spec/fixtures/rails32/happy-path'
+    FakablePathManTester.switch_on 'spec/fixtures/rails32/happy-path/'
   end
   before :each do
     AppCreator.create
@@ -36,12 +36,11 @@ describe 'happy path' do
 
   after :all do
     AppCreator.reset
-    ActLikeRails32.switch_off
+    FakablePathManTester.switch_off
   end
 
   it "replaces the default templates by the assets" do
     expected = Asset.all
-    
     Asset.sync
     
     actual = RemoteAsset.all
@@ -52,7 +51,7 @@ end
 
 describe 'full path' do
   before :all do
-    ActLikeRails32.switch_on 'spec/fixtures/rails32/fully-loaded'
+    FakablePathManTester.switch_on 'spec/fixtures/rails32/fully-loaded/'
   end
   before :each do
     AppCreator.create
@@ -60,7 +59,7 @@ describe 'full path' do
 
   after :all do
     AppCreator.reset
-    ActLikeRails32.switch_off
+    FakablePathManTester.switch_off
   end
 
   it "replaces paths correctly" do

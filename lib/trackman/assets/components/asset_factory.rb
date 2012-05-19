@@ -17,14 +17,14 @@ module Trackman
           klass.new attributes
         end
 
-        protected 
-          def uses_rails32?
-            const_defined?(:Rails)  &&  ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
-          end
+        def uses_rails32?
+          const_defined?(:Rails)  &&  ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
+        end
 
+        protected 
           def build_class_from(parent)
             to_include = []
-            to_include << Rails32Asset if uses_rails32?
+            to_include << Rails32PathMan if uses_rails32?
           
             klass = Class.new(parent) do
               to_include.each do |f|

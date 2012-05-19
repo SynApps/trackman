@@ -34,8 +34,7 @@ describe Trackman::Assets::Components::AssetFactory do
       end
     end
 
-    asset = TestFactory.create(:path => 'assets/a.js')
-    asset.should be_a_kind_of Rails32Asset
+    TestFactory.uses_rails32?.should be_true
   end
 
   it "returns a Rails32Asset when we are on rails 3.2.x" do
@@ -45,8 +44,7 @@ describe Trackman::Assets::Components::AssetFactory do
       end
     end
 
-    asset = TestFactory.create(:path => 'assets/a.js')
-    asset.should be_a_kind_of Rails32Asset
+    TestFactory.uses_rails32?.should be_true
   end
 
   it "returns a Rails32Asset when we are on rails 3.1.5" do
@@ -56,8 +54,7 @@ describe Trackman::Assets::Components::AssetFactory do
       end
     end
 
-    asset = TestFactory.create(:path => 'assets/a.js')
-    asset.should be_a_kind_of Rails32Asset
+    TestFactory.uses_rails32?.should be_true
   end
 
   it "returns a normal asset when we are on rails 3.0.9 and below" do
@@ -67,8 +64,7 @@ describe Trackman::Assets::Components::AssetFactory do
       end
     end
 
-    asset = TestFactory.create(:path => 'assets/a.js')
-    asset.should be_a_kind_of Asset
+    TestFactory.uses_rails32?.should be_false
   end
 
   it "returns a CssAsset extended with a Rails32Asset when we are on rails 3.2 and the asset is a css one" do
@@ -80,7 +76,7 @@ describe Trackman::Assets::Components::AssetFactory do
 
     asset = TestFactory.create(:path => 'assets/a.css')
     asset.should be_a_kind_of CssAsset
-    asset.should be_a_kind_of Rails32Asset
+    TestFactory.uses_rails32?.should be_true
   end
 
 end

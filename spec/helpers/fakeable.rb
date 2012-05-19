@@ -1,4 +1,3 @@
-
 class Trackman::Assets::Asset
   alias :old_path= :path=
 end
@@ -44,19 +43,11 @@ class Fakeable
 
   def self.setup(pre_path, path)
     p = ""
-    puts "+++++++++++++++++++++++++++++++++ "
-    puts "for paths : pre => #{pre_path}, path => #{path}"
     unless path.to_s.include? pre_path
-      puts "Inside my lone less p = #{p} " 
       p << pre_path.to_s.dup
       p << '/' if p[-1] != '/' && path[0] != '/'
     end
     p << path.to_s.dup    
-    #p = yield p if block_given?
-
-    puts "after treatment p = #{p} " 
-    puts "------------------------------ " 
-    
     Pathname.new p
   end
 

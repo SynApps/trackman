@@ -2,12 +2,19 @@ module Trackman
   module Assets
     module Components
       module CompositeAsset
-        
+
+        def self.included(mod)
+          mod.send(:include, PathMan)
+        end
+        def self.extended(mod)
+          mod.send(:extend, PathMan)
+        end
+
         def assets
           children_paths
             .select{|p| p.internal_path? }
             .inject([]) do |array, p|
-              asset = Asset.create(:path => to_path(p))  
+              asset = Asset.create(:path => translate(p, path))  
               array << asset 
               array.concat(asset.assets.select{|a| !array.include?(a) })
               array   
@@ -20,13 +27,6 @@ module Trackman
 
           data.scan(@@import).collect{|x| @@url.match(x)[:url] }
         end
-        
-        protected
-          def to_path(str_path)
-            return Pathname.new str_path if File.exist? str_path
-            puts "parent path added ====> app/assets/#{str_path}"
-            Pathname.new "#{path.parent}/#{str_path}"
-          end    
       end
     end
   end

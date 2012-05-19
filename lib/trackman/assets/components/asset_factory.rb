@@ -24,7 +24,7 @@ module Trackman
         protected 
           def build_class_from(parent)
             to_include = []
-            to_include << Rails32PathMan if uses_rails32?
+            to_include << Rails32PathResolver if uses_rails32?
           
             klass = Class.new(parent) do
               to_include.each do |f|

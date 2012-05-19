@@ -4,10 +4,10 @@ module Trackman
       module CompositeAsset
 
         def self.included(mod)
-          mod.send(:include, PathMan)
+          mod.send(:include, PathResolver)
         end
         def self.extended(mod)
-          mod.send(:extend, PathMan)
+          mod.send(:extend, PathResolver)
         end
 
         def assets

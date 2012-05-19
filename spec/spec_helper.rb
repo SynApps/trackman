@@ -9,7 +9,6 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
-
 end
 
 
@@ -18,5 +17,5 @@ CssAsset = Trackman::Assets::CssAsset unless defined?(CssAsset)
 HtmlAsset = Trackman::Assets::HtmlAsset unless defined?(HtmlAsset)
 RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
 
-PathMan = Trackman::Assets::Components::PathMan unless defined?(PathMan)
-Rails32PathMan = Trackman::Assets::Components::Rails32PathMan unless defined?(Rails32PathMan)
+PathResolver = Trackman::Assets::Components::PathResolver unless defined?(PathResolver)
+Rails32PathResolver = Trackman::Assets::Components::Rails32PathResolver unless defined?(Rails32PathResolver)

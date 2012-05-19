@@ -1,8 +1,8 @@
 module Trackman
   module Assets
     module Components  
-      module Rails32PathMan
-        extend PathMan
+      module Rails32PathResolver
+        extend PathResolver
         
         class << self
           alias old_translate translate
@@ -20,7 +20,7 @@ module Trackman
         end
 
         def translate url, parent_url
-          path = Rails32PathMan.old_translate(url, parent_url)
+          path = Rails32PathResolver.old_translate(url, parent_url)
 
           parts = path.split('/')
           parts.insert(0, 'app') if parts.first == 'assets'

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'helpers/fakable_pathman_tester'
 
 class Tester
-  extend Rails32PathMan
+  extend Rails32PathResolver
 end
 
 describe FakablePathManTester do

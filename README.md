@@ -12,8 +12,8 @@ Trackman is a Heroku add-on that enables you to handle your maintenance and erro
 
 Trackman works out of the box for
 
-* Rails 2.x/3.x
-
+* Rails 2
+* Rails 3
 
 
 ## Getting started
@@ -26,7 +26,7 @@ heroku addons:add trackman
 gem 'trackman'
 ```
 
-##### Step 2.1 - For rails 2.x only
+##### Step 2.1 - Rails 2 only
 ```console
 ./script generate trackman
 ```

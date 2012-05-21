@@ -1,5 +1,5 @@
 class FakablePathManTester  
-  @@modules = [PathResolver, Rails32PathResolver]
+  @@modules = [PathResolver, Rails32PathResolver, RailsPathResolver]
   Conventions = Trackman::Assets::Components::Conventions
 
   def self.switch_on prepath
@@ -85,6 +85,31 @@ class ActLikeRails32
     Trackman::Assets::Components::AssetFactory.module_eval do
       alias :asset_pipeline_enabled? :old_asset_pipeline_enabled?
       remove_method :old_asset_pipeline_enabled?
+    end
+  end
+end
+
+class ActLikeRails2311
+  def self.switch_on
+    Trackman::Assets::Components::AssetFactory.module_eval do
+      alias :old_uses_rails? :uses_rails?
+      alias :old_uses_rails32? :uses_rails32?
+      
+      define_method :uses_rails? do
+        true
+      end
+
+      define_method :uses_rails32? do
+        false
+      end
+    end
+  end
+
+  def self.switch_off
+    Trackman::Assets::Components::AssetFactory.module_eval do
+      alias :uses_rails? :old_uses_rails?
+      alias :uses_rails32? :old_uses_rails32?
+      remove_method :old_uses_rails32?
     end
   end
 end

@@ -4,7 +4,7 @@ module Trackman
       module AssetFactory
         def create attributes = {}
           path = attributes[:path]
-          
+
           if File.extname(path) == '.html'
             parent = HtmlAsset
           elsif File.extname(path) == '.css'
@@ -14,12 +14,18 @@ module Trackman
           end 
 
           instance = parent.new attributes
-          instance.extend Rails32PathResolver if asset_pipeline_enabled?
+
+          if asset_pipeline_enabled?
+            instance.extend Rails32PathResolver  
+          elsif uses_rails? #fallback to rails without asset pipeline
+            instance.extend RailsPathResolver
+          end
+
           instance
         end
 
         def rails_defined?
-          const_defined? :Rails
+          const_defined?(:Rails)
         end
 
         def asset_pipeline_enabled?

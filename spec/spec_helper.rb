@@ -19,3 +19,4 @@ RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
 
 PathResolver = Trackman::Assets::Components::PathResolver unless defined?(PathResolver)
 Rails32PathResolver = Trackman::Assets::Components::Rails32PathResolver unless defined?(Rails32PathResolver)
+RailsPathResolver = Trackman::Assets::Components::RailsPathResolver unless defined?(RailsPathResolver)

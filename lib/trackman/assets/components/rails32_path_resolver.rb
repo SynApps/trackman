@@ -21,7 +21,6 @@ module Trackman
 
         def translate url, parent_url
           path = Rails32PathResolver.old_translate(url, parent_url)
-          #'public/assets/rails.png'
           parts = path.split('/')
           parts.insert(0, 'app') if parts.first == 'assets'
 

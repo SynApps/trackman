@@ -26,8 +26,7 @@ heroku addons:add trackman
 gem 'trackman'
 ```
 
-##### Step 2.1 
-For rails 2.x only
+##### Step 2.1 - For rails 2.x only
 ```console
 ./script generate trackman
 ```

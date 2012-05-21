@@ -64,10 +64,9 @@ describe 'full path' do
     ActLikeRails32.switch_off
   end
 
-  #right now it doesn't work
   it "replaces all images" do
    expected = Asset.all
-   puts expected.map{|x| x.path.to_s }
+
    Asset.sync
    actual = RemoteAsset.all
 

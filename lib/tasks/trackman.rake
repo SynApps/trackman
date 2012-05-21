@@ -4,7 +4,7 @@ namespace :trackman do
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
 
-  desc "Syncs your assets with the server, this is what gets executed when you deploy to heroku"
+  desc "Syncs your assets with the server, this is what gets executed when you deploy to heroku."
   task :sync do
     Trackman::Assets::Asset.sync
   end
@@ -20,20 +20,27 @@ namespace :trackman do
       puts "adding #{CEP} addon to heroku..."
       puts "heroku addons:add #{CEP}" 
     end
-    remove_configs
+    rename_configs
     add_configs 
     puts "done! Thank you for using Trackman!"
   end 
 
-  def remove_configs
-    configs = `heroku config` 
-    to_remove = []
-    to_remove << ERROR if configs.include? ERROR
-    to_remove << MAINTENANCE if configs.include? MAINTENANCE
+  def rename_configs
+    configs = `heroku config -s` 
+    remove = {}
 
-    puts "removing configs #{to_remove} so we can re-add them with the new urls"   
-    #`heroku config:remove #{to_remove.join(' ')}`
-    puts "heroku config:remove #{to_remove.join(' ')}"
+    [ERROR, MAINTENANCE].each do |c|
+      remove[c] = configs[/#{c}=.+$/][/[^=]+$/] if configs.include? c
+    end
+    
+    add = Hash[remove.map {|k, v| [k + ".bkp", v] }]
+      .map{|k,v| "#{k}=#{v}" }
+      .join(' ')
+    
+    remove = remove.map{|k,v| k }.join(' ')
+
+    puts "heroku config:add #{add}"
+    puts "heroku config:remove #{remove}"
   end
   def add_configs
     puts "adding configs #{MAINTENANCE} and #{ERROR}"

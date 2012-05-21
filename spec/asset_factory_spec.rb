@@ -12,13 +12,18 @@ describe Trackman::Assets::Components::AssetFactory do
       end
     end
   end  
+  after :each do
+    begin
+      Object.send(:remove_const, :Rails)
+    rescue
+    end
+  end
   after :all do
     class Trackman::Assets::Asset
       def validate_path?
         true
       end
     end
-    Object.send(:remove_const, :Rails)
   end
 
   it "returns an HtmlAsset" do
@@ -27,56 +32,37 @@ describe Trackman::Assets::Components::AssetFactory do
     asset.should be_a_kind_of HtmlAsset
   end
 
-  it "returns a Rails32Asset when we are on rails 3.2" do
+
+  it "returns a Rails32 when asset pipeline is configured to be used" do  
     module Rails
-      module VERSION
-        STRING = "3.2"
+      def self.application
+        Rails::App.new
+      end
+      class App
+        def config
+          Rails::Config.new
+        end
+      end
+      class Config
+        def assets
+          Rails::Assets.new
+        end 
+      end
+
+      class Assets
+        def enabled
+          true
+        end
       end
     end
-
-    TestFactory.uses_rails32?.should be_true
+    
+    TestFactory.asset_pipeline_enabled?.should be_true
   end
 
-  it "returns a Rails32Asset when we are on rails 3.2.x" do
-    module Rails
-      module VERSION
-        STRING = "3.2.x"
-      end
-    end
+  it "returns a normal asset if asset pipepeline is not defined or not used" do
 
-    TestFactory.uses_rails32?.should be_true
+    TestFactory.asset_pipeline_enabled?.should be_false
+    asset = TestFactory.create(:path => 'x.css')
+    asset.should_not be_a_kind_of Rails32PathResolver 
   end
-
-  it "returns a Rails32Asset when we are on rails 3.1.5" do
-    module Rails
-      module VERSION
-        STRING = "3.1.5"
-      end
-    end
-
-    TestFactory.uses_rails32?.should be_true
-  end
-
-  it "returns a normal asset when we are on rails 3.0.9 and below" do
-    module Rails
-      module VERSION
-        STRING = "3.0.9"
-      end
-    end
-
-    TestFactory.uses_rails32?.should be_false
-  end
-
-  it "returns a CssAsset extended with a Rails32Asset when we are on rails 3.2 and the asset is a css one" do
-    module Rails
-      module VERSION
-        STRING = "3.2.0"
-      end
-    end
-
-    asset = TestFactory.create(:path => 'assets/a.css')
-    asset.should be_a_kind_of CssAsset
-    TestFactory.uses_rails32?.should be_true
-  end
-
 end

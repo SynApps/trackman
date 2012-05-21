@@ -14,8 +14,10 @@ Trackman works out of the box for
 
 * Rails 2.x/3.x
 
+
+
 ## Getting started
-### Step 1 - Install the addon
+### Step 1 - Install the heroku add-on
 ```console
 heroku addons:add trackman
 ```
@@ -28,13 +30,14 @@ gem 'trackman'
 ```console
 rake trackman:setup
 ```
-sets up your initial configuration and add custom error page addon if you don't have it yet.
+Sets up your initial configuration and add custom error page add-on if you don't have it yet.
 
 ### Optional
 ```console
 rake trackman:sync
 ```
-performs a manual sync of your error/maintenance pages and assets
+Performs a manual sync of your error/maintenance pages and their related assets. 
+This normally gets executed everytime you deploy to heroku.
 
 ### Notes
 By convention, we assume your maintenance page is located at
@@ -45,11 +48,11 @@ public/503.html
 
 If you want two different pages for maintenance and when your app is down, we expect:
 
-- For maintenance
+For maintenance
 ```console
 public/503.html
 ```
-- Broken app
+Broken app
 ```console
 public/503-error.html
 ```
@@ -62,19 +65,22 @@ After the add-on installation
 
 ### Bug reports
 
-Any bug report can be submitted here..
-https://github.com/epetre/Bombero/issues
+Any bug report can be submitted here.
+https://github.com/jfabre/trackman/issues
 
 
-### Maintainers
+### Creators / Maintainers
 
 * Jeremy Fabre (https://github.com/jfabre)
 * Emanuel Petre (https://github.com/epetre)
 
+###Copyright
+
+Copyright © 2012 Emanuel Petre, Jeremy Fabre
 
 ## License
 
-  Trackman client is released under the MIT license:
+  Trackman is released under the MIT license:
 
   [www.opensource.org/licenses/MIT](www.opensource.org/licenses/MIT)
 

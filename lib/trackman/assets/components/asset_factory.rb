@@ -14,13 +14,21 @@ module Trackman
           end 
 
           instance = parent.new attributes
-          instance.extend Rails32PathResolver if uses_rails32?
+          instance.extend Rails32PathResolver if asset_pipeline_enabled?
           instance
         end
 
-        def uses_rails32?
-          const_defined?(:Rails)  &&  ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
+        def rails_defined?
+          const_defined? :Rails
         end
+
+        def asset_pipeline_enabled?
+           rails_defined? && 
+           Rails.respond_to?(:application) &&
+           Rails.application.respond_to?(:config) &&
+           Rails.application.config.respond_to?(:assets) && 
+           Rails.application.config.assets.enabled
+        end  
       end
     end
   end

@@ -21,7 +21,7 @@ module Trackman
         end
 
         def translate url, parent_url
-          path = PathResolver.old_translate(url, parent_url)
+          path = RailsPathResolver.old_translate(url, parent_url)
 
           parts = path.split('/')
           parts.insert(0, 'public') if parts.first != 'public'

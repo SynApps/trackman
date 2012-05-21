@@ -14,18 +14,31 @@ module Trackman
           end 
 
           instance = parent.new attributes
+<<<<<<< HEAD
+          instance.extend Rails32PathResolver if asset_pipeline_enabled?
+          instance
+        end
 
-          if asset_pipeline_enabled?
-            instance.extend Rails32PathResolver  
-          elsif rails_defined? #fallback to rails without asset pipeline
+        def rails_defined?
+          const_defined? :Rails
+=======
+        
+          if uses_rails32?
+            instance.extend Rails32PathResolver
+          elsif uses_rails? #fallback to rails without asset pipeline
             instance.extend RailsPathResolver
           end
 
           instance
         end
 
-        def rails_defined?
+        def uses_rails?
           const_defined?(:Rails)
+        end
+
+        def uses_rails32?
+          uses_rails?  &&  ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
+>>>>>>> c8c05bfdca05b2ee989fd7040676cebe6f2f2b88
         end
 
         def asset_pipeline_enabled?

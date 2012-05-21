@@ -26,6 +26,12 @@ heroku addons:add trackman
 gem 'trackman'
 ```
 
+#### Step 2.1 - For rails 2.x only
+```console
+./script generate trackman
+```
+This will add trackman.rake to lib/tasks/ 
+
 ### Step 3 - Setup
 ```console
 rake trackman:setup

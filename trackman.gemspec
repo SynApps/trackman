@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "trackman"
   s.version     = Trackman::VERSION
   s.authors     = ["Jeremy Fabre", "Emanuel Petre"]
-  s.email       = ["jeremy.fabre@hotmail.com", "epetre@gmail.com"]
+  s.email       = ["jeremy.fabre@hotmail.com", "petreemanuel@gmail.com"]
   s.homepage    = ""
   s.summary     = "Client version of the Trackman addon on Heroku"
   s.description = "Trackman hosts your maintenance and appdown pages and lets you keep them in your current environment so that you can blah."
@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency "rest-client", ">= 1.6.7"
-  s.add_runtime_dependency "json", ">= 1.6.5"
-  s.add_runtime_dependency "nokogiri", ">= 1.5.0"
-  s.add_runtime_dependency "rack", ">= 1.4.1"
+  s.add_runtime_dependency "rest-client"
+  s.add_runtime_dependency "json"
+  s.add_runtime_dependency "nokogiri"
+  s.add_runtime_dependency "rack"
 
   s.add_development_dependency "rspec"
 end

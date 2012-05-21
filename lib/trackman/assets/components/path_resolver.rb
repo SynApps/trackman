@@ -16,7 +16,7 @@ module Trackman
             s = url.to_s
       			child = Pathname.new(s[1...s.length])
       		end
-      	  
+
           (parent + child).relative_path_from(working_dir).to_s
       	end
 

@@ -1,9 +1,10 @@
 module Trackman
   module Assets
     module Components  
-      module Rails32PathResolver
-        extend PathResolver
+      module RailsPathResolver
         
+        #way 2
+        extend PathResolver
         class << self
           alias old_translate translate
           alias old_parent_of parent_of
@@ -21,27 +22,11 @@ module Trackman
 
         def translate url, parent_url
           path = Rails32PathResolver.old_translate(url, parent_url)
-          parts = path.split('/')
-          parts.insert(0, 'app') if parts.first == 'assets'
 
-          if parts.first == 'app' && parts[1] == 'assets'
-            parts.insert(2, subfolder(parts.last))
-          elsif parts.first != 'public'
-            parts.insert(0, 'public') 
-          end
+          parts = path.split('/')
+          parts.insert(0, 'public') if parts.first != 'public'
 
           parts.join('/')
-        end
-
-        def subfolder(file)
-          if file.include?('.js')
-            subfolder = "javascripts"
-          elsif file.include?('.css')
-            subfolder = "stylesheets"
-          else 
-            subfolder = "images"
-          end
-          subfolder
         end
       end
     end

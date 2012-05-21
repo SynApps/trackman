@@ -21,9 +21,10 @@ module Trackman
       def children_paths
          @children_paths ||= img_paths + js_paths + css_paths + inner_css_paths
       end
-       
+
       def refine_path(paths, node)
         paths.collect{|n| n[node].to_s }
+          .select{|n|n and n =~/\w/}
           .select{|p| p.internal_path? }
       end
     end 

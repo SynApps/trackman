@@ -18,11 +18,11 @@ module Trackman
         super
 
         @id = attributes[:id]
-        @hash = attributes[:file_hash]
+        @file_hash = attributes[:file_hash]
       end
       
-      def hash
-        @hash || super
+      def file_hash
+        @file_hash || super
       end
       
       def validate_path?
@@ -36,14 +36,11 @@ module Trackman
       end
 
       def self.all
-        JSON.parse(RestClient.get @@site)
-          .map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
-          .map { |r| RemoteAsset.new(r) }
-          .sort
+        JSON.parse(RestClient.get @@site).map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }.map { |r| RemoteAsset.new(r) }.sort
       end
 
       def create!
-        response = RestClient.post @@site, :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
+        response = RestClient.post @@site, :asset => {:path => path.to_s, :file => File.open(path)}, :content_type => :json, :accept => :json
         path = response.headers[:location]
         @id = path[/\d+$/].to_i
       end
@@ -60,7 +57,7 @@ module Trackman
         result = super
         if result
           if other.is_a? RemoteAsset
-            result = other.id == id && other.hash == hash 
+            result = other.id == id && other.file_hash == file_hash 
           end
           return result
         end

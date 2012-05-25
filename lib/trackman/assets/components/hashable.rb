@@ -9,7 +9,7 @@ module Trackman
           @data ||= read_file
         end
 
-        def hash
+        def file_hash
           Digest::MD5.hexdigest(data)
         end
         

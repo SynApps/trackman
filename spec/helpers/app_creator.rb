@@ -1,7 +1,7 @@
 class AppCreator
   def self.get_config
     RemoteAsset.class_variables.inject({}) do |carry, e| 
-      carry.merge!({e => RemoteAsset.class_variable_get(e)})
+      carry.merge!({e => RemoteAsset.send(:class_variable_get, e)})
     end
   end
 
@@ -9,7 +9,7 @@ class AppCreator
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
     
-    server = RemoteAsset.class_variable_get :@@server
+    server = RemoteAsset.send(:class_variable_get, :@@server)
     url = "http://#{user}:#{pass}@#{server}/heroku/resources"
 
     response = RestClient.post url, :plan => 'test', :heroku_id => 123 
@@ -20,10 +20,10 @@ class AppCreator
     id = json['id']
     site = "http://#{user}:#{pass}@#{server}/heroku/resources/#{id}/assets"
     
-    RemoteAsset.class_variable_set(:@@user, user)
-    RemoteAsset.class_variable_set(:@@pass, pass)
-    RemoteAsset.class_variable_set(:@@app_id, id)
-    RemoteAsset.class_variable_set(:@@site, site)
+
+    [[:@@user,user], [:@@pass, pass], [:@@app_id, id], [:@@site, site]].each do |s, v| 
+      RemoteAsset.send(:class_variable_set, s, v)
+    end
 
     get_config
   end

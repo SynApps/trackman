@@ -42,7 +42,7 @@ describe Trackman::Assets::Asset do
       asset = Asset.new(:path => path)
         
       file = File.open path
-      asset.hash.should eq(Digest::MD5.hexdigest(file.read))
+      asset.file_hash.should eq(Digest::MD5.hexdigest(file.read))
     end
   end
   

@@ -11,9 +11,7 @@ module Trackman
         end
 
         def assets
-          children_paths
-            .select{|p| p.internal_path? }
-            .inject([]) do |array, p|
+          children_paths.select{|p| p.internal_path? }.inject([]) do |array, p|
               asset = Asset.create(:path => translate(p, path))  
               array << asset 
               array.concat(asset.assets.select{|a| !array.include?(a) })
@@ -22,10 +20,10 @@ module Trackman
         end
         
         def inner_css_paths
-          @@url ||= /url\(['"]?(?<url>[^'")]+)['"]?\)/
+          @@url ||= /url\(['"]?([^'")]+)['"]?\)/
           @@import ||= /url\(['"]?[^'"]+['"]?\)/
 
-          data.scan(@@import).collect{|x| @@url.match(x)[:url] }
+          data.scan(@@import).collect{|x| @@url.match(x)[1] }
         end
       end
     end

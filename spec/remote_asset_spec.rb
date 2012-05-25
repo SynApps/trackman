@@ -4,7 +4,7 @@ describe Trackman::Assets::RemoteAsset do
   before :all do
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
-    server = RemoteAsset.class_variable_get :@@server
+    server = RemoteAsset.send(:class_variable_get, :@@server)
 
     response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
     json = JSON.parse response
@@ -13,10 +13,9 @@ describe Trackman::Assets::RemoteAsset do
     pass = json['config']['TRACKMAN_PASSWORD']
     app_id = json['id']
 
-    RemoteAsset.class_variable_set :@@app_id, app_id 
-    RemoteAsset.class_variable_set :@@user, user
-    RemoteAsset.class_variable_set :@@pass, pass
-    RemoteAsset.class_variable_set :@@site, "http://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"
+    [[:@@app_id, app_id], [:@@user, user], [:@@pass, pass], [:@@site, "http://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"]].each do |s, v|
+      RemoteAsset.send(:class_variable_set, s, v)
+    end
   end
   
   after :each do
@@ -48,9 +47,7 @@ describe Trackman::Assets::RemoteAsset do
   it "returns all assets on the server" do
     expected = ['spec/test_data/y.css', 'spec/test_data/a.js', '/public/503-error.html', '/public/503.html', 'spec/test_data/sample.html']
     
-    assets = ['spec/test_data/y.css', 'spec/test_data/a.js', 'spec/test_data/sample.html']
-      .map { |f| RemoteAsset.new(:path => f) }
-      .to_a
+    assets = ['spec/test_data/y.css', 'spec/test_data/a.js', 'spec/test_data/sample.html'].map { |f| RemoteAsset.new(:path => f) }
 
     assets.each{|f| f.create! }
 

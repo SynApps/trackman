@@ -23,9 +23,7 @@ module Trackman
       end
 
       def refine_path(paths, node)
-        paths.collect{|n| n[node].to_s }
-          .select{|n|n and n =~/\w/}
-          .select{|p| p.internal_path? }
+        paths.collect{|n| n[node].to_s }.select{|n|n && n =~/\w/ && n.internal_path? }
       end
     end 
   end

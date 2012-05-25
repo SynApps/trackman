@@ -1,9 +1,7 @@
-require 'trackman'
 module Trackman
   class RackMiddleware
     def initialize(app)
       @app = app
-      
       Trackman::Assets::Asset.autosync
     end
     

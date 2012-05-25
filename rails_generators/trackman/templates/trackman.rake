@@ -33,9 +33,7 @@ namespace :trackman do
       remove[c] = configs[/#{c}=.+$/][/[^=]+$/] if configs.include? c
     end
     
-    add = Hash[remove.map {|k, v| [k + ".bkp", v] }]
-      .map{|k,v| "#{k}=#{v}" }
-      .join(' ')
+    add = Hash[remove.map {|k, v| [k + ".bkp", v] }].map{|k,v| "#{k}=#{v}" }.join(' ')
     
     remove = remove.map{|k,v| k }.join(' ')
 

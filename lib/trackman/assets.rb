@@ -35,5 +35,3 @@ module Trackman
     autoloads 'trackman/assets', @@classes.concat(@@modules)
   end
 end
-
-

@@ -28,7 +28,7 @@ gem 'trackman'
 
 ##### Step 2.1 - Rails 2 only
 ```console
-./script generate trackman
+./script/generate trackman
 ```
 This will add trackman.rake to lib/tasks/ 
 

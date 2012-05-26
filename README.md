@@ -92,5 +92,5 @@ Copyright © 2012 Emanuel Petre, Jeremy Fabre
 
   Trackman is released under the MIT license:
 
-  [www.opensource.org/licenses/MIT](www.opensource.org/licenses/MIT)
+  [LICENSE](LICENSE)
 

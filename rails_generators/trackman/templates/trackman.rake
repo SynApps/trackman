@@ -1,6 +1,5 @@
 require 'trackman'
 namespace :trackman do
-  CEP = 'custom_error_pages'
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
   TRACKMAN_ERROR = 'TRACKMAN_ERROR_PAGE_URL'
@@ -11,36 +10,50 @@ namespace :trackman do
     Trackman::Assets::Asset.sync
   end
 
-  desc "Setups the heroku configs required by Trackman" 
+  desc "Sets up the heroku configs required by Trackman" 
   task :setup do
-    if `bundle list`.include? 'heroku'
-      rename_configs
-      add_configs 
-      puts "done! Thank you for using Trackman!"
+    heroku_version = `heroku version`
+    if heroku_version !~ /^[2-9]\.[2-9]/
+      puts "your heroku version is too low, we recommend '~> 2.26' at least"
     else
-      puts "heroku is not installed!"
-      puts "please install it before running this setup."
+      configs = `heroku config -s` 
+      rename_configs configs
+      add_configs configs
+      puts "done! Thank you for using Trackman!"
     end
   end 
 
-  def rename_configs
-    configs = `heroku config -s` 
-    remove = {}
+  def rename_configs configs
+    bkp = {}
 
     [ERROR, MAINTENANCE].each do |c|
-      remove[c] = configs[/#{c}=.+$/][/[^=]+$/] if configs.include? c
+      bkp[c] = extract_config_value(configs, c) if configs.include? c
     end
     
-    add = Hash[remove.map {|k, v| [k + ".bkp", v] }].map{|k,v| "#{k}=#{v}" }.join(' ')
+    add = Hash[bkp.map {|k, v| [k + ".bkp", v] }].map{|k,v| "#{k}=#{v}" }.join(' ')
     
-    remove = remove.map{|k,v| k }.join(' ')
-
-    puts "heroku config:add #{add}"
-    puts "heroku config:remove #{remove}"
+    `heroku config:add #{add}`
+    puts "backuping configs to heroku...\n running heroku config:add #{add}"
   end
-  def add_configs
-    puts "adding configs #{MAINTENANCE} and #{ERROR}"
-    `heroku config:add #{MAINTENANCE}=#{ENV[TRACKMAN_MAINTENANCE]} #{ERROR}=#{ENV[TRACKMAN_ERROR]}`
-    puts "heroku config:add #{MAINTENANCE}=#{ENV[TRACKMAN_MAINTENANCE]} #{ERROR}=#{ENV[TRACKMAN_ERROR]}"
+
+  def add_configs configs
+    puts "overriding the required heroku configs #{MAINTENANCE} and #{ERROR}"
+
+    if configs.include?(TRACKMAN_ERROR) && configs.include?(TRACKMAN_MAINTENANCE)
+      trackman_configs = {}
+      [[TRACKMAN_ERROR, ERROR], [TRACKMAN_MAINTENANCE, MAINTENANCE]].each do |old_c, new_c|
+        trackman_configs[new_c] = extract_config_value(configs, old_c)
+      end
+
+      add = trackman_configs.map{|k,v| "#{k}=#{v}" }.join(' ')
+      `heroku config:add #{add}`
+      puts "running heroku config:add #{add}"
+    else
+      puts "cannot find trackman configuration, make sure trackman addon is installed"
+    end
+  end
+
+  def extract_config_value configs, name
+    configs[/#{name}=.+$/][/[^=]+$/]
   end
 end

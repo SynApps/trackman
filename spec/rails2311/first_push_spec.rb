@@ -19,7 +19,7 @@ describe 'full path' do
 
   it "replaces all images" do
    expected = Asset.all
-   puts expected.map{|x| x.path.to_s }
+   
    Asset.sync
    actual = RemoteAsset.all
 

@@ -14,3 +14,21 @@ if defined?(Rails)
     require "trackman/railtie"
   end
 end
+
+
+#ruby 1.8.7 does not take blocks (this fixes it) -- used in Asset.all
+if RUBY_VERSION !~ /^1\.9/
+  class Array
+    def uniq
+      ret, keys = [], []
+      each do |x|
+        key = block_given? ? yield(x) : x
+        unless keys.include? key
+          ret << x
+          keys << key
+        end
+      end
+      ret
+    end
+  end
+end

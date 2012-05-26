@@ -76,13 +76,13 @@ describe Trackman::Assets::RemoteAsset do
       '@@app_id' => 'TRACKMAN_APP_ID'
     }
     begin
-      configs.each {|k,v| RemoteAsset.class_variable_set k, nil }
+      configs.each {|k,v| RemoteAsset.send(:class_variable_set, k, nil) }
       configs.each do |k,v|
         lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Assets::Errors::ConfigNotFoundError)
-        RemoteAsset.class_variable_set k, ENV[v]
+        RemoteAsset.send(:class_variable_set, k, ENV[v])
       end
     ensure 
-      configs.each {|k,v| RemoteAsset.class_variable_set k, ENV[v] }
+      configs.each {|k,v| RemoteAsset.send(:class_variable_set, k, ENV[v]) }
     end
   end
 end

@@ -30,7 +30,7 @@ class AppCreator
 
   def self.reset
     @@old_config.each do |k,v|
-      RemoteAsset.class_variable_set(k, v)
+      RemoteAsset.send(:class_variable_set, k, v)
     end
   end
 

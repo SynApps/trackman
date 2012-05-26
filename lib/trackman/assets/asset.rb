@@ -21,12 +21,13 @@ module Trackman
 
       def ==(other)
         return false if other.nil?
-        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path) 
+        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path)         
         other_path.to_s == path.to_s || path.realpath == other_path.realpath
       end
 
       def <=>(another)
         result = 0
+
         if self.path.extname == '.html' && another.path.extname == '.html'
           result = self.path.to_s <=> another.path.to_s  
         elsif @path.extname == '.html' || another.path.extname == '.html'  
@@ -46,14 +47,12 @@ module Trackman
       end
 
       def self.all
-        if maintenance_path.exist?
-          assets = [maintenance_page] + maintenance_page.assets 
-          assets = assets + [error_page] + error_page.assets if error_path.exist?
-          
-          return assets.uniq{|a| a.path.realpath }.sort
-        else
-          return []
-        end  
+        return [] unless maintenance_path.exist?
+
+        assets = [maintenance_page] + maintenance_page.assets 
+        assets = assets + [error_page] + error_page.assets if error_path.exist?
+
+        assets.uniq{|a| a.path.realpath }.sort 
       end
 
       def self.sync

@@ -11,12 +11,14 @@ module Trackman
         end
 
         def assets
-          children_paths.select{|p| p.internal_path? }.inject([]) do |array, p|
-              asset = Asset.create(:path => translate(p, path))  
-              array << asset 
-              array.concat(asset.assets.select{|a| !array.include?(a) })
-              array   
-            end
+          result = children_paths.select{|p| p.internal_path? }.inject([]) do |array, p|
+            asset = Asset.create(:path => translate(p, path))  
+            array << asset 
+            array.concat(asset.assets.select{|a| !array.include?(a) })
+            array              
+          end
+          
+          result
         end
         
         def inner_css_paths

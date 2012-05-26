@@ -21,9 +21,9 @@ describe Trackman::Assets::Asset do
         TestAsset.maintenance_page
       ]
 
-      TestAsset.all
-      
-      TestAsset.all.should eq(expected)
+      actual = TestAsset.all
+
+      actual.should eq(expected)
     end
 
 
@@ -51,8 +51,10 @@ describe Trackman::Assets::Asset do
         TestAsset.maintenance_page,
         TestAsset.error_page
       ]
-
-      TestAsset.all.should eq(expected)
+      actual = TestAsset.all 
+      
+      actual.map{|x| x.path}.should == expected.map{|x| x.path}
+      actual.should eq(expected)
     end
 
     it "does not include the same asset twice" do
@@ -79,8 +81,15 @@ describe Trackman::Assets::Asset do
       ]
       
       actual = TestAsset.all
-      
+
       actual.should eq(expected)
+    end
+
+    it "testing equality of 2 assets" do
+      one = [TestAsset.create(:path => 'spec/test_data/all/all3.html'), TestAsset.create(:path => 'spec/test_data/all/all3.html')]
+      the_same = [TestAsset.create(:path => 'spec/test_data/all/all3.html'), TestAsset.create(:path => 'spec/test_data/all/all3.html')]
+
+      one.should eq(the_same)
     end
 
     it "does not include external assets" do

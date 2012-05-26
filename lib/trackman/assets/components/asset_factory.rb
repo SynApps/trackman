@@ -25,7 +25,7 @@ module Trackman
         end
 
         def rails_defined?
-          const_defined?(:Rails)
+          Object.const_defined?(:Rails)
         end
 
         def asset_pipeline_enabled?

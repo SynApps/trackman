@@ -38,11 +38,13 @@ describe Trackman::Assets::Components::AssetFactory do
       def self.application
         Rails::App.new
       end
+      
       class App
         def config
           Rails::Config.new
         end
       end
+
       class Config
         def assets
           Rails::Assets.new

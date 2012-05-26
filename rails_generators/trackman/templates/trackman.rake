@@ -3,26 +3,24 @@ namespace :trackman do
   CEP = 'custom_error_pages'
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
+  TRACKMAN_ERROR = 'TRACKMAN_ERROR_PAGE_URL'
+  TRACKMAN_MAINTENANCE = 'TRACKMAN_MAINTENANCE_PAGE_URL'
 
   desc "Syncs your assets with the server, this is what gets executed when you deploy to heroku."
   task :sync do
     Trackman::Assets::Asset.sync
   end
 
-  #TODO : check if heroku is installed and if app is deployed?
   desc "Setups the heroku configs required by Trackman" 
   task :setup do
-    # ensures that custom_error_pages addon is present
-    #`heroku addons:add #{CEP}` unless `heroku addons`.include? CEP
-    
-    puts "verifying if #{CEP} addon is installed..."
-    unless `heroku addons`.include? CEP
-      puts "adding #{CEP} addon to heroku..."
-      puts "heroku addons:add #{CEP}" 
+    if `bundle list`.include? 'heroku'
+      rename_configs
+      add_configs 
+      puts "done! Thank you for using Trackman!"
+    else
+      puts "heroku is not installed!"
+      puts "please install it before running this setup."
     end
-    rename_configs
-    add_configs 
-    puts "done! Thank you for using Trackman!"
   end 
 
   def rename_configs
@@ -42,7 +40,7 @@ namespace :trackman do
   end
   def add_configs
     puts "adding configs #{MAINTENANCE} and #{ERROR}"
-    #`heroku config:add #{MAINTENANCE}=maintenance #{ERROR}=error`
-    puts "heroku config:add #{MAINTENANCE}=maintenance #{ERROR}=error"
+    `heroku config:add #{MAINTENANCE}=#{ENV[TRACKMAN_MAINTENANCE]} #{ERROR}=#{ENV[TRACKMAN_ERROR]}`
+    puts "heroku config:add #{MAINTENANCE}=#{ENV[TRACKMAN_MAINTENANCE]} #{ERROR}=#{ENV[TRACKMAN_ERROR]}"
   end
 end

@@ -12,6 +12,7 @@ describe Trackman::Assets::Asset do
       @@called = true
     end
   end
+
   after :all do
     def Asset.sync
       old_sync
@@ -20,9 +21,20 @@ describe Trackman::Assets::Asset do
   
   before :each do
     @@called = false
+
+    class Env
+      def production?
+        true
+      end
+    end
   end
+
   after :each do
     ENV['TRACKMAN_AUTOSYNC'] = nil
+    begin
+      Object.send(:remove_const, :Rails)
+    rescue
+    end
   end
   
   it "syncs without any special config" do
@@ -39,7 +51,25 @@ describe Trackman::Assets::Asset do
      
     @@called.should be_false
   end
+  
+  it "doesn't autosync if the env is not in production" do
+    class Rails
+      def self.env
+        Env.new
+      end  
+    end
+    
+    class Env
+      def production?
+        false
+      end
+    end
 
+    Asset.autosync
+
+    @@called.should be_false
+  end
+  
   it "doesn't blow up when I autosync even though something is broken" do
     def Asset.sync
       @@called = true

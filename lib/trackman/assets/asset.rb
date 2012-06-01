@@ -67,6 +67,10 @@ module Trackman
       def self.autosync
         autosync = ENV['TRACKMAN_AUTOSYNC'] || true
         autosync = autosync !~ /(0|false|FALSE)/ unless autosync.is_a? TrueClass
+        if const_defined?(:Rails) 
+          autosync = autosync && Rails.env.production?
+        end 
+        
         begin
           return sync if autosync
         rescue

@@ -9,7 +9,7 @@ module Trackman
       @@app_id = ENV['TRACKMAN_APP_ID']
       @@server = ENV['TRACKMAN_SERVER_URL']
 
-      @@site = "http://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
+      @@site = "https://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
 
       attr_reader :id
       

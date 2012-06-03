@@ -7,11 +7,11 @@ Gem::Specification.new do |s|
   s.version     = Trackman::VERSION
   s.authors     = ["Jeremy Fabre", "Emanuel Petre"]
   s.email       = ["jeremy.fabre@hotmail.com", "petreemanuel@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/SynApps/trackman"
   s.summary     = "Client version of the Trackman addon on Heroku"
-  s.description = "Trackman hosts your maintenance and appdown pages and lets you keep them in your current environment so that you can blah."
+  s.description = "Trackman hosts your maintenances and app-down pages (503s) and lets you keep them in your current development environment so that you can focus on delivering and not configuring."
 
-  s.rubyforge_project = "trackman"
+  #s.rubyforge_project = "trackman"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

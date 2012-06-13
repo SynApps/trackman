@@ -6,14 +6,14 @@ describe Trackman::Assets::RemoteAsset do
     pass = ENV['HEROKU_PASSWORD']
     server = RemoteAsset.send(:class_variable_get, :@@server)
 
-    response = RestClient.post "https://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
+    response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
     json = JSON.parse response
     
     user = json['config']['TRACKMAN_USER']
     pass = json['config']['TRACKMAN_PASSWORD']
     app_id = json['id']
 
-    [[:@@app_id, app_id], [:@@user, user], [:@@pass, pass], [:@@site, "https://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"]].each do |s, v|
+    [[:@@app_id, app_id], [:@@user, user], [:@@pass, pass], [:@@site, "http://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"]].each do |s, v|
       RemoteAsset.send(:class_variable_set, s, v)
     end
   end

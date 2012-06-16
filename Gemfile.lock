@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     trackman (0.0.5)
-      heroku (>= 2.26.2)
       json
       nokogiri
       rack
@@ -45,5 +44,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  heroku (>= 2.26.2)
   rspec
   trackman!

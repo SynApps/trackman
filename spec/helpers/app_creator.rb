@@ -3,7 +3,7 @@ class AppCreator
     response = RestClient.post url, :plan => 'test', :heroku_id => 123 
     json = JSON.parse response
 
-    trackman_url = json['config']['TRACKMAN_URL']
+    trackman_url = json['config']['TRACKMAN_URL'].gsub('https', 'http')
 
     [[:@@server_url, trackman_url], [:@@site, "#{trackman_url}/assets"]]
   end

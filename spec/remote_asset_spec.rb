@@ -25,7 +25,6 @@ describe Trackman::Assets::RemoteAsset do
   end
 
   it "creates assets on the server" do
-    puts "b4 call#{RemoteAsset.send(:class_variable_get, :@@server_url)}"
     expected = RemoteAsset.new(:path => 'spec/test_data/test2.png')
     expected.create!
     

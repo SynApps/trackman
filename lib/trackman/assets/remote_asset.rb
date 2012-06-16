@@ -37,8 +37,6 @@ module Trackman
       end
 
       def create!
-        puts "server = #{@@server_url}"
-        puts "site = #{@@site}"
         response = RestClient.post @@site, :asset => {:path => path.to_s, :file => File.open(path)}, :content_type => :json, :accept => :json
         path = response.headers[:location]
         @id = path[/\d+$/].to_i

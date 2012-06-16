@@ -4,16 +4,14 @@ describe Trackman::Assets::RemoteAsset do
   before :all do
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
-    server = RemoteAsset.send(:class_variable_get, :@@server)
+    server = ENV['TRACKMAN_SERVER_URL']
 
     response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
     json = JSON.parse response
-    
-    user = json['config']['TRACKMAN_USER']
-    pass = json['config']['TRACKMAN_PASSWORD']
-    app_id = json['id']
-
-    [[:@@app_id, app_id], [:@@user, user], [:@@pass, pass], [:@@site, "http://#{user}:#{pass}@#{server}/heroku/resources/#{app_id}/assets"]].each do |s, v|
+    @trackman_url = json['config']['TRACKMAN_URL'].gsub(/https/, 'http')
+ 
+    @config = [[:@@server_url, @trackman_url], [:@@site, "#{@trackman_url}/assets"]]
+    @config.each do |s, v|
       RemoteAsset.send(:class_variable_set, s, v)
     end
   end
@@ -24,9 +22,10 @@ describe Trackman::Assets::RemoteAsset do
     end
 
     File.open('spec/test_data/y.css', 'w') {|f| f.write @old_file } unless @old_file.nil?
-  end  
+  end
 
   it "creates assets on the server" do
+    puts "b4 call#{RemoteAsset.send(:class_variable_get, :@@server_url)}"
     expected = RemoteAsset.new(:path => 'spec/test_data/test2.png')
     expected.create!
     
@@ -69,20 +68,13 @@ describe Trackman::Assets::RemoteAsset do
   end 
 
   it "throws if a config is missing" do
-    configs = {
-      '@@server' => 'TRACKMAN_SERVER_URL', 
-      '@@user' => 'TRACKMAN_USER', 
-      '@@pass' => 'TRACKMAN_PASSWORD', 
-      '@@app_id' => 'TRACKMAN_APP_ID'
-    }
     begin
-      configs.each {|k,v| RemoteAsset.send(:class_variable_set, k, nil) }
-      configs.each do |k,v|
+      @config.each {|k,v| RemoteAsset.send(:class_variable_set, k, nil) }
+      @config.each do |k,v|
         lambda { RemoteAsset.new(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Assets::Errors::ConfigNotFoundError)
-        RemoteAsset.send(:class_variable_set, k, ENV[v])
       end
-    ensure 
-      configs.each {|k,v| RemoteAsset.send(:class_variable_set, k, ENV[v]) }
+    ensure
+      @config.each {|k,v| RemoteAsset.send(:class_variable_set, k, v) }
     end
   end
 end

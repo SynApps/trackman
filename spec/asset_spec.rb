@@ -46,8 +46,6 @@ describe Trackman::Assets::Asset do
     end
   end
   
-  
-
   describe "#remote" do
     
     class TestAsset < Asset
@@ -59,8 +57,10 @@ describe Trackman::Assets::Asset do
     it "returns a remote asset equal to the previous one" do
       local = TestAsset.maintenance_page
       
+      AppCreator.create
       remote = local.to_remote
-      
+      AppCreator.reset
+
       local.should eq(remote)
       remote.is_a?(RemoteAsset).should be_true
     end  

@@ -37,13 +37,15 @@ module Trackman
           result += -1
         elsif another.is_child_of(self)
           result += 1
+        else
+          result = self.path.to_s <=> another.path.to_s  
         end  
 
         result
       end
       
       def is_child_of(parent)
-        parent.is_a?(Components::CompositeAsset) && parent.assets.include?(self)
+        parent.assets.include? self
       end
 
       def self.all

@@ -33,7 +33,7 @@ module Trackman
       end
 
       def self.all
-        JSON.parse(RestClient.get @@site).map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }.map { |r| RemoteAsset.new(r) }.sort
+        get_attributes.map{ |r| RemoteAsset.new(r) }.sort
       end
 
       def create!
@@ -64,6 +64,9 @@ module Trackman
       private 
         def ensure_config
           raise Errors::ConfigNotFoundError, "The config TRACKMAN_URL is missing." if @@server_url.nil?      
+        end
+        def self.get_attributes
+          JSON.parse(RestClient.get @@site).map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
         end
     end 
   end

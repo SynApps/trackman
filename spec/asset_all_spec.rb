@@ -45,9 +45,9 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        TestAsset.create(:path => 'spec/test_data/all/3.js'),
-        TestAsset.create(:path => 'spec/test_data/all/2.gif'), 
         TestAsset.create(:path => 'spec/test_data/all/1.css'),
+        TestAsset.create(:path => 'spec/test_data/all/2.gif'),
+        TestAsset.create(:path => 'spec/test_data/all/3.js'),
         TestAsset.maintenance_page,
         TestAsset.error_page
       ]

@@ -21,8 +21,8 @@ module Trackman
 
       def ==(other)
         return false if other.nil?
-        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path)         
-        other_path.to_s == path.to_s || path.realpath == other_path.realpath
+        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path)
+        other_path.to_s == path.to_s || path.cleanpath == other_path.cleanpath
       end
 
       def <=>(another)

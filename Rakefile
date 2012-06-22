@@ -1,6 +1,5 @@
 require "bundler/gem_tasks"
 
-
 desc "creates a new app to the server and outputs the credentials"
 task :create_app do
   require 'trackman'

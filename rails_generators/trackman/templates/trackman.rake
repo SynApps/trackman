@@ -7,10 +7,8 @@ namespace :trackman do
   TRACKMAN_MAINTENANCE = 'TRACKMAN_MAINTENANCE_PAGE_URL'
 
   desc "Syncs your assets with the server, this is what gets executed when you deploy to heroku."
-  task :sync, :debug do |t, args|
-    if Debugger.debug_mode?
-      RestClient.log = Logger.new(STDOUT)
-    end
+  task :sync do
+    RestClient.log = Logger.new(STDOUT) if Debugger.debug_mode?
     Trackman::Assets::Asset.sync
   end
 

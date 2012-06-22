@@ -28,9 +28,6 @@ module Trackman
       end
 
       def self.find id
-        puts "For #{@@site}"
-        puts RestClient.get "#{@@site}"
-
         response = RestClient.get "#{@@site}/#{id}"
         
         body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]

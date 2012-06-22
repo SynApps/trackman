@@ -61,10 +61,8 @@ module Trackman
         local = Asset.all
         remote = RemoteAsset.all
         diff_result = diff(local, remote) 
-        
-        Debugger.trace diff_result[:create]
-        Debugger.trace diff_result[:update]
-        Debugger.trace diff_result[:delete]
+
+        Debugger.trace diff_result.inspect
 
         ship diff_result
         

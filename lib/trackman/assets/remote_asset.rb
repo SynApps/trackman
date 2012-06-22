@@ -51,7 +51,7 @@ module Trackman
         RestClient.put "#{@@site}/#{id}", :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
       end  
       def delete
-        #response = RestClient.delete "#{@@site}/#{id}"
+        response = RestClient.delete "#{@@site}/#{id}"
         true
       end
 

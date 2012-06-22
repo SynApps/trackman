@@ -61,6 +61,8 @@ module Trackman
         local = Asset.all
         remote = RemoteAsset.all
         diff_result = diff(local, remote) 
+        
+        Trackman.trace diff_result
         ship diff_result
         
         true

@@ -1,4 +1,5 @@
 require 'trackman'
+require 'rest-client'
 namespace :trackman do
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'

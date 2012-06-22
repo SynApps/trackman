@@ -6,6 +6,7 @@ module Trackman
   module Assets
     class RemoteAsset < Asset
       @@server_url = ENV['TRACKMAN_URL']
+
       @@site = "#{@@server_url}/assets"
 
       attr_reader :id
@@ -27,7 +28,11 @@ module Trackman
       end
 
       def self.find id
+        puts "For #{@@site}"
+        puts RestClient.get "#{@@site}"
+
         response = RestClient.get "#{@@site}/#{id}"
+        
         body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
         RemoteAsset.new(body)
       end
@@ -46,7 +51,7 @@ module Trackman
         RestClient.put "#{@@site}/#{id}", :asset => {:path => path, :file => File.open(path)}, :content_type => :json, :accept => :json
       end  
       def delete
-        response = RestClient.delete "#{@@site}/#{id}"
+        #response = RestClient.delete "#{@@site}/#{id}"
         true
       end
 

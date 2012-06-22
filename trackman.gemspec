@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "rack"
   
   s.add_development_dependency "rspec"
+  s.add_development_dependency "sprockets"
 end

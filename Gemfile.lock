@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    trackman (0.1.3)
+    trackman (0.1.5)
+      heroku (>= 2.26.2)
       json
       nokogiri
       rack
@@ -12,19 +13,19 @@ GEM
   specs:
     addressable (2.2.8)
     diff-lcs (1.1.3)
-    excon (0.14.0)
-    heroku (2.26.6)
-      heroku-api (~> 0.2.4)
+    excon (0.14.1)
+    heroku (2.28.0)
+      heroku-api (~> 0.2.5)
       launchy (>= 0.3.2)
-      netrc (~> 0.7.2)
+      netrc (~> 0.7.4)
       rest-client (~> 1.6.1)
       rubyzip
-    heroku-api (0.2.4)
+    heroku-api (0.2.6)
       excon (~> 0.14.0)
     json (1.7.3)
     launchy (2.1.0)
       addressable (~> 2.2.6)
-    mime-types (1.18)
+    mime-types (1.19)
     netrc (0.7.4)
     nokogiri (1.5.4)
     rack (1.4.1)
@@ -38,12 +39,11 @@ GEM
     rspec-expectations (2.10.0)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.10.1)
-    rubyzip (0.9.8)
+    rubyzip (0.9.9)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  heroku (>= 2.26.2)
   rspec
   trackman!

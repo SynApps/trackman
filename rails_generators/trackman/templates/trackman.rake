@@ -1,4 +1,5 @@
 require 'trackman'
+require 'rest-client'
 namespace :trackman do
   ERROR = 'ERROR_PAGE_URL'
   MAINTENANCE = 'MAINTENANCE_PAGE_URL'
@@ -7,6 +8,7 @@ namespace :trackman do
 
   desc "Syncs your assets with the server, this is what gets executed when you deploy to heroku."
   task :sync do
+    RestClient.log = Logger.new(STDOUT) if Debugger.debug_mode?
     Trackman::Assets::Asset.sync
   end
 

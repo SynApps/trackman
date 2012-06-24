@@ -18,12 +18,12 @@ describe 'full path' do
   end
 
   it "replaces all images" do
-   expected = Asset.all
-   
-   Asset.sync
-   actual = RemoteAsset.all
+   local = Asset.all
 
-   actual.count.should == 8
-   actual.should == expected
+   Asset.sync
+   remote = RemoteAsset.all
+   
+   remote.count.should == 8
+   local.each{|l| remote.should include(l) }
   end
 end

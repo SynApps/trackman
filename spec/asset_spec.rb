@@ -46,8 +46,6 @@ describe Trackman::Assets::Asset do
     end
   end
   
-  
-
   describe "#remote" do
     
     class TestAsset < Asset
@@ -95,5 +93,21 @@ describe Trackman::Assets::Asset do
 
     (dependent <=> dependency).should == 1
     (dependency <=> dependent).should == -1
+  end
+
+  it "fixes the bug with realpath" do
+    class MyAsset < Asset
+      def validate_path?
+        false
+      end
+      def file_hash
+        123
+      end
+    end
+
+    local = MyAsset.new(:path => 'public/test.html')
+    remote = MyAsset.new(:path => 'public/./test.html')
+
+    local.should == remote
   end
 end

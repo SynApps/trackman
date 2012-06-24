@@ -21,8 +21,8 @@ module Trackman
 
       def ==(other)
         return false if other.nil?
-        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path)         
-        other_path.to_s == path.to_s || path.realpath == other_path.realpath
+        other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path)
+        other_path.to_s == path.to_s || path.cleanpath == other_path.cleanpath
       end
 
       def <=>(another)
@@ -37,13 +37,15 @@ module Trackman
           result += -1
         elsif another.is_child_of(self)
           result += 1
+        else
+          result = self.path.to_s <=> another.path.to_s  
         end  
 
         result
       end
       
       def is_child_of(parent)
-        parent.is_a?(Components::CompositeAsset) && parent.assets.include?(self)
+        parent.assets.include? self
       end
 
       def self.all
@@ -59,6 +61,9 @@ module Trackman
         local = Asset.all
         remote = RemoteAsset.all
         diff_result = diff(local, remote) 
+
+        Debugger.trace diff_result.inspect
+
         ship diff_result
         
         true

@@ -21,7 +21,21 @@ class FakablePathManTester
         end
       end
     end
-
+    
+    RemoteAsset.class_eval do
+      singleton_class = class << self; self; end
+      singleton_class.instance_eval do
+        alias_method :old_get_attributes, :get_attributes  
+        define_method :get_attributes do
+          old_get_attributes.map do |h|
+            my_hash = h.dup
+            my_hash[:path] = prepath + h[:path] unless h[:path].start_with? prepath
+            my_hash
+          end    
+        end
+      end
+    end
+    
     Conventions.module_eval do 
       alias :real_maintenance_path :maintenance_path 
       alias :real_error_path :error_path
@@ -55,7 +69,15 @@ class FakablePathManTester
 
       remove_method :real_maintenance_path
       remove_method :real_error_path
-    end 
+    end
+
+    RemoteAsset.class_eval do
+      singleton_class = class << self; self; end
+      singleton_class.instance_eval do
+        alias_method :get_attributes, :old_get_attributes  
+        remove_method :old_get_attributes
+      end
+    end
   end
 end
 

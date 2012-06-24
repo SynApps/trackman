@@ -1,18 +1,16 @@
 require 'rest-client'
 require 'json'
+require 'uri'
 
 module Trackman
   module Assets
     class RemoteAsset < Asset
-      @@user = ENV['TRACKMAN_USER']
-      @@pass = ENV['TRACKMAN_PASSWORD']
-      @@app_id = ENV['TRACKMAN_APP_ID']
-      @@server = ENV['TRACKMAN_SERVER_URL']
+      @@server_url = ENV['TRACKMAN_URL']
 
-      @@site = "https://#{@@user}:#{@@pass}@#{@@server}/heroku/resources/#{@@app_id}/assets"
+      @@site = "#{@@server_url}/assets"
 
       attr_reader :id
-      
+
       def initialize attributes = {}
         ensure_config
         super
@@ -31,12 +29,13 @@ module Trackman
 
       def self.find id
         response = RestClient.get "#{@@site}/#{id}"
+        
         body = Hash[JSON.parse(response).map{ |k, v| [k.to_sym, v] }]
         RemoteAsset.new(body)
       end
 
       def self.all
-        JSON.parse(RestClient.get @@site).map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }.map { |r| RemoteAsset.new(r) }.sort
+        get_attributes.map{ |r| RemoteAsset.new(r) }.sort
       end
 
       def create!
@@ -64,14 +63,12 @@ module Trackman
         false 
       end
 
-      
-
       private 
         def ensure_config
-          if @@user.nil? || @@pass.nil? || @@app_id.nil? || @@server.nil?
-            config_missing = ['TRACKMAN_USER', 'TRACKMAN_PASSWORD', 'TRACKMAN_APP_ID', 'TRACKMAN_SERVER_URL'].first{|c| ENV[c].nil? }
-            raise Errors::ConfigNotFoundError, "The config '#{config_missing}' is missing."
-          end            
+          raise Errors::ConfigNotFoundError, "The config TRACKMAN_URL is missing." if @@server_url.nil?      
+        end
+        def self.get_attributes
+          JSON.parse(RestClient.get @@site).map{|r|  Hash[r.map{ |k, v| [k.to_sym, v] }] }
         end
     end 
   end

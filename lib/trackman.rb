@@ -4,8 +4,10 @@ require 'tasks'
 
 module Trackman
   autoload :RackMiddleware, 'trackman/rack_middleware'
-  autoload :Assets, 'trackman/assets'
+  autoload :Assets, 'trackman/assets'  
 end 
+
+autoload :Debugger, 'trackman/debugger'
 
 if defined?(Rails)
   if ::Rails::VERSION::STRING =~ /^2\.[1-9]/

@@ -15,21 +15,23 @@ class FakablePathManTester
   end
 
   def self.override_resolvers prepath
+    
+    PathResolver.module_eval do
+      alias real_working_dir working_dir
+
+      define_method :working_dir do
+        real_working_dir + prepath
+      end
+    end
+   
     @@modules.each do |m| 
       m.module_eval do
         alias real_translate translate  
-        alias real_working_dir working_dir if method_defined? :working_dir
-
+        
         define_method :translate do |url, parent_url|
           parent = parent_url.to_s.dup
           parent.slice!(prepath)
           prepath + real_translate(url, parent)
-        end
-
-        if method_defined? :working_dir
-          define_method :working_dir do
-            real_working_dir + prepath
-          end
         end
       end
     end
@@ -57,7 +59,7 @@ class FakablePathManTester
         params = old_build_params
         path = params[:asset][:path]
         path.slice! prepath
-        
+
         params 
       end
 
@@ -65,7 +67,6 @@ class FakablePathManTester
       singleton_class.instance_eval do
         alias_method :old_get_attributes, :get_attributes  
         
-
         define_method :get_attributes do
           old_get_attributes.map do |h|
             my_hash = h.dup
@@ -78,17 +79,18 @@ class FakablePathManTester
   end
 
   def self.reset_resolvers
+    PathResolver.module_eval do    
+      alias :working_dir :real_working_dir
+      remove_method :real_working_dir
+    end
+
     @@modules.each do |m| 
       m.module_eval do
         alias :translate :real_translate
         remove_method :real_translate
-
-        if method_defined? :working_dir
-          alias :working_dir :real_working_dir
-          remove_method :real_working_dir
-        end
       end
     end
+    Rails32PathResolver.class_variable_set(:@@sprockets, nil)
   end
 
   def self.reset_conventions

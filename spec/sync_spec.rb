@@ -1,27 +1,11 @@
 require 'spec_helper'
 
 describe Trackman::Assets::Asset do
-  before :all do
-    class Asset
-      class << self
-        alias :old_sync :sync
-      end
-    end
-
-    def Asset.sync
-      @@called = true
-    end
-  end
-
-  after :all do
-    def Asset.sync
-      old_sync
-    end
-  end
   
-  before :each do
-    @@called = false
+  class MyTestAsset < Asset
+  end
 
+  before :each do
     class Env
       def production?
         true
@@ -38,18 +22,18 @@ describe Trackman::Assets::Asset do
   end
   
   it "syncs without any special config" do
-    Asset.autosync
+    MyTestAsset.should_receive(:sync)
 
-    @@called.should be_true
+    MyTestAsset.autosync
   end  
   
   it "doesnt autosync if ENV is set to false/0/FALSE" do
+    MyTestAsset.should_not_receive(:sync)
+
     ['false', '0', 'FALSE'].each do |v|
       ENV['TRACKMAN_AUTOSYNC'] = v
-      Asset.autosync
+      MyTestAsset.autosync
     end
-     
-    @@called.should be_false
   end
   
   it "doesn't autosync if the env is not in production" do
@@ -65,21 +49,20 @@ describe Trackman::Assets::Asset do
       end
     end
 
-    Asset.autosync
+    MyTestAsset.should_not_receive(:sync)
 
-    @@called.should be_false
+    MyTestAsset.autosync
   end
   
   it "doesn't blow up when I autosync even though something is broken" do
-    def Asset.sync
-      @@called = true
+    def MyTestAsset.sync
       raise "something is wrong"
     end
     result = true
-    
-    lambda { result = Asset.autosync }.should_not raise_error
+    MyTestAsset.should_receive(:sync)
+
+    lambda { result = MyTestAsset.autosync }.should_not raise_error
     
     result.should be_false
-    @@called.should be_true
   end
 end

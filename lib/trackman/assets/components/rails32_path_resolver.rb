@@ -1,3 +1,5 @@
+require 'sprockets'
+
 module Trackman
   module Assets
     module Components  
@@ -12,7 +14,7 @@ module Trackman
           path = Pathname.new path
           
           if path.relative?          
-            folder = (root + Pathname.new(parent_url)).parent.realpath
+          folder = (root + Pathname.new(parent_url)).parent.realpath
             path = (folder + path).to_s
             path.slice! sprockets.paths.select{|p| path.include? p }.first 
           end
@@ -21,22 +23,19 @@ module Trackman
           path.relative_path_from(root).to_s
         end
 
-        @@sprockets = nil
-        def sprockets
-          unless @@sprockets
-            @@sprockets = ::Sprockets::Environment.new
-            
-            paths = []
-            ['app', 'lib', 'vendor'].each do |f|
-              paths = paths + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
-            end
-            paths << "#{working_dir}/public"
-              
-            paths.each{|p| @@sprockets.append_path p }
-          end
-          @@sprockets
+        def sprockets 
+          @@sprockets ||= init_env
         end
-
+        def init_env
+          env = ::Sprockets::Environment.new
+          paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
+             array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
+          end
+          paths << "#{working_dir}/public"
+          paths.each{|p| env.append_path p }
+          
+          env
+        end
         def subfolder(file)
           if file.include?('.js')
             subfolder = "javascripts"

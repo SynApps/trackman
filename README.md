@@ -21,7 +21,7 @@ Trackman works out of the box for Ruby(1.8.7 and 1.9.3) on
 ```console
 heroku addons:add trackman
 ```
-### Step 2 - Add the client gem to your Gemfile
+### Step 2 - Add the gem to your Gemfile
 ```console
 gem 'trackman'
 ```
@@ -36,7 +36,7 @@ This will add trackman.rake to lib/tasks/
 ```console
 rake trackman:setup
 ```
-Sets up your initial configuration and add custom error page add-on if you don't have it yet.
+Sets up your initial configuration.
 
 ### Optional
 ```console
@@ -69,14 +69,14 @@ public/503-error.html
 
 After the add-on installation
 
-* On the first publish or manual sync, your html file(s) and every internal assets referenced by your pages(s) will be pushed to our server so that we can store them properly on S3.
+* On the first publish or manual sync, your html file(s) and every internal assets referenced by your pages(s) will be pushed to the server so that we can store them properly on S3.
 * On the next publications, only modified assets will be published. 
-* Any renamed or missing asset will be handled properly on our side.
+* Any renamed or missing asset will be handled properly.
 
 ### Bug reports
 
 Any bug report can be submitted here.
-https://github.com/jfabre/trackman/issues
+https://github.com/SynApps/trackman/issues
 
 
 ### Creators / Maintainers

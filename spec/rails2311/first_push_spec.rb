@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'helpers/app_creator'
 require 'helpers/fakable_pathman_tester'
+require 'helpers/act_like_rails2311'
 
 describe 'full path' do
   before :all do

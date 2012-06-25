@@ -16,7 +16,7 @@ namespace :trackman do
   desc "Sets up the heroku configs required by Trackman" 
   task :setup do
     heroku_version = `heroku version`
-    if heroku_version !~ /^[2-9]\.[2-9]/
+    if heroku_version !~ /[2-9]\.[2-9]/
       puts "your heroku version is too low, we recommend '~> 2.26' at least"
     else
       configs = `heroku config -s` 

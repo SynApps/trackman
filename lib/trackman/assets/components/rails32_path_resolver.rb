@@ -14,7 +14,7 @@ module Trackman
           path = Pathname.new path
           
           if path.relative?          
-          folder = (root + Pathname.new(parent_url)).parent.realpath
+            folder = (root + Pathname.new(parent_url)).parent.realpath
             path = (folder + path).to_s
             path.slice! sprockets.paths.select{|p| path.include? p }.first 
           end

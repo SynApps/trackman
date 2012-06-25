@@ -90,7 +90,7 @@ class FakablePathManTester
         remove_method :real_translate
       end
     end
-    Rails32PathResolver.class_variable_set(:@@sprockets, nil)
+    Rails32PathResolver.send(:class_variable_set, :@@sprockets, nil)
   end
 
   def self.reset_conventions

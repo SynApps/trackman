@@ -48,7 +48,6 @@ describe Trackman::Assets::Asset do
         false
       end
     end
-
     MyTestAsset.should_not_receive(:sync)
 
     MyTestAsset.autosync

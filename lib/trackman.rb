@@ -11,7 +11,9 @@ autoload :Debugger, 'trackman/debugger'
 
 if defined?(Rails)
   if ::Rails::VERSION::STRING =~ /^2\.[1-9]/
-    Rails.configuration.middleware.use Trackman::RackMiddleware
+    unless Rails.class_variable_get(:@@configuration).nil?  
+      Rails.configuration.middleware.use Trackman::RackMiddleware
+    end 
   elsif ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
     require "trackman/railtie"
   end

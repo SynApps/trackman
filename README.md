@@ -36,7 +36,8 @@ This will add trackman.rake to lib/tasks/
 ```console
 rake trackman:setup
 ```
-Sets up your initial configuration.
+This sets your initial heroku configurations and ensures that when your app is down or in maintenance your pages will be requested by heroku.
+If you have maintenance or error pages setup for heroku, we will back them up in a configuration before we override them.  
 
 ### Optional
 ```console

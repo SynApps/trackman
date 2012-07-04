@@ -21,6 +21,10 @@ class AppCreator
   end
 
   def self.reset
+    RemoteAsset.all.each do |a|
+      a.delete
+    end
+
     @@config.each do |k,v|
       RemoteAsset.send(:class_variable_set, k, v)
     end

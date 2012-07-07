@@ -4,7 +4,8 @@ require 'tasks'
 
 module Trackman
   autoload :RackMiddleware, 'trackman/rack_middleware'
-  autoload :Assets, 'trackman/assets'  
+  autoload :Assets, 'trackman/assets'
+  autoload :ConfigurationHandler, 'trackman/configuration_handler'
 end 
 
 autoload :Debugger, 'trackman/debugger'

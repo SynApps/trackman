@@ -5,6 +5,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'trackman'
+
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
@@ -20,3 +21,4 @@ RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
 PathResolver = Trackman::Assets::Components::PathResolver unless defined?(PathResolver)
 Rails32PathResolver = Trackman::Assets::Components::Rails32PathResolver unless defined?(Rails32PathResolver)
 RailsPathResolver = Trackman::Assets::Components::RailsPathResolver unless defined?(RailsPathResolver)
+ConfigurationHandler = Trackman::ConfigurationHandler unless defined?(ConfigurationHandler)

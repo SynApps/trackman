@@ -26,4 +26,6 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency "rspec"
   s.add_development_dependency "sprockets"
+  s.add_development_dependency "rspec-mocks"
+  s.add_development_dependency "versionomy"
 end

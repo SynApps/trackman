@@ -41,7 +41,7 @@ If you have maintenance or error pages setup for heroku, we will back them up in
 
 ### Optional
 ```console
-rake trackman:sync
+heroku run rake trackman:sync
 ```
 Performs a manual sync of your error/maintenance pages and their related assets. 
 This normally gets executed everytime you deploy to heroku.

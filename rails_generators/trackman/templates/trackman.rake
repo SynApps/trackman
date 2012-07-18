@@ -8,10 +8,10 @@ namespace :trackman do
     Trackman::Assets::Asset.sync
   end
 
-  desc "Sets up the heroku configs required by Trackman" 
+  desc "Sets up the heroku configs required by Trackman"
   task :setup do
-    configs = ConfigurationHandler.s_to_h(`heroku config -s`)
+    configs = Trackman::ConfigurationHandler.s_to_h(`heroku config -s`)
     heroku_version = Gem.loaded_specs["heroku"].version
-    ConfigurationHandler.new(configs, heroku_version).setup
-  end 
+    Trackman::ConfigurationHandler.new(configs, heroku_version).setup
+  end
 end

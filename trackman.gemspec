@@ -23,9 +23,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "nokogiri"
   s.add_runtime_dependency "rack"
   s.add_runtime_dependency "heroku", ">= 2.26.2"
+  s.add_runtime_dependency "versionomy"
   
   s.add_development_dependency "rspec"
   s.add_development_dependency "sprockets"
   s.add_development_dependency "rspec-mocks"
-  s.add_development_dependency "versionomy"
 end

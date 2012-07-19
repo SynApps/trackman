@@ -58,8 +58,8 @@ describe ConfigurationHandler do
 
 		puts config_hash
 
-		config_hash["ERROR_PAGE_URL.bkp"].should == "\"error_page_url_old\""
-		config_hash["MAINTENANCE_PAGE_URL.bkp"].should == "\"en_US.UTF-8_old\""
+		config_hash["ERROR_PAGE_URL_bkp"].should == "\"error_page_url_old\""
+		config_hash["MAINTENANCE_PAGE_URL_bkp"].should == "\"en_US.UTF-8_old\""
 		config_hash["ERROR_PAGE_URL"].should == "\"error_page_url\""
 		config_hash["MAINTENANCE_PAGE_URL"].should == "\"en_US.UTF-8\""
 	end
@@ -75,8 +75,8 @@ describe ConfigurationHandler do
 		config_handler.setup
 		config_hash = config_handler.configs
 
-		config_hash.keys.should_not include("ERROR_PAGE_URL.bkp")
-		config_hash.keys.should_not include("MAINTENANCE_PAGE_URL.bkp")
+		config_hash.keys.should_not include("ERROR_PAGE_URL_bkp")
+		config_hash.keys.should_not include("MAINTENANCE_PAGE_URL_bkp")
 		config_hash["ERROR_PAGE_URL"].should == "\"error_page_url\""
 		config_hash["MAINTENANCE_PAGE_URL"].should ==  "\"en_US.UTF-8\""
 	end

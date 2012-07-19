@@ -1,12 +1,13 @@
 PATH
   remote: .
   specs:
-    trackman (0.2.0)
+    trackman (0.2.5)
       heroku (>= 2.26.2)
       json
       nokogiri
       rack
       rest-client
+      versionomy
 
 GEM
   remote: http://rubygems.org/
@@ -21,8 +22,8 @@ GEM
       netrc (~> 0.7.5)
       rest-client (~> 1.6.1)
       rubyzip
-    heroku-api (0.2.12)
-      excon (~> 0.15.3)
+    heroku-api (0.2.13)
+      excon (~> 0.15.4)
     hike (1.2.1)
     json (1.7.3)
     launchy (2.1.0)
@@ -60,4 +61,3 @@ DEPENDENCIES
   rspec-mocks
   sprockets
   trackman!
-  versionomy

@@ -26,14 +26,19 @@ module Trackman
         def sprockets 
           @@sprockets ||= init_env
         end
+
         def init_env
-          env = ::Sprockets::Environment.new
-          paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
-             array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
-          end
-          paths << "#{working_dir}/public"
-          paths.each{|p| env.append_path p }
-          
+          #if ::Rails
+            puts 'A rails env exists, loading it'
+            env = ::Rails.application.config.assets
+          # else
+          #   env = ::Sprockets::Environment.new
+          #   paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
+          #     array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
+          #   end
+          #   paths << "#{working_dir}/public"
+          #   paths.each{|p| env.append_path p }
+
           env
         end
         def subfolder(file)

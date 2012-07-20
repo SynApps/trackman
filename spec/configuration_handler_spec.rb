@@ -70,7 +70,7 @@ describe ConfigurationHandler do
 								"TRACKMAN_ERROR_PAGE_URL" => "\"error_page_url\"",
 								"SOME_CONFIG" => "\"url\""
 							}
-		config_handler= ConfigurationHandler.new(configs, "2.26.2")
+		config_handler = ConfigurationHandler.new(configs, "2.26.2")
 
 		config_handler.setup
 		config_hash = config_handler.configs

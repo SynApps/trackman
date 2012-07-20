@@ -28,7 +28,7 @@ module Trackman
         end
 
         def init_env
-          env = ::Rails.application.config.assets
+          env = ::Rails.application.class.assets
 
           # if defined?(::Rails) && ::Rails.application
           #   env = ::Rails.application.config.assets

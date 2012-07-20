@@ -39,12 +39,12 @@ rake trackman:setup
 This sets your initial heroku configurations and ensures that when your app is down or in maintenance your pages will be requested by heroku.
 If you have maintenance or error pages setup for heroku, we will back them up in a configuration before we override them.  
 
-### Optional
+### Optional - If for any reason you wish to troubleshoot the sync operation:
+
 ```console
-rake trackman:sync
+heroku run rake trackman:sync
 ```
-Performs a manual sync of your error/maintenance pages and their related assets. 
-This normally gets executed everytime you deploy to heroku.
+Calling this command manually will throw exceptions instead of silently failing like the normal sync would.
 
 ### For best results, make sure you have those installed:
 * Heroku >= 2.26.2

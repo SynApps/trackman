@@ -46,10 +46,10 @@ module Trackman
 	      bkp[c] = configs[c] if configs.include? c
 	    end
 	   
-	    add = Hash[bkp.map {|k, v| [k + ".bkp", v] }].map{|k,v| "#{k}=#{v}" }.select{|c| !configs.include? c }.join(' ')
+	    add = Hash[bkp.map {|k, v| [k + "_bkp", v] }].map{|k,v| "#{k}=#{v}" }.select{|c| !configs.include? c }.join(' ')
 	    
 	    unless add.empty?
-	    	puts "backuping configs to heroku..."
+	    	puts "backing configs to heroku..."
 	      add_config add
 	    end
 	  end

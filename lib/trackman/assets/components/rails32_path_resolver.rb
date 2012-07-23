@@ -16,6 +16,7 @@ module Trackman
           if path.relative? 
             folder = (root + Pathname.new(parent_url)).parent.realpath
             path = (folder + path).to_s
+
             path.slice! sprockets.paths.select{|p| path.include? p }.first 
           end
           
@@ -30,6 +31,7 @@ module Trackman
         def init_env
           if defined?(::Rails) && ::Rails.application
             env = ::Rails.application.class.assets
+            env.append_path "#{working_dir}/public"
           else
             env = ::Sprockets::Environment.new
             paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|

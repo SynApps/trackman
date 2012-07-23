@@ -21,6 +21,7 @@ module Trackman
           end
           
           path = sprockets.resolve path
+          puts "RESOLVED PATH #{path.to_s}"
           path.relative_path_from(root).to_s
         end
 

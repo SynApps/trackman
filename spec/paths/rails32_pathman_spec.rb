@@ -51,16 +51,6 @@ describe Rails32PathResolver do
     actual.should == expected
   end
 
-  it "serves a favicon" do
-    parent_url = 'public/503.html'
-    url = '/favicon.png'
-
-    actual = Rails32Tester.translate url, parent_url
-    expected = 'public/favicon.png'
-
-    actual.should == expected
-  end
-
   it "works for nested paths" do
     parent_url = 'app/assets/stylesheets/a/css.css'
     url = '3/32/allo.png'
@@ -71,12 +61,42 @@ describe Rails32PathResolver do
     actual.should == expected
   end
 
+  it "works for nested paths with assets/img.png" do
+    parent_url = 'app/assets/stylesheets/css.css'
+    url = 'assets/img.png'
+
+    actual = Rails32Tester.translate url, parent_url
+    expected = 'app/assets/images/img.png'
+
+    actual.should == expected
+  end
+
+  it "serves a favicon" do
+    parent_url = 'public/503.html'
+    url = '/favicon.png'
+
+    actual = Rails32Tester.translate url, parent_url
+    expected = 'public/favicon.png'
+
+    actual.should == expected
+  end
+
   it "public is not buggy" do
     parent_url = 'public/500.html'
-    url = 'assets/rails.png'
+    url = 'assets/assets/rails.png'
 
     actual = Rails32Tester.translate url, parent_url
     expected = 'public/assets/rails.png'
+
+    actual.should == expected
+  end
+
+  it "public is not buggy 2" do
+    parent_url = 'public/500.html'
+    url = 'assets/img.png'
+
+    actual = Rails32Tester.translate url, parent_url
+    expected = 'app/assets/images/img.png'
 
     actual.should == expected
   end

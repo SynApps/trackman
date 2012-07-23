@@ -12,7 +12,7 @@ module Trackman
 
         def assets
           result = children_paths.select{|p| p.internal_path? }.inject([]) do |array, p|
-            asset = Asset.create(:path => translate(p, path))  
+             asset = Asset.create(:virtual_path => p.dup, :path => translate(p, path))  
             array << asset 
             array.concat(asset.assets.select{|a| !array.include?(a) })
             array              

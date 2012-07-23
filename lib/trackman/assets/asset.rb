@@ -10,13 +10,16 @@ module Trackman
       
       def initialize attributes = {}
         @assets = []
+        
+        self.virtual_path = attributes[:virtual_path]
         self.path = attributes[:path]
       end
       
+      attr_accessor :virtual_path
       attr_reader :path, :assets
 
       def to_remote
-        RemoteAsset.new(:path => @path)
+        RemoteAsset.new(:path => @path, :virtual_path => self.virtual_path)
       end
 
       def ==(other)

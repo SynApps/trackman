@@ -67,7 +67,7 @@ module Trackman
 
       private
         def build_params
-          { :asset => { :path => path.to_s, :file => File.open(path) } }
+          { :asset => { :virtual_path => virtual_path, :path => path.to_s, :file => File.open(path) } }
         end 
         def ensure_config
           raise Errors::ConfigNotFoundError, "The config TRACKMAN_URL is missing." if @@server_url.nil?      

@@ -36,7 +36,7 @@ namespace :setup do
     task :fixture, :name do |t, args| 
       name = response = args[:name]
       puts "rails _3.0.9_ new spec/fixtures/rails309/#{name} -G -O -T"
-      `rails _3.0.9_ new spec/fixtures/rails309/#{name} -G -O -T`
+      `rails _3.0.9_ new ./lib/trackman/assets/remote_asset.rb:74:inspec/fixtures/rails309/#{name} -G -O -T`
     end
   end
 

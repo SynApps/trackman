@@ -1,3 +1,3 @@
 module Trackman
-  VERSION = "0.2.81"
+  VERSION = "0.2.82"
 end

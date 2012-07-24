@@ -18,7 +18,6 @@ if defined?(Rails) && Rails.env == "production"
   end
 end
 
-
 #ruby 1.8.7 does not take blocks (this fixes it) -- used in Asset.all
 if RUBY_VERSION !~ /^1\.9/
   class Array

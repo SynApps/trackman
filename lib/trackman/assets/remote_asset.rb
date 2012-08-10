@@ -21,6 +21,10 @@ module Trackman
         @file_hash = attributes[:file_hash]
       end
       
+      def self.log_exception ex
+        RestClient.post "#{@@server_url}/exceptions", :exception => { message: ex.message, :backtrace => ex.backtrace }
+      end
+
       def file_hash
         @file_hash || super
       end

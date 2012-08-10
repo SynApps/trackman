@@ -82,7 +82,8 @@ module Trackman
         
         begin
           return sync if autosync
-        rescue
+        rescue Exception => ex
+          RemoteAsset.log_exception ex
           return false
         end
         autosync

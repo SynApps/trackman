@@ -12,7 +12,7 @@ autoload :Debugger, 'trackman/debugger'
 
 if defined?(Rails) && Rails.env == "production"
   if ::Rails::VERSION::STRING =~ /^2\.[1-9]/
-    require 'config/environment'
+    require './config/environment'
     Rails.configuration.middleware.use Trackman::RackMiddleware 
   elsif ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
     require "trackman/railtie"

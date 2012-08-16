@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trackman (0.2.86)
+    trackman (0.2.87)
       heroku (>= 2.26.2)
       json
       nokogiri

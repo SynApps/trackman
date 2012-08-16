@@ -64,4 +64,12 @@ describe Trackman::Assets::Asset do
     
     result.should be_false
   end
+
+  it "logs the error when sync is broken" do
+    MyTestAsset.stub!(:sync).and_raise("something is wrong")
+
+    RemoteAsset.should_receive(:log_exception).once
+
+    lambda { result = MyTestAsset.autosync }.should_not raise_error
+  end
 end

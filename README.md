@@ -1,19 +1,20 @@
 # Trackman
+Trackman is a Heroku add-on that hosts your maintenance pages and their assets outside your app.  
+Version them as a part of your project.
 
-Trackman is a Heroku add-on that enables you to handle your maintenance and error pages with the rest of your app and hosts the production version of those files in the cloud when you deploy.
-
-* It works with rails-like conventions.
-* It is rack-based.
-* It will push your pages and all their internal assets upon application initialization. 
-
-## Information
-
-### Platform support
-
-Trackman works out of the box for Ruby(1.8.7 and 1.9.3) on
-
+works out of the box for Ruby(1.8.7 and 1.9.3) on 
 * Rails 2
 * Rails 3
+
+##Quick peek
+###The first time
+* Create maintenance pages as if they were served by your app.
+* Run a rake task to setup the heroku configs.
+* Deploy the changes and boot your app.
+
+### Need to change your layout or assets?
+Simply modify those pages, link different assets, go crazy...  
+Trackman will sync upon application boot on your next deployment.
 
 
 ## Getting started
@@ -38,6 +39,8 @@ rake trackman:setup
 ```
 This sets your initial heroku configurations and ensures that when your app is down or in maintenance your pages will be requested by heroku.
 If you have maintenance or error pages setup for heroku, we will back them up in a configuration before we override them.  
+
+On your next push Trackman will look for changes to your maintenance pages and sync them!
 
 ### Optional - If for any reason you wish to troubleshoot the sync operation:
 
@@ -67,12 +70,6 @@ Broken app
 ```console
 public/503-error.html
 ```
-
-After the add-on installation
-
-* On the first publish or manual sync, your html file(s) and every internal assets referenced by your pages(s) will be pushed to the server so that we can store them properly on S3.
-* On the next publications, only modified assets will be published. 
-* Any renamed or missing asset will be handled properly.
 
 ### Bug reports
 

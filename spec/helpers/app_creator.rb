@@ -12,7 +12,7 @@ class AppCreator
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
     server = ENV['TRACKMAN_SERVER_URL']
-
+    
     @@config = get_config "http://#{user}:#{pass}@#{server}/heroku/resources"
 
     @@config.each do |s, v| 

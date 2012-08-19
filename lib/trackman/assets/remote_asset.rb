@@ -45,18 +45,12 @@ module Trackman
       end
 
       def create!
-        puts "***CREATE ASSET**"
-        puts build_params
-        puts "*****"
         response = RestClient.post @@site, build_params, :content_type => :json, :accept => :json
         path = response.headers[:location]
         @id = path[/\d+$/].to_i
       end
 
       def update!
-        puts "***UPDATE ASSET**"
-          puts build_params
-        puts "*****"
         RestClient.put "#{@@site}/#{id}", build_params, :content_type => :json, :accept => :json
       end  
       def delete

@@ -10,15 +10,18 @@ module Trackman
           mod.send(:extend, PathResolver)
         end
 
+        #internals = children_paths.select{|p| p.internal_path? }.map{|p| translate(p, path) }.select{|p| !p.nil? }
         def assets
-          result = children_paths.select{|p| p.internal_path? }.inject([]) do |array, p|
-             asset = Asset.create(:virtual_path => p.dup, :path => translate(p, path))  
-            array << asset 
-            array.concat(asset.assets.select{|a| !array.include?(a) })
-            array              
+          internals = children_paths.select{|p| p.internal_path? }.map{|p| {old: p, new_path: translate(p, path)} }
+          internals.select{|p| !p[:new_path].nil? }.map{|p| asset_from(p[:old], p[:new_path])}.inject([]) do |sum, a|
+            sum << a
+            sum.concat(a.assets.select{|child| !sum.include?(child) })
+            sum
           end
-          
-          result
+        end
+        
+        def asset_from(virtual, physical)
+          Asset.create(:virtual_path => virtual.dup, :path => physical)  
         end
         
         def inner_css_paths

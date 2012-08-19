@@ -8,19 +8,17 @@ module Trackman
         
         def translate url, parent_url 
           root = working_dir.realpath
-          
           path = url
 
           path.slice! /^(\/assets|assets\/)/
           path = Pathname.new path
 
-          if path.relative? 
-            folder = (root + Pathname.new(parent_url)).parent.realpath
-            path = (folder + path).to_s
-            path.slice! sprockets.paths.select{|p| path.include? p }.first
+          path = prepare_for_sprocket(path, parent_url, root) if path.relative?
+          begin
+            path = sprockets.resolve path
+          rescue Exception
+            return nil
           end
-
-          path = sprockets.resolve path
           path.relative_path_from(root).to_s
         end
 
@@ -28,19 +26,22 @@ module Trackman
           @@sprockets ||= init_env
         end
 
+        def prepare_for_sprocket path, parent_url, root
+          folder = (root + Pathname.new(parent_url)).parent.realpath
+          path = (folder + path).to_s
+          path.slice! sprockets.paths.select{|p| path.include? p }.first
+          path
+        end
+        
         def init_env
-          #if defined?(::Rails) && ::Rails.application
-          #  env = ::Rails.application.class.assets
-          #  env.append_path "#{working_dir}/public"
-          #else
-            env = ::Sprockets::Environment.new
-            paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
-              array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
-            end
-            paths << "#{working_dir}/public"
-            paths.each{|p| env.append_path p }
-          #end
-
+          env = ::Sprockets::Environment.new
+          
+          paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
+            array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
+          end
+          
+          paths << "#{working_dir}/public"
+          paths.each{|p| env.append_path p }
           env
         end
         def subfolder(file)

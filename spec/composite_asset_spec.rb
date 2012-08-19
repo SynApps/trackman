@@ -1,12 +1,42 @@
 require 'spec_helper'
 
-class FakeCompositeAsset 
-  #include CompositeAsset
+class TestComposite
+  include Trackman::Assets::Components::CompositeAsset
+  
+  def path 
+    'parent'
+  end
+
+  def asset_from(virtual, physical)
+    TestAsset.new(:virtual_path => virtual.dup, :path => translate(physical, self.path))  
+  end
 end
 
-describe FakeCompositeAsset do
-  it "" do
+class TestAsset < Trackman::Assets::Asset
+  def validate_path?
+    false
+  end    
+end
+
+describe Trackman::Assets::Components::CompositeAsset do
+  before :each do
+    @composite = TestComposite.new
+  end
+  it "has children" do
     asset = CssAsset.new(:path => 'spec/test_data/css/with-asset.css')
     asset.assets.should == [CssAsset.new(:path => 'spec/test_data/css/imported.css')] 
+  end
+
+  it "removes the translated assets that are nil" do
+    def @composite.children_paths 
+      ['a', 'b', 'c']
+    end
+    def @composite.translate(url, parent_url)
+      return nil if url == 'b'
+      url
+    end
+    
+    expected = ['a', 'c'].map{|p| TestAsset.new(:virtual_path => p, :path => p)}
+    @composite.assets.should == expected
   end
 end

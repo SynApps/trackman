@@ -4,9 +4,8 @@ describe Trackman::Assets::RemoteAsset do
   before :all do
     user = ENV['HEROKU_USERNAME']
     pass = ENV['HEROKU_PASSWORD']
-    server = ENV['e']
+    server = ENV['TRACKMAN_SERVER_URL']
 
-    puts "calling http://#{user}:#{pass}@#{server}/heroku/resources"
     response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
     json = JSON.parse response
     @trackman_url = json['config']['TRACKMAN_URL'].gsub('https', 'http')

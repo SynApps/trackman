@@ -10,7 +10,6 @@ module Trackman
       @@server_url = ENV['TRACKMAN_URL']
 
       @@site = "#{@@server_url}/assets"
-
       attr_reader :id
 
       def initialize attributes = {}
@@ -22,7 +21,7 @@ module Trackman
       end
       
       def self.log_exception ex
-        RestClient.post "#{@@server_url}/exceptions", :exception => { :message => ex.message, :backtrace => ex.backtrace }
+        RestClient.post "#{@@server_url}/exceptions", :exception => { :message => ex.message, :backtrace => ex.backtrace }, :ssl_version => 'SSLv3'
       end
 
       def file_hash
@@ -45,13 +44,13 @@ module Trackman
       end
 
       def create!
-        response = RestClient.post @@site, build_params, :content_type => :json, :accept => :json
+        response = RestClient.post @@site, build_params, :content_type => :json, :accept => :json, :ssl_version => 'SSLv3'
         path = response.headers[:location]
         @id = path[/\d+$/].to_i
       end
 
       def update!
-        RestClient.put "#{@@site}/#{id}", build_params, :content_type => :json, :accept => :json
+        RestClient.put "#{@@site}/#{id}", build_params, :content_type => :json, :accept => :json, :ssl_version => 'SSLv3'
       end  
       def delete
         response = RestClient.delete "#{@@site}/#{id}"

@@ -17,8 +17,7 @@ describe Trackman::Assets::Components::Rails32PathResolver do
     @test.stub(:prepare_for_sprocket).and_return('some/path')
     @test.stub(:sprockets).and_return(sprocket)
 
-    @test.translate 'some/path', 'path/to/my/parent'
-
     lambda { @test.translate 'some/path', 'path/to/my/parent' }.should_not raise_error
   end
+
 end

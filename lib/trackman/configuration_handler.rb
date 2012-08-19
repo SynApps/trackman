@@ -31,7 +31,7 @@ module Trackman
     
 
 	  def add_configs
-	    if configs.include?(@@TRACKMAN_ERROR) && configs.include?(@@TRACKMAN_MAINTENANCE)
+	   if configs.include?(@@TRACKMAN_ERROR) && configs.include?(@@TRACKMAN_MAINTENANCE)
 	      trackman_configs = {}
 	      [[@@TRACKMAN_ERROR, @@ERROR], [@@TRACKMAN_MAINTENANCE, @@MAINTENANCE]].each do |old_c, new_c|
 	        trackman_configs[new_c] = configs[old_c]
@@ -40,7 +40,7 @@ module Trackman
 	      add = trackman_configs.map{|k,v| "#{k}=#{v}" }.join(' ')
 	      add_config add
 	    else
-	      raise SetupException, "Can't find trackman configuration, make sure trackman addon is installed."
+	      raise SetupException, "cannot find trackman configuration, make sure trackman addon is installed"
 	    end
 	  end
 

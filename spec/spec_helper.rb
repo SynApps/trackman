@@ -13,6 +13,30 @@ RSpec.configure do |config|
 end
 
 
+module Trackman
+  module Assets
+    module Components  
+      module Rails32PathResolver
+        def sprockets
+          @@sprockets ||= init_env
+        end
+        
+        def init_env
+          env = ::Sprockets::Environment.new
+          paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
+            array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
+          end
+          paths << "#{working_dir}/public"
+          paths.each{|p| env.append_path p }
+
+          env
+        end
+      end
+    end
+  end
+end
+
+
 Asset = Trackman::Assets::Asset unless defined?(Asset)
 CssAsset = Trackman::Assets::CssAsset unless defined?(CssAsset)
 HtmlAsset = Trackman::Assets::HtmlAsset unless defined?(HtmlAsset)

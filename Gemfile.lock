@@ -1,7 +1,15 @@
+GIT
+  remote: git@github.com:jfabre/rest-client.git
+  revision: fed0962f95ad2e84bd849422637249df74659dda
+  specs:
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+      netrc
+
 PATH
   remote: .
   specs:
-    trackman (0.3.5)
+    trackman (0.4.0)
       heroku (>= 2.26.2)
       json
       nokogiri
@@ -15,8 +23,8 @@ GEM
     addressable (2.3.2)
     blockenspiel (0.4.5)
     diff-lcs (1.1.3)
-    excon (0.16.1)
-    heroku (2.30.5)
+    excon (0.16.2)
+    heroku (2.31.1)
       heroku-api (~> 0.3.4)
       launchy (>= 0.3.2)
       netrc (~> 0.7.7)
@@ -33,8 +41,6 @@ GEM
     netrc (0.7.7)
     nokogiri (1.5.5)
     rack (1.4.1)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     rspec (2.10.0)
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
@@ -57,6 +63,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rest-client!
   rspec
   sprockets
   trackman!

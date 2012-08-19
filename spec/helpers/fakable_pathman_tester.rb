@@ -31,7 +31,9 @@ class FakablePathManTester
         define_method :translate do |url, parent_url|
           parent = parent_url.to_s.dup
           parent.slice!(prepath)
-          prepath + real_translate(url, parent)
+          result = real_translate(url, parent)
+          return prepath + result unless result.nil?
+          nil 
         end
       end
     end

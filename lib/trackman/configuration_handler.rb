@@ -7,26 +7,30 @@ module Trackman
 	  @@TRACKMAN_ERROR = 'TRACKMAN_ERROR_PAGE_URL'
 	  @@TRACKMAN_MAINTENANCE = 'TRACKMAN_MAINTENANCE_PAGE_URL'
 
-	  attr_accessor :configs, :heroku_version 
+	  attr_accessor :configs, :heroku_version, :options
 
-	  def initialize(configs, heroku_version)
-	  	self.configs = configs
-	  	self.heroku_version = heroku_version
+	  def initialize(heroku_version, options = {})
+	  	self.options = options
+      self.heroku_version = heroku_version
+      self.configs = get_configs
 	  end
 
-	  def setup
-	    unless is_heroku_valid
-	      raise SetupException, "your heroku version is too low, we recommend '~> 2.26' at least"
-	    else
-	      rename_configs
-	      add_configs
-	      puts "done! Thank you for using Trackman!"
-	    end
+    def setup
+	    raise SetupException, "Your heroku version is too low, trackman requires '~> 2.26'." unless is_heroku_valid
+      rename_configs
+      add_configs
+      puts "Done!"
 	  end
+
+    def get_configs
+      result = run "heroku config -s" do |option|
+        "heroku config -s #{option}"
+      end
+      Trackman::ConfigurationHandler.s_to_h(result)
+    end
+    
 
 	  def add_configs
-	    puts "overriding the required heroku configs #{@@MAINTENANCE} and #{@@ERROR}"
-
 	    if configs.include?(@@TRACKMAN_ERROR) && configs.include?(@@TRACKMAN_MAINTENANCE)
 	      trackman_configs = {}
 	      [[@@TRACKMAN_ERROR, @@ERROR], [@@TRACKMAN_MAINTENANCE, @@MAINTENANCE]].each do |old_c, new_c|
@@ -36,7 +40,7 @@ module Trackman
 	      add = trackman_configs.map{|k,v| "#{k}=#{v}" }.join(' ')
 	      add_config add
 	    else
-	      raise SetupException, "cannot find trackman configuration, make sure trackman addon is installed"
+	      raise SetupException, "Can't find trackman configuration, make sure trackman addon is installed."
 	    end
 	  end
 
@@ -49,10 +53,26 @@ module Trackman
 	    add = Hash[bkp.map {|k, v| [k + "_bkp", v] }].map{|k,v| "#{k}=#{v}" }.select{|c| !configs.include? c }.join(' ')
 	    
 	    unless add.empty?
-	    	puts "backing configs to heroku..."
 	      add_config add
 	    end
 	  end
+
+    def self.s_to_h configs
+      new_configs = {}
+      configs.split(" ").each do |a|
+        key_val = a.split("=")
+        new_configs[key_val[0]] = key_val[1]
+      end
+      new_configs
+    end
+
+    def self.h_to_s configs
+      out = []
+      configs.each do |k,v|
+        out << k + "=" + v
+      end
+      out.join ' '
+    end
 
 		private
 		  def is_heroku_valid
@@ -60,25 +80,18 @@ module Trackman
 		  end
 
 		  def add_config add
-		  	`heroku config:add #{add}`
+        run "heroku config:add #{add}" do |option|
+          "heroku config:add #{option} #{add}"
+        end
 		  end
 
-			def self.s_to_h configs
-				new_configs = {}
-				configs.split(" ").each do |a|
-					key_val = a.split("=")
-					new_configs[key_val[0]] = key_val[1]
-				end
-				new_configs
-			end
-
-			def self.h_to_s configs
-				out = []
-				configs.each do |k,v|
-					out << k + "=" + v
-				end
-				out.join ' '
-			end
+      def run command
+        command = yield("--app #{options[:app]}") unless self.options[:app].nil?
+        puts "exec: #{command}"
+        result = `#{command}`
+        raise "An error occured running the last command." if $? != 0
+        result
+      end
 	end
 
 	class SetupException < Exception

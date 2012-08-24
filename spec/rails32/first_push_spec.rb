@@ -25,6 +25,8 @@ describe 'first push' do
 
     actual.should == expected
   end
+
+ 
 end
 
 describe 'happy path' do
@@ -74,5 +76,21 @@ describe 'full path' do
    remote.count.should == 7
    
    local.each{|l| remote.should include(l) }
+  end
+  
+  it "sends the good virtual paths to the server" do
+    virtual_paths = ['/assets/some-other-css.css', '/assets/application.css', '/assets/rails.png']
+
+    local = Asset.all
+
+    Asset.sync
+    
+    remote = RemoteAsset.all
+    
+    virtual_paths.each do |p|
+     
+      local.any?{|a| a.virtual_path.to_s == p}.should  be_true
+      remote.any?{|a| a.virtual_path.to_s == p }.should be_true
+    end
   end
 end

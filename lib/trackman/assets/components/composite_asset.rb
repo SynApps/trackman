@@ -12,7 +12,7 @@ module Trackman
 
         #internals = children_paths.select{|p| p.internal_path? }.map{|p| translate(p, path) }.select{|p| !p.nil? }
         def assets
-          internals = children_paths.select{|p| p.internal_path? }.map{|p| {old: p.dup, new_path: translate(p, path)} }
+          internals = children_paths.select{|p| p.internal_path? }.map{|p| {old: p, new_path: translate(p, path)} }
           internals.select{|p| !p[:new_path].nil? }.map{|p| asset_from(p[:old], p[:new_path])}.inject([]) do |sum, a|
             sum << a
             sum.concat(a.assets.select{|child| !sum.include?(child) })

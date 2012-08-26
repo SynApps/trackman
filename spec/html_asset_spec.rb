@@ -48,4 +48,16 @@ describe Trackman::Assets::HtmlAsset do
 
     actual.should == expected
   end
+
+  it "removes the query string from the path" do
+    asset = Asset.create(:path => 'spec/fixtures/composite_assets/query_string_in_path.html')
+    expected = [
+      '/assets/burndownchartslogo.png', '/assets/google.png', '/assets/facebook.png', 
+      '/assets/twitter.png', '/assets/application.js', '/assets/application.css'
+    ]
+
+    actual = asset.children_paths
+    
+    actual.should == expected
+  end
 end

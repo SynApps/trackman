@@ -88,7 +88,6 @@ describe 'full path' do
     remote = RemoteAsset.all
     
     virtual_paths.each do |p|
-     
       local.any?{|a| a.virtual_path.to_s == p}.should  be_true
       remote.any?{|a| a.virtual_path.to_s == p }.should be_true
     end

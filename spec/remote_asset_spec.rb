@@ -9,7 +9,8 @@ describe Trackman::Assets::RemoteAsset do
     response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
     json = JSON.parse response
     @trackman_url = json['config']['TRACKMAN_URL'].gsub('https', 'http')
- 
+    
+    puts @trackman_url
     @config = [[:@@server_url, @trackman_url], [:@@site, "#{@trackman_url}/assets"]]
     @config.each do |s, v|
       RemoteAsset.send(:class_variable_set, s, v)

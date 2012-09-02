@@ -74,7 +74,6 @@ describe 'full path' do
    remote = RemoteAsset.all
    
    remote.count.should == 7
-   
    local.each{|l| remote.should include(l) }
   end
   

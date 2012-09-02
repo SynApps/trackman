@@ -23,7 +23,8 @@ module Trackman
       end
 
       def refine_path(paths, node)
-        paths.map{|n| n[node].to_s.gsub(/\?[^\?]*$/, '') }.select{|n| n && n =~ /\w/ && n.internal_path? }
+        temp = paths.map{|n| n[node].to_s.gsub(/\?[^\?]*$/, '') }
+        temp.select{|n| n && n =~ /\w/ && n.internal_path? && !n.embedded? }
       end
     end 
   end

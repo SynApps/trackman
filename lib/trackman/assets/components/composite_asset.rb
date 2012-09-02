@@ -2,7 +2,9 @@ module Trackman
   module Assets
     module Components
       module CompositeAsset
-
+        @@url = /url\(['"]?([^'")]+)['"]?\)/
+        @@import = /url\(['"]?[^'"]+['"]?\)/
+        
         def self.included(mod)
           mod.send(:include, PathResolver)
         end
@@ -24,10 +26,7 @@ module Trackman
         end
         
         def inner_css_paths
-          @@url ||= /url\(['"]?([^'")]+)['"]?\)/
-          @@import ||= /url\(['"]?[^'"]+['"]?\)/
-
-          data.scan(@@import).collect{|x| @@url.match(x)[1] }
+          data.scan(@@import).collect{|x| @@url.match(x)[1]}.select{|x| !x.embedded? }
         end
       end
     end
@@ -37,5 +36,8 @@ end
 class String
   def internal_path? 
     self !~ /^http/
+  end
+  def embedded?
+    self.include? 'data:'
   end 
 end

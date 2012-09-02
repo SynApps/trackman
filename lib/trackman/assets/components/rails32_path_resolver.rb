@@ -17,6 +17,7 @@ module Trackman
           begin
             path = sprockets.resolve path
           rescue Exception => e
+            Debugger.trace "Could not find path: #{path}\n#{e.message}"
             return nil
           end
           path.relative_path_from(root).to_s

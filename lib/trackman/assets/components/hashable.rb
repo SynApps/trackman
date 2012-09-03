@@ -4,24 +4,23 @@ module Trackman
   module Assets
     module Components
       module Hashable
-      
         def data
-          @data ||= read_file
+          @data ||= read_file(path)
         end
 
         def file_hash
-          Digest::MD5.hexdigest(data)
+          @file_hash ||= (data.nil? ? "" : Digest::MD5.hexdigest(data))
         end
         
         protected
-          def read_file
+          def read_file(file_path)
             begin
-              file = File.open(path)
+              file = File.open(file_path)
               return file.read
             rescue
               return nil
             ensure
-              file.close 
+              file.close unless file.nil?
             end    
           end
       end      

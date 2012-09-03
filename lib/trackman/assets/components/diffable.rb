@@ -4,6 +4,7 @@ module Trackman
       module Diffable
         def diff local, remote 
           to_create = local.select{|a| remote.all? { |s| a.path != s.path } }.map{|a| a.to_remote }
+          
           { 
             :create => to_create, 
             :update => remote.select{|a| local.any?{ |s| a.path == s.path && a.file_hash != s.file_hash }},  

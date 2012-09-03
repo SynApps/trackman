@@ -1,11 +1,8 @@
 module Trackman
   module Assets
     class Asset
-      extend Components::AssetFactory
-      extend Components::Conventions
-      extend Components::Diffable
-      extend Components::Shippable
-      include Components::Hashable
+      extend Components::AssetFactory, Components::Conventions
+      extend Components::Diffable, Components::Shippable
       include Comparable
       
       def initialize attributes = {}
@@ -19,7 +16,7 @@ module Trackman
       attr_reader :path, :assets
 
       def to_remote
-        RemoteAsset.new(:path => @path, :virtual_path => self.virtual_path)
+        RemoteAsset.create(:path => @path, :virtual_path => self.virtual_path)
       end
 
       def ==(other)
@@ -50,7 +47,11 @@ module Trackman
       def is_child_of(parent)
         parent.assets.include? self
       end
-
+      
+      def to_s
+        "<#{self.class}:\npath=#{path}\nfile_hash=#{file_hash}>"
+      end
+      
       def self.all
         return [] unless maintenance_path.exist?
 
@@ -63,6 +64,7 @@ module Trackman
       def self.sync
         local = Asset.all
         remote = RemoteAsset.all
+
         diff_result = diff(local, remote) 
 
         Debugger.trace diff_result.inspect

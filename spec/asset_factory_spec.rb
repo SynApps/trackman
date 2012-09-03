@@ -40,6 +40,9 @@ describe Trackman::Assets::Components::AssetFactory do
       end
       
       class App
+        def assets
+          Rails::Assets.new
+        end
         def config
           Rails::Config.new
         end

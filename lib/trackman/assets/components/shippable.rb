@@ -15,9 +15,9 @@ module Trackman
         def build_proc symbol, instance 
           case symbol
           when :update
-            proc = Proc.new { instance.update! }
+            proc = Proc.new { instance.update }
           when :create
-            proc = Proc.new { instance.create! }
+            proc = Proc.new { instance.insert }
           when :delete
             proc = Proc.new { instance.delete }
           else

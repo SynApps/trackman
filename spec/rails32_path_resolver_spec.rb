@@ -10,9 +10,9 @@ describe Trackman::Assets::Components::Rails32PathResolver do
     @test = Rails32ResolverTest.new
   end
 
-  it "does not throw when sprockets throws" do
+  it "does not throw when sprockets throws a FileNotFound" do
     sprocket = double "SprocketEnvironment"
-    sprocket.stub(:resolve).and_raise(Exception)
+    sprocket.stub(:resolve).and_raise(Sprockets::FileNotFound)
     
     @test.stub(:prepare_for_sprocket).and_return('some/path')
     @test.stub(:sprockets).and_return(sprocket)

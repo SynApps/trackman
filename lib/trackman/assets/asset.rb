@@ -1,11 +1,8 @@
 module Trackman
   module Assets
     class Asset
-      extend Components::AssetFactory
-      extend Components::Conventions
-      extend Components::Diffable
-      extend Components::Shippable
-      include Components::Hashable
+      extend Components::AssetFactory, Components::Conventions
+      extend Components::Diffable, Components::Shippable
       include Comparable
       
       def initialize attributes = {}

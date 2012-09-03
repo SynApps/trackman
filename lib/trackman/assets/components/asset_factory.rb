@@ -16,9 +16,11 @@ module Trackman
           instance = parent.new attributes
 
           if asset_pipeline_enabled?
-            instance.extend Rails32PathResolver  
+            instance.extend BundleAsset, Rails32PathResolver 
           elsif rails_defined? #fallback to rails without asset pipeline
-            instance.extend RailsPathResolver
+            instance.extend Hashable, RailsPathResolver
+          else
+            instance.extend Hashable
           end
 
           instance
@@ -31,8 +33,7 @@ module Trackman
         def asset_pipeline_enabled?
            rails_defined? && 
            Rails.respond_to?(:application) &&
-           Rails.application.respond_to?(:config) &&
-           Rails.application.config.respond_to?(:assets) && 
+           Rails.application.respond_to?(:assets) &&
            Rails.application.config.assets.enabled
         end  
       end

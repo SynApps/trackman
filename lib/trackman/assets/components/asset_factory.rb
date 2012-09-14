@@ -4,28 +4,33 @@ module Trackman
       module AssetFactory
         def create attributes = {}
           path = attributes[:path]
+          instance = retrieve_parent(path).new attributes
+          add_content_behavior instance
+        end
 
+        def retrieve_parent path
           if File.extname(path) == '.html'
             parent = HtmlAsset
           elsif File.extname(path) == '.css'
             parent = CssAsset 
           else
             parent = Asset
-          end 
-
-          instance = parent.new attributes
-
-          if asset_pipeline_enabled?
-            instance.extend BundleAsset, Rails32PathResolver 
-          elsif rails_defined? #fallback to rails without asset pipeline
-            instance.extend Hashable, RailsPathResolver
-          else
-            instance.extend Hashable
           end
+          parent 
+        end
+
+        def add_content_behavior instance
+          if asset_pipeline_enabled?
+            instance.extend Rails32PathResolver, BundledAsset
+            return instance
+          elsif rails_defined? #fallback to rails without asset pipeline
+            instance.extend RailsPathResolver
+          end
+          instance.extend Hashable
 
           instance
         end
-
+        
         def rails_defined?
           Object.const_defined?(:Rails)
         end

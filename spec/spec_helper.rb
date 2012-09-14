@@ -5,34 +5,34 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'trackman'
-
+require 'sprockets'
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 end
 
-
-module Trackman
-  module Assets
-    module Components  
-      module Rails32PathResolver
-        def sprockets
-          @@sprockets ||= init_env
-        end
-        
-        def init_env
-          env = ::Sprockets::Environment.new
-          paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
-            array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
-          end
-          paths << "#{working_dir}/public"
-          paths.each{|p| env.append_path p }
-
-          env
-        end
-      end
+module Trackman::Assets::Components::BundledAsset
+  def env
+    working_dir = Pathname.new(Dir.pwd)
+    env = ::Sprockets::Environment.new
+    paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
+      array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
     end
+    paths << "#{working_dir}/public"
+    paths.each{|p| env.append_path p }
+    env
+  end
+end
+module Trackman::Assets::Components::Rails32PathResolver 
+  def sprockets  
+    env = ::Sprockets::Environment.new
+    paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
+      array + ["images", "stylesheets", "javascripts"].map{|p| "#{working_dir}/#{f}/assets/#{p}" }
+    end
+    paths << "#{working_dir}/public"
+    paths.each{|p| env.append_path p }
+    env
   end
 end
 

@@ -1,10 +1,10 @@
 # Trackman
 Trackman is a Heroku add-on that hosts your maintenance pages and their assets outside your app.  
-Version them as a part of your project.
+You keep them within your project, trackman syncs them to s3 when you deploy. 
 
-works out of the box for Ruby(1.8.7 and 1.9.3) on 
-* Rails 2
-* Rails 3
+Works out of the box for Ruby(1.8.7 and 1.9.3) on 
+* Rails 2.3
+* Rails 3.x
 
 ##Quick peek
 ###The first time
@@ -38,9 +38,9 @@ This will add trackman.rake to lib/tasks/
 rake trackman:setup
 ```
 This sets your initial heroku configurations and ensures that when your app is down or in maintenance your pages will be requested by heroku.
-If you have maintenance or error pages setup for heroku, we will back them up in a configuration before we override them.  
+If you have maintenance or error pages setup for heroku, trackman will back them up in a configuration before we overwrite them.  
 
-On your next push Trackman will look for changes to your maintenance pages and sync them!
+On your next push Trackman will look for changes to your pages, linked assets and sync them.
 
 ### Optional - If for any reason you wish to troubleshoot the sync operation:
 
@@ -84,7 +84,7 @@ https://github.com/SynApps/trackman/issues
 
 ###Copyright
 
-Copyright © 2012 Emanuel Petre, Jeremy Fabre
+Copyright © 2012 SynApps
 
 ## License
 

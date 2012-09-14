@@ -13,8 +13,8 @@ describe Trackman::Assets::Components::Diffable do
     }
     
     remote = [
-      RemoteAsset.new(:path => 'spec/test_data/sample.html', :file_hash => 'abcd123'), 
-      RemoteAsset.new(:path => 'spec/test_data/test1.jpeg', :file_hash => '12345')
+      RemoteAsset.create(:path => 'spec/test_data/sample.html', :file_hash => 'abcd123'), 
+      RemoteAsset.create(:path => 'spec/test_data/test1.jpeg', :file_hash => '12345')
     ]
     
     local = [Asset.create(:path => 'spec/test_data/sample.html')]

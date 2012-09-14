@@ -16,7 +16,7 @@ module Trackman
           path = prepare_for_sprocket(path, parent_url, root) if path.relative?
           begin
             path = sprockets.resolve path
-          rescue FileNotFound => e
+          rescue Sprockets::FileNotFound => e
             Debugger.trace "Could not find path: #{path}\n#{e.message}"
             return nil
           end

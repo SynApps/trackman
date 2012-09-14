@@ -23,8 +23,8 @@ describe Trackman::Assets::Components::CompositeAsset do
     @composite = TestComposite.new
   end
   it "has children" do
-    asset = CssAsset.new(:path => 'spec/test_data/css/with-asset.css')
-    asset.assets.should == [CssAsset.new(:path => 'spec/test_data/css/imported.css')] 
+    asset = Asset.create(:path => 'spec/test_data/css/with-asset.css')
+    asset.assets.should == [Asset.create(:path => 'spec/test_data/css/imported.css')] 
   end
 
   it "removes the translated assets that are nil" do

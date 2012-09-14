@@ -30,7 +30,7 @@ describe Trackman::Assets::Asset do
   describe "#data" do
     it "returns content of the file specified by path" do
       path = "./spec/spec_helper.rb"
-      asset = Asset.new(:path => path)
+      asset = Asset.create(:path => path)
       
       asset.data.should eq(File.open(path).read)    
     end
@@ -39,7 +39,7 @@ describe Trackman::Assets::Asset do
   describe "#hash" do
     it "returns the fingerprint of data" do
       path = "./spec/spec_helper.rb"
-      asset = Asset.new(:path => path)
+      asset = Asset.create(:path => path)
         
       file = File.open path
       asset.file_hash.should eq(Digest::MD5.hexdigest(file.read))

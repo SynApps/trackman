@@ -49,6 +49,7 @@ describe 'happy path' do
     actual = RemoteAsset.all
     
     actual.should == expected
+    actual.each{|a| a.data.should_not be_nil }
   end
 end
 

@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    trackman (0.4.3)
+    trackman (0.4.5)
       heroku (>= 2.26.2)
       json
       nokogiri
@@ -30,7 +30,7 @@ GEM
       netrc (~> 0.7.7)
       rest-client (~> 1.6.1)
       rubyzip
-    heroku-api (0.3.4)
+    heroku-api (0.3.5)
       excon (~> 0.16.1)
     hike (1.2.1)
     json (1.7.5)

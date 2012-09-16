@@ -12,6 +12,6 @@ namespace :trackman do
   desc "Sets up the heroku configs required by Trackman"
   task :setup, :app do |t, args|
     heroku_version = Gem.loaded_specs["heroku"].version.to_s
-    Trackman::ConfigurationHandler.new(heroku_version, app: args[:app]).setup
+    Trackman::ConfigurationHandler.new(heroku_version, :app => args[:app]).setup
   end
 end

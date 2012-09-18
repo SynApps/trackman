@@ -1,5 +1,5 @@
 module Trackman
-  module Assets
+  module Scaffold
     
     #TODO do something better than this to share the scope
     def self.autoloads path, items
@@ -12,9 +12,8 @@ module Trackman
       end
     end
 
-    @@classes = [:Asset, :HtmlAsset, :RemoteAsset, :CssAsset]
-    @@modules = [:Components, :Errors]
+    @@modules = [:ContentSaver]
 
-    autoloads 'trackman/assets', @@classes.concat(@@modules)
+    autoloads 'trackman/scaffold', @@modules
   end
 end

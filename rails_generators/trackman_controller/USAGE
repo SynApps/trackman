@@ -1,0 +1,13 @@
+Description:
+    Generates a controller which will scaffold your  error and maintenance pages 
+    when you execute the corresponding actions.
+  
+Usage:
+    Pass the name of the controller as the first argument. If no name is specified
+    it will take 'errors' as default.
+
+Examples:
+    rails generate trackman_controller abc
+
+        Will create a controller called "abc". It will contain four GET methods to
+        generate your error and maintenance pages.

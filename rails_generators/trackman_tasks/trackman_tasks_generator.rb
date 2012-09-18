@@ -1,4 +1,4 @@
-class TrackmanGenerator < Rails::Generator::Base
+class TrackmanTasksGenerator < Rails::Generator::Base
   def manifest 
     record do |m|
       m.directory('lib/tasks')

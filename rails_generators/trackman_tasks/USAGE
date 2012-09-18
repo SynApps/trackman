@@ -1,0 +1,10 @@
+Description:
+    Generates Trackman related rake tasks within your project.
+  
+Usage:
+    No parameter is needed to run this command.
+
+Examples:
+    rails generate trackman_tasks 
+
+        Will create a rake file located at 'lib/tasks/trackman.rake'.

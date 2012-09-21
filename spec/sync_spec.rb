@@ -36,7 +36,7 @@ describe Trackman::Assets::Asset do
     end
   end
   
-  it "doesn't autosync if the env is not in production" do
+  it "doesn't autosync if the env is dev or test" do
     class Rails
       def self.env
         Env.new
@@ -45,6 +45,12 @@ describe Trackman::Assets::Asset do
     
     class Env
       def production?
+        false
+      end
+      def development?
+        true
+      end
+      def test?
         false
       end
     end

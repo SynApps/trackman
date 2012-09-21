@@ -79,7 +79,7 @@ module Trackman
         autosync = autosync !~ /(0|false|FALSE)/ unless autosync.is_a? TrueClass
         
         if Object.const_defined?(:Rails)
-          autosync = autosync && Rails.env.production?
+          autosync = autosync && !(Rails.env.development? || Rails.env.test?)
         end 
         
         begin

@@ -38,8 +38,9 @@ module Trackman
         def asset_pipeline_enabled?
            rails_defined? && 
            Rails.respond_to?(:application) &&
+           Rails.application.config.assets.enabled &&
            Rails.application.respond_to?(:assets) &&
-           Rails.application.config.assets.enabled
+           Rails.application.assets
         end  
       end
     end

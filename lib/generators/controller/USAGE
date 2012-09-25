@@ -1,0 +1,12 @@
+Description:
+    Generates a controller which will scaffold your maintenance pages when you execute the corresponding actions.
+    The controller will also handle your 404 and 500 error pages. 
+Usage:
+    Pass the name of the controller as the first argument. If no name is specified
+    it will take "errors" as default.
+
+Examples:
+    rails generate trackman:controller abc
+
+        Will create a controller called "abc". It will contain four GET methods to
+        access your error pages and generate your static pages.

@@ -1,75 +1,111 @@
 # Trackman
-Trackman is a Heroku add-on that hosts your maintenance pages and their assets outside your app.  
-You keep them within your project, trackman syncs them to s3 when you deploy. 
+Trackman is a Heroku add-on that hosts your maintenance pages and their assets outside your app (S3).
+You keep them versioned in the comfort of your project and Trackman syncs them to s3 when you deploy. 
 
 Works out of the box for Ruby(1.8.7 and 1.9.3) on 
 * Rails 2.3
-* Rails 3.x
+* Rails 3
 
-##Quick peek
-###The first time
-* Create maintenance pages as if they were served by your app.
+
+## Quick peek  
+### The first time
+* Generate a controller to scaffold your static pages or create them manually.
 * Run a rake task to setup the heroku configs.
 * Deploy the changes and boot your app.
 
 ### Need to change your layout or assets?
-Simply modify those pages, link different assets, go crazy...  
+Simply edit your static pages, link different assets, go crazy...  
 Trackman will sync upon application boot on your next deployment.
 
+### Conventions
+We assume your maintenance page is located at:
+
+```console
+public/503.html
+```
+
+And the page to display if your app breaks during initialization:
+
+```console
+public/503-error.html
+```
 
 ## Getting started
-### Step 1 - Install the heroku add-on
+### Step 1 - Install the addon, add the gem and run bundle install
+
+
 ```console
 heroku addons:add trackman
 ```
-### Step 2 - Add the gem to your Gemfile
-```console
+
+
+```ruby
 gem 'trackman'
 ```
 
-##### Step 2.1 - Rails 2 only
+
 ```console
-./script/generate trackman
+bundle install
 ```
+
+##### Step 1.5 (Rails 2 only) - Generate Trackman tasks 
+
+```console
+./script/generate trackman_tasks
+```
+
+
 This will add trackman.rake to lib/tasks/ 
 
-### Step 3 - Setup
+### Step 2 - Setup
+
+
 ```console
 rake trackman:setup
 ```
+
+
 This sets your initial heroku configurations and ensures that when your app is down or in maintenance your pages will be requested by heroku.
-If you have maintenance or error pages setup for heroku, trackman will back them up in a configuration before we overwrite them.  
+If you already have maintenance or error pages configs for heroku, Trackman will copy with .bkp extensions before he overwrites them.  
 
-On your next push Trackman will look for changes to your pages, linked assets and sync them.
+### Step 3 (optional) - Scaffold your static pages
 
-### Optional - If for any reason you wish to troubleshoot the sync operation:
+##### Rails 2.3
+
+```console
+./script/generate trackman_controller [name]  
+```
+
+##### Rails 3
+
+
+```console
+rails generate trackman:controller [name]
+```
+
+This will generate a special controller that, when on development, will create your maintenance pages for you when you execute its actions.
+Because Rails 3 can handle 500 and 404 pages dynamically, the controller also adds the required route to handle them.
+On Rails 2, it generates the 4 different static pages instead.
+
+The controller has class methods to filter the response output.  
+You can find examples on how to use them within the controller itself.
+
+### Step 4 -  Deploy
+Now that you have your maintenance pages, you can commit and push to Heroku.  
+Trackman will look for changes to your pages and linked assets and sync them on application boot.
+
+### To troubleshoot the sync operation
 
 ```console
 heroku run rake trackman:sync
 ```
-Calling this command manually will throw exceptions instead of silently failing like the normal sync would.
+
+
+Executing this task will throw exceptions instead of silently failing like the normal sync would.
 
 ### For best results, make sure you have those installed:
 * Heroku >= 2.26.2
 * Bundler >= 1.1.3
-
-### Notes
-By convention, we assume your maintenance page is located at
-
-```console
-public/503.html
-```
-
-If you want two different pages for maintenance and when your app is down, we expect:
-
-For maintenance
-```console
-public/503.html
-```
-Broken app
-```console
-public/503-error.html
-```
 
 ### Bug reports
 
@@ -82,7 +118,7 @@ https://github.com/SynApps/trackman/issues
 * Jeremy Fabre (https://github.com/jfabre)
 * Emanuel Petre (https://github.com/epetre)
 
-###Copyright
+### Copyright
 
 Copyright © 2012 SynApps
 

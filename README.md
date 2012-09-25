@@ -9,12 +9,12 @@ Works out of the box for Ruby(1.8.7 and 1.9.3) on
 
 ## Quick peek  
 ### The first time
-* Generate a controller to scaffold your static pages or create them manually.
 * Run a rake task to setup the heroku configs.
+* Generate a controller to scaffold your static pages.
 * Deploy the changes and boot your app.
 
 ### Need to change your layout or assets?
-Simply edit your static pages, link different assets, go crazy...  
+Simply edit your static pages, link different assets, go crazy!  
 Trackman will sync upon application boot on your next deployment.
 
 ### Conventions

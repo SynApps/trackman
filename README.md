@@ -1,6 +1,6 @@
 # Trackman
 Trackman is a Heroku add-on that hosts your maintenance pages and their assets outside your app (S3).
-You keep them versioned in the comfort of your project and Trackman syncs them to s3 when you deploy. 
+You keep them within your project and Trackman syncs them to S3 when you deploy. 
 
 Works out of the box for Ruby(1.8.7 and 1.9.3) on 
 * Rails 2.3
@@ -14,7 +14,7 @@ Works out of the box for Ruby(1.8.7 and 1.9.3) on
 * Deploy the changes and boot your app.
 
 ### Need to change your layout or assets?
-Simply edit your static pages, link different assets, go crazy!  
+Simply edit your static pages, link different assets, go crazy!0  
 Trackman will sync upon application boot on your next deployment.
 
 ### Conventions

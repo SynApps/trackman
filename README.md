@@ -14,7 +14,7 @@ Works out of the box for Ruby(1.8.7 and 1.9.3) on
 * Deploy the changes and boot your app.
 
 ### Need to change your layout or assets?
-Simply edit your static pages, link different assets, go crazy!0  
+Simply edit your static pages, link different assets, go crazy!
 Trackman will sync upon application boot on your next deployment.
 
 ### Conventions

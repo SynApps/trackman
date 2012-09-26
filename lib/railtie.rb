@@ -1,7 +1,5 @@
-#Bundler.require
-
 if defined?(Rails)
-  if ::Rails::VERSION::STRING =~ /^2\.[1-9]/ && Rails.env.production?
+  if ::Rails::VERSION::STRING =~ /^2\.[1-9]/
     module Trackman
       class RackMiddleware
         def initialize(app)
@@ -24,11 +22,9 @@ if defined?(Rails)
           Dir[File.join(File.dirname(__FILE__),'../rails_generators/trackman_tasks/templates/*.rake')].each { |f| load f }
         end
 
-        if Rails.env == "production"
-          initializer "trackman.hook" do |app|
-            app.config.after_initialize do
-              Trackman::Assets::Asset.autosync
-            end
+        initializer "trackman.hook" do |app|
+          app.config.after_initialize do
+            Trackman::Assets::Asset.autosync
           end
         end
       end

@@ -78,4 +78,27 @@ describe Trackman::Assets::Asset do
 
     lambda { result = MyTestAsset.autosync }.should_not raise_error
   end
+
+  it "syncs if the env is not development or test" do
+    class Rails
+      def self.env
+        Env.new
+      end  
+    end
+    
+    class Env
+      def production?
+        false
+      end
+      def development?
+        false
+      end
+      def test?
+        false
+      end
+    end
+    MyTestAsset.should_receive(:sync)
+
+    MyTestAsset.autosync
+  end
 end

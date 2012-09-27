@@ -4,3 +4,4 @@ Gemfile.lock
 pkg/*
 *.orig
 *.DS_Store
+.rspec

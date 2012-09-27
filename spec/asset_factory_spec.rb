@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Trackman::Assets::Components::AssetFactory do
+describe Trackman::Components::AssetFactory do
   class TestFactory
-    extend Trackman::Assets::Components::AssetFactory
+    extend Trackman::Components::AssetFactory
   end
   
   before :all do

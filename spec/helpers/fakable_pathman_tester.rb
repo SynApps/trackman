@@ -1,6 +1,6 @@
 class FakablePathManTester  
   @@modules = [PathResolver, Rails32PathResolver, RailsPathResolver]
-  Conventions = Trackman::Assets::Components::Conventions
+  Conventions = Trackman::Components::Conventions
 
   def self.switch_on prepath
     override_remote_assets prepath

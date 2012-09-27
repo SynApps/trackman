@@ -19,7 +19,8 @@ if defined?(Rails)
     module Trackman
       class Railtie < Rails::Railtie
         rake_tasks do
-          Dir[File.join(File.dirname(__FILE__),'../rails_generators/trackman_tasks/templates/*.rake')].each { |f| load f }
+          path = '../rails_generators/trackman_tasks/templates/*.rake'
+          Dir[File.join(File.dirname(__FILE__), path)].each { |f| load f }
         end
 
         initializer "trackman.hook" do |app|

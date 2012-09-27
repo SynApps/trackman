@@ -4,7 +4,7 @@ require 'digest/md5'
 describe Trackman::Assets::Asset do
   it "should raise an exception if the path is not good" do 
     wrong_path = "./wrong_path.html"
-    lambda { Asset.new(:path => wrong_path) }.should raise_error Trackman::Assets::Errors::AssetNotFoundError
+    lambda { Asset.new(:path => wrong_path) }.should raise_error Trackman::Errors::AssetNotFoundError
   end
 
   it "is equal if the path is the same" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 class TestComposite
-  include Trackman::Assets::Components::CompositeAsset
+  include Trackman::Components::CompositeAsset
   
   def path 
     'parent'
@@ -18,7 +18,7 @@ class TestAsset < Trackman::Assets::Asset
   end    
 end
 
-describe Trackman::Assets::Components::CompositeAsset do
+describe Trackman::Components::CompositeAsset do
   before :each do
     @composite = TestComposite.new
   end

@@ -12,7 +12,7 @@ RSpec.configure do |config|
   config.filter_run :focus
 end
 
-module Trackman::Assets::Components::BundledAsset
+module Trackman::Components::BundledAsset
   def env
     working_dir = Pathname.new(Dir.pwd)
     env = ::Sprockets::Environment.new
@@ -24,7 +24,7 @@ module Trackman::Assets::Components::BundledAsset
     env
   end
 end
-module Trackman::Assets::Components::Rails32PathResolver 
+module Trackman::Components::Rails32PathResolver 
   def sprockets  
     env = ::Sprockets::Environment.new
     paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
@@ -42,7 +42,7 @@ CssAsset = Trackman::Assets::CssAsset unless defined?(CssAsset)
 HtmlAsset = Trackman::Assets::HtmlAsset unless defined?(HtmlAsset)
 RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
 
-PathResolver = Trackman::Assets::Components::PathResolver unless defined?(PathResolver)
-Rails32PathResolver = Trackman::Assets::Components::Rails32PathResolver unless defined?(Rails32PathResolver)
-RailsPathResolver = Trackman::Assets::Components::RailsPathResolver unless defined?(RailsPathResolver)
+PathResolver = Trackman::Components::PathResolver unless defined?(PathResolver)
+Rails32PathResolver = Trackman::Components::Rails32PathResolver unless defined?(Rails32PathResolver)
+RailsPathResolver = Trackman::Components::RailsPathResolver unless defined?(RailsPathResolver)
 ConfigurationHandler = Trackman::ConfigurationHandler unless defined?(ConfigurationHandler)

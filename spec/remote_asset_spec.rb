@@ -77,7 +77,7 @@ describe Trackman::Assets::RemoteAsset do
     begin 
       @config.each {|k,v| RemoteAsset.send(:class_variable_set, k, nil) }
       @config.each do |k,v|
-        lambda { RemoteAsset.create(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Assets::Errors::ConfigNotFoundError)
+        lambda { RemoteAsset.create(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Errors::ConfigNotFoundError)
       end
     ensure
       @config.each {|k,v| RemoteAsset.send(:class_variable_set, k, v) }

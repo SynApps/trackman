@@ -13,8 +13,8 @@ module Trackman
     end
 
     @@classes = [:Asset, :HtmlAsset, :RemoteAsset, :CssAsset]
-    @@modules = [:Components, :Errors]
+    @@modules = []
 
-    autoloads 'trackman/assets', @@classes.concat(@@modules)
+    autoloads 'trackman/assets', @@classes + @@modules
   end
 end

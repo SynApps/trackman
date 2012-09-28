@@ -1,7 +1,7 @@
 module Trackman
   module Assets
     class CssAsset < Asset
-      include Components::CompositeAsset
+      include CompositeAsset
 
       protected
 		    alias children_paths inner_css_paths

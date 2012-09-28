@@ -2,7 +2,7 @@ require 'nokogiri'
 module Trackman
   module Assets
     class HtmlAsset < Asset
-      include Components::CompositeAsset
+      include CompositeAsset
 
       def document
         @doc ||= Nokogiri::HTML(data)     

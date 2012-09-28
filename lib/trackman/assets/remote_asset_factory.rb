@@ -1,7 +1,7 @@
 module Trackman
-  module Components
+  module Assets
     module RemoteAssetFactory
-      include AssetFactory
+      include Assets::AssetFactory
 
       def retrieve_parent(path)
         RemoteAsset

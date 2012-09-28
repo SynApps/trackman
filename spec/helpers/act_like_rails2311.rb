@@ -1,7 +1,7 @@
 
 class ActLikeRails2311
   def self.switch_on
-    Trackman::Components::AssetFactory.module_eval do
+    Trackman::Assets::AssetFactory.module_eval do
       alias :old_rails_defined? :rails_defined?
       alias :old_asset_pipeline_enabled? :asset_pipeline_enabled? 
       
@@ -16,7 +16,7 @@ class ActLikeRails2311
   end
 
   def self.switch_off
-    Trackman::Components::AssetFactory.module_eval do
+    Trackman::Assets::AssetFactory.module_eval do
       alias :rails_defined? :old_rails_defined?
       alias :asset_pipeline_enabled? :old_asset_pipeline_enabled?
       

@@ -1,7 +1,7 @@
 module Trackman
   module Assets
     class Asset
-      extend Components::AssetFactory, Components::Conventions
+      extend AssetFactory, Components::Conventions
       extend Components::Diffable, Components::Shippable
       include Comparable
       

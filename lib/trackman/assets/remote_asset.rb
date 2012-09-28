@@ -7,7 +7,7 @@ RestClient.log = Logger.new(STDOUT) if Trackman::Utility::Debugger.debug_mode?
 module Trackman
   module Assets
     class RemoteAsset < Asset
-      extend Components::RemoteAssetFactory
+      extend RemoteAssetFactory
 
       @@server_url = ENV['TRACKMAN_URL']
 

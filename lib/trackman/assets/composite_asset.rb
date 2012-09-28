@@ -1,5 +1,5 @@
 module Trackman
-  module Components
+  module Assets
     module CompositeAsset
       @@url = /url\(['"]?([^'")]+)['"]?\)/
       @@import = /url\(['"]?[^'"]+['"]?\)/

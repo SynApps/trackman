@@ -1,5 +1,5 @@
 module Trackman
-  module Components
+  module Assets
     module AssetFactory
       def create attributes = {}
         path = attributes[:path]
@@ -20,12 +20,12 @@ module Trackman
 
       def add_content_behavior instance
         if asset_pipeline_enabled?
-          instance.extend Rails32Resolver, BundledAsset
+          instance.extend Path::Rails32Resolver, BundledAsset
           return instance
         elsif rails_defined? #fallback to rails without asset pipeline
-          instance.extend RailsResolver
+          instance.extend Path::RailsResolver
         end
-        instance.extend Hashable
+        instance.extend Components::Hashable
 
         instance
       end

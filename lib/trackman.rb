@@ -17,5 +17,4 @@ module Trackman
   end
 
   autoloads 'trackman', [:Assets, :Configuration, :Scaffold, :Components, :Errors, :Path, :Utility]
-
 end

@@ -3,20 +3,8 @@ require 'helpers/app_creator'
 
 describe Trackman::Assets::RemoteAsset do  
   before :each do
-    # user = ENV['HEROKU_USERNAME']
-    # pass = ENV['HEROKU_PASSWORD']
-    # server = ENV['TRACKMAN_SERVER_URL']
     @old_file = nil
     @config = AppCreator.create
-
-    # response = RestClient.post "http://#{user}:#{pass}@#{server}/heroku/resources", :plan => 'test', :heroku_id => 123 
-    # json = JSON.parse response
-    # @trackman_url = json['config']['TRACKMAN_URL'].gsub('https', 'http')
-    
-    # @config = [[:@@server_url, @trackman_url], [:@@site, "#{@trackman_url}/assets"]]
-    # @config.each do |s, v|
-    #   RemoteAsset.send(:class_variable_set, s, v)
-    # end
   end
   
   after :each do
@@ -74,13 +62,21 @@ describe Trackman::Assets::RemoteAsset do
   end 
 
   it "throws if a config is missing" do
-    begin 
-      @config.each {|k,v| RemoteAsset.send(:class_variable_set, k, nil) }
-      @config.each do |k,v|
-        lambda { RemoteAsset.create(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Errors::ConfigNotFoundError)
+    config = @config
+    begin
+      Trackman::Assets::Persistence::Remote::ClassMethods.module_eval do
+        config.each do |k,v| 
+          alias_method "temp_#{k}", k
+          define_method(k, lambda{ nil }) 
+        end
       end
+      lambda { RemoteAsset.create(:path => 'spec/test_data/a.js') }.should raise_error(Trackman::Errors::ConfigNotFoundError)
     ensure
-      @config.each {|k,v| RemoteAsset.send(:class_variable_set, k, v) }
+      Trackman::Assets::Persistence::Remote::ClassMethods.module_eval do
+        config.each do |k,v| 
+          alias_method k, "temp_#{k}"
+        end
+      end
     end
   end
 end

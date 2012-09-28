@@ -5,7 +5,7 @@ class AppCreator
 
     trackman_url = json['config']['TRACKMAN_URL'].gsub('https', 'http')
 
-    [[:@@server_url, trackman_url], [:@@site, "#{trackman_url}/assets"]]
+    [[:server_url, trackman_url], [:site, "#{trackman_url}/assets"]]
   end
 
   def self.create
@@ -15,8 +15,12 @@ class AppCreator
     
     @@config = get_config "http://#{user}:#{pass}@#{server}/heroku/resources"
 
-    @@config.each do |s, v| 
-      RemoteAsset.send(:class_variable_set, s, v)
+    Trackman::Assets::Persistence::Remote::ClassMethods.module_eval do
+      #singleton = class << self; self; end
+      @@config.each do |k, v|   
+        alias_method "old_#{k}", k
+        define_method(k, lambda { v })
+      end
     end
 
     @@config
@@ -25,8 +29,11 @@ class AppCreator
   def self.reset
     RemoteAsset.all.each { |a| a.delete }
 
-    @@config.each do |k,v|
-      RemoteAsset.send(:class_variable_set, k, v)
+    Trackman::Assets::Persistence::Remote::ClassMethods.module_eval do
+      #singleton = class << self; self; end
+      @@config.each do |k,v|
+        alias_method k, "old_#{k}"
+      end
     end
   end
 end

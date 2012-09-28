@@ -86,7 +86,7 @@ module Trackman
           return sync if autosync
         rescue Exception => ex
           begin
-            ::Trackman::Assets::RemoteAsset.log_exception ex
+            Trackman::Utility::Debugger.log_exception ex
           ensure
             return false
           end

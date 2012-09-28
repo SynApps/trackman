@@ -67,7 +67,7 @@ module Trackman
 
         diff_result = diff(local, remote) 
 
-        Debugger.trace diff_result.inspect
+        Trackman::Utility::Debugger.trace diff_result.inspect
 
         ship diff_result
         

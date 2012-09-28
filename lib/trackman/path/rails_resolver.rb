@@ -1,7 +1,7 @@
 module Trackman
-  module Components  
-    module RailsPathResolver
-      include PathResolver
+  module Path  
+    module RailsResolver
+      include Resolver
       
       alias old_translate translate
       alias old_parent_of parent_of

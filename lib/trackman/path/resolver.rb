@@ -1,6 +1,6 @@
 module Trackman
-  module Components  
-    module PathResolver
+  module Path  
+    module Resolver
     	def translate url, parent_url
         raise "parent_url: #{parent_url} is required to be relative" if Pathname.new(parent_url).absolute?
 

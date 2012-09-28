@@ -2,7 +2,7 @@ require 'rest-client'
 require 'json'
 require 'uri'
 require 'logger'
-RestClient.log = Logger.new(STDOUT) if Debugger.debug_mode?
+RestClient.log = Logger.new(STDOUT) if Trackman::Utility::Debugger.debug_mode?
 
 module Trackman
   module Assets

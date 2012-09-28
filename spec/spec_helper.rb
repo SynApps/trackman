@@ -24,7 +24,7 @@ module Trackman::Components::BundledAsset
     env
   end
 end
-module Trackman::Components::Rails32PathResolver 
+module Trackman::Path::Rails32Resolver 
   def sprockets  
     env = ::Sprockets::Environment.new
     paths = ['app', 'lib', 'vendor'].inject([]) do |array, f|
@@ -42,7 +42,7 @@ CssAsset = Trackman::Assets::CssAsset unless defined?(CssAsset)
 HtmlAsset = Trackman::Assets::HtmlAsset unless defined?(HtmlAsset)
 RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
 
-PathResolver = Trackman::Components::PathResolver unless defined?(PathResolver)
-Rails32PathResolver = Trackman::Components::Rails32PathResolver unless defined?(Rails32PathResolver)
-RailsPathResolver = Trackman::Components::RailsPathResolver unless defined?(RailsPathResolver)
-ConfigurationHandler = Trackman::ConfigurationHandler unless defined?(ConfigurationHandler)
+Resolver = Trackman::Path::Resolver unless defined?(Resolver)
+Rails32Resolver = Trackman::Path::Rails32Resolver unless defined?(Rails32Resolver)
+RailsResolver = Trackman::Path::RailsResolver unless defined?(RailsResolver)
+Configuration = Trackman::Utility::Configuration unless defined?(Configuration)

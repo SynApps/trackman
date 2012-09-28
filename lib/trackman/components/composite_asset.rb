@@ -5,10 +5,10 @@ module Trackman
       @@import = /url\(['"]?[^'"]+['"]?\)/
       
       def self.included(mod)
-        mod.send(:include, PathResolver)
+        mod.send(:include, Path::Resolver)
       end
       def self.extended(mod)
-        mod.send(:extend, PathResolver)
+        mod.send(:extend, Path::Resolver)
       end
 
       def assets

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 class PathTester
-  extend PathResolver
+  extend Resolver
 end
 
-describe PathResolver do
+describe Resolver do
   it 'gives a path at the same level as the parent if the url is relative and there is no parent specified' do
     parent_url = 'allo/home.html' 
     url = 'bob.jpg'

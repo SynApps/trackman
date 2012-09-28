@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-class TestConfigurationHandler < Trackman::ConfigurationHandler
+class TestConfiguration < Trackman::Utility::Configuration
   def get_configs
     {
       "TRACKMAN_MAINTENANCE_PAGE_URL" => "\"en_US.UTF-8\"",
@@ -12,7 +12,7 @@ class TestConfigurationHandler < Trackman::ConfigurationHandler
   attr_accessor :heroku_configs
 
   def add_config add
-    self.heroku_configs = (heroku_configs || {}).merge(ConfigurationHandler.s_to_h(add))
+    self.heroku_configs = (heroku_configs || {}).merge(Configuration.s_to_h(add))
   end
 
   def run command
@@ -20,9 +20,9 @@ class TestConfigurationHandler < Trackman::ConfigurationHandler
   end
 end
 
-describe ConfigurationHandler do
+describe Configuration do
   before :each do 
-    @config = TestConfigurationHandler.new "2.26.2"
+    @config = TestConfiguration.new "2.26.2"
   end
 
 	it "creates heroku configs" do
@@ -44,13 +44,13 @@ describe ConfigurationHandler do
 			"TRACKMANw_ERROR_PAGE_URL" => "\"error_page_url\""
 		}
 		
-		lambda{ @config.setup }.should raise_error(Trackman::SetupException)
+		lambda{ @config.setup }.should raise_error(Trackman::Errors::ConfigSetupError)
 	end
 
 	it "raises an error if trackman version is bad" do
 		@config.heroku_version = "2.22.2" 
 
-		lambda{ @config.setup }.should raise_error(Trackman::SetupException)
+		lambda{ @config.setup }.should raise_error(Trackman::Errors::ConfigSetupError)
 	end
 
 	it "backups configs when they already exist and add the new ones" do

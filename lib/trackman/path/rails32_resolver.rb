@@ -1,7 +1,7 @@
 module Trackman
-  module Components  
-    module Rails32PathResolver
-      include PathResolver
+  module Path  
+    module Rails32Resolver
+      include Resolver
       
       def translate url, parent_url 
         root = working_dir.realpath
@@ -14,7 +14,7 @@ module Trackman
         begin
           path = sprockets.resolve path
         rescue Sprockets::FileNotFound => e
-          Debugger.trace "Could not find path: #{path}\n#{e.message}"
+          Trackman::Utility::Debugger.trace "Could not find path: #{path}\n#{e.message}"
           return nil
         end
         path.relative_path_from(root).to_s

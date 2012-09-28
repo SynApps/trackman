@@ -1,5 +1,5 @@
 class FakablePathManTester  
-  @@modules = [PathResolver, Rails32PathResolver, RailsPathResolver]
+  @@modules = [Resolver, Rails32Resolver, RailsResolver]
   Conventions = Trackman::Components::Conventions
 
   def self.switch_on prepath
@@ -16,7 +16,7 @@ class FakablePathManTester
 
   def self.override_resolvers prepath
     
-    PathResolver.module_eval do
+    Resolver.module_eval do
       alias real_working_dir working_dir
 
       define_method :working_dir do
@@ -81,7 +81,7 @@ class FakablePathManTester
   end
 
   def self.reset_resolvers
-    PathResolver.module_eval do    
+    Resolver.module_eval do    
       alias :working_dir :real_working_dir
       remove_method :real_working_dir
     end
@@ -92,7 +92,7 @@ class FakablePathManTester
         remove_method :real_translate
       end
     end
-    Rails32PathResolver.send(:class_variable_set, :@@sprockets, nil)
+    Rails32Resolver.send(:class_variable_set, :@@sprockets, nil)
   end
 
   def self.reset_conventions

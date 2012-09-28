@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 class Rails32ResolverTest
-  include Trackman::Components::Rails32PathResolver
+  include Rails32Resolver
 end
 
-describe Trackman::Components::Rails32PathResolver do  
-  Rails32PathResolver = Trackman::Components::Rails32PathResolver
+describe Trackman::Path::Rails32Resolver do  
+  
   before :all do
     @test = Rails32ResolverTest.new
   end

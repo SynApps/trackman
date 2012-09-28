@@ -68,6 +68,6 @@ describe Trackman::Components::AssetFactory do
 
     TestFactory.asset_pipeline_enabled?.should be_false
     asset = TestFactory.create(:path => 'x.css')
-    asset.should_not be_a_kind_of Rails32PathResolver 
+    asset.should_not be_a_kind_of Rails32Resolver 
   end
 end

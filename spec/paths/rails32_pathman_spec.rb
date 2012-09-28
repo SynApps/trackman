@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'sprockets'
 
 class Rails32Tester
-  extend Rails32PathResolver
+  extend Rails32Resolver
 
   def self.working_dir
     Pathname.new('spec/fixtures/sprockets')
@@ -10,7 +10,7 @@ class Rails32Tester
 end
 
 
-describe Rails32PathResolver do
+describe Rails32Resolver do
   it "serves an image linked by an html" do
     parent_url = 'public/503.html'
     url = '/assets/bombero.jpeg'

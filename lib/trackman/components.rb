@@ -4,7 +4,7 @@ module Trackman
       :Shippable, :CompositeAsset, :AssetFactory, :PathResolver, 
       :Rails32PathResolver, :RailsPathResolver, :BundledAsset, :RemoteAssetFactory]
    
-    ::Trackman::Assets.autoloads 'trackman/components', @@modules do |s,p|
+    Trackman.autoloads 'trackman/components', @@modules do |s,p|
         autoload s, p 
     end
   end

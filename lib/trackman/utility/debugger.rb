@@ -7,7 +7,7 @@ module Trackman
       @@server_url = ENV['TRACKMAN_URL']
 
       def self.debug_mode?
-        !ENV['TRACKMAN_DEBUG_MODE'].nil? && ENV['TRACKMAN_DEBUG_MODE'] == 'true'
+        @@debug ||= ENV['TRACKMAN_DEBUG_MODE'] == 'true'
       end
 
       def self.trace data
@@ -20,5 +20,23 @@ module Trackman
     end
   end
 end
+if Trackman::Utility::Debugger.debug_mode?
+  RestClient.log = Logger.new(STDOUT) 
 
-RestClient.log = Logger.new(STDOUT) if Trackman::Utility::Debugger.debug_mode?
+  #loads module first
+  Trackman::Components::Diffable
+
+  module Trackman
+    module Components
+      module Diffable
+        alias old_diff diff
+        
+        def diff local, remote 
+          result = old_diff local, remote
+          Trackman::Utility::Debugger.trace "Diff result:\n#{result.inspect}"
+          result
+        end
+      end
+    end
+  end
+end

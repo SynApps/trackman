@@ -1,9 +1,8 @@
 module Trackman
   module Components
-    @@modules = [:Conventions, :Diffable, :Hashable, :Shippable]
-   
-    Trackman.autoloads 'trackman/components', @@modules do |s,p|
-        autoload s, p 
-    end
+    autoload :Conventions, 'trackman/components/conventions'
+    autoload :Diffable, 'trackman/components/diffable'
+    autoload :Hashable, 'trackman/components/hashable'
+    autoload :Shippable, 'trackman/components/shippable'
   end
 end

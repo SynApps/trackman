@@ -1,9 +1,7 @@
 module Trackman
   module Errors
-    @@classes = [:AssetNotFoundError, :ConfigNotFoundError, :ConfigSetupError]
-    
-    Trackman.autoloads 'trackman/errors', @@classes do |s,p|
-        autoload s, p 
-    end
+    autoload :AssetNotFoundError, 'trackman/errors/asset_not_found_error'
+    autoload :ConfigNotFoundError, 'trackman/errors/config_not_found_error'
+    autoload :ConfigSetupError, 'trackman/errors/config_setup_error'
   end
 end

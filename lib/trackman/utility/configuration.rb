@@ -27,7 +27,7 @@ module Trackman
         result = run "heroku config -s" do |option|
           "heroku config -s #{option}"
         end
-        Trackman::Configuration.s_to_h(result)
+        self.class.s_to_h(result)
       end
       
 

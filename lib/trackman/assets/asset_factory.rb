@@ -20,12 +20,12 @@ module Trackman
 
       def add_content_behavior instance
         if asset_pipeline_enabled?
-          instance.extend Path::Rails32Resolver, BundledAsset
+          instance.extend Trackman::Path::Rails32Resolver, BundledAsset
           return instance
         elsif rails_defined? #fallback to rails without asset pipeline
-          instance.extend Path::RailsResolver
+          instance.extend Trackman::Path::RailsResolver
         end
-        instance.extend Components::Hashable
+        instance.extend Trackman::Components::Hashable
 
         instance
       end

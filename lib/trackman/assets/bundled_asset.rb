@@ -1,7 +1,7 @@
 module Trackman
   module Assets
     module BundledAsset
-      include Components::Hashable
+      include Trackman::Components::Hashable
       
       def env
         @@env ||= ::Rails.application.assets.index

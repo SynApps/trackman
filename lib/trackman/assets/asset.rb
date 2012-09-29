@@ -1,8 +1,8 @@
 module Trackman
   module Assets
     class Asset
-      extend AssetFactory, Components::Conventions
-      extend Components::Diffable, Components::Shippable
+      extend AssetFactory, Trackman::Components::Conventions
+      extend Trackman::Components::Diffable, Trackman::Components::Shippable
       include Comparable
       
       def initialize attributes = {}
@@ -65,10 +65,7 @@ module Trackman
         local = Asset.all
         remote = RemoteAsset.all
 
-        diff_result = diff(local, remote) 
-
-        Trackman::Utility::Debugger.trace diff_result.inspect
-
+        diff_result = diff(local, remote)
         ship diff_result
         
         true

@@ -1,9 +1,7 @@
 module Trackman
   module Assets
     module Persistence
-      Trackman.autoloads 'trackman/assets/persistence', [:Remote] do |s, p|
-        autoload s, p
-      end
+      autoload :Remote, 'trackman/assets/persistence/remote'
     end
   end
 end

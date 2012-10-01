@@ -15,11 +15,25 @@ module Trackman
       end
 
       def self.log_exception ex
-        RestClient.post "#{@@server_url}/exceptions", :exception => { :message => ex.message, :backtrace => ex.backtrace }, :ssl_version => 'SSLv3'
+        to_send = {
+          :ruby_version => "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}",
+          :gem_version => Trackman::VERSION,
+          :rails_version => defined?(Rails) ? ::Rails::VERSION::STRING : 'rails not defined',
+          :bundle => `bundle list`.split("\n"),
+          :exception => { :class => ex.class.name, :message => ex.message, :backtrace => ex.backtrace },
+          :local => Trackman::Assets::Asset.all.map{|a| a.to_s },
+          :remote => Trackman::Assets::RemoteAsset.all.map{|a| a.to_s }
+        }
+        send_data to_send
+      end
+      
+      def self.send_data data
+        RestClient.post "#{@@server_url}/exceptions", data, :ssl_version => 'SSLv3'
       end
     end
   end
 end
+
 if Trackman::Utility::Debugger.debug_mode?
   RestClient.log = Logger.new(STDOUT) 
 

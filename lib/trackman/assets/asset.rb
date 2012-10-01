@@ -84,6 +84,8 @@ module Trackman
         rescue Exception => ex
           begin
             Trackman::Utility::Debugger.log_exception ex
+          rescue Exception => ex2
+            puts ex2
           ensure
             return false
           end

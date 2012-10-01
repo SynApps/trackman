@@ -10,7 +10,8 @@ module Trackman
   autoload :Errors, 'trackman/errors'
   autoload :Path, 'trackman/path'
   autoload :Utility, 'trackman/utility'
-end
 
+end
+require File.expand_path("../trackman/version", __FILE__)
 require File.expand_path("../trackman/utility/debugger", __FILE__)
 require File.expand_path("../trackman/utility/railtie", __FILE__)

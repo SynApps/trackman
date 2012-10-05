@@ -1,26 +1,15 @@
+require File.expand_path('../middleware', __FILE__)
+
 if defined?(Rails)
   if ::Rails::VERSION::STRING =~ /^2\.[1-9]/
-    module Trackman
-      class RackMiddleware
-        def initialize(app)
-          @app = app
-          Trackman::Assets::Asset.autosync
-        end
-        
-        def call(env)
-          @app.call(env)
-        end
-      end
-    end
     require './config/environment'
-    Rails.configuration.middleware.use Trackman::RackMiddleware 
+    Rails.configuration.middleware.use Trackman::Middleware 
   elsif ::Rails::VERSION::STRING =~ /^[3-9]\.[1-9]/
     require 'generators/controller/controller_generator'
     module Trackman
       class Railtie < Rails::Railtie
         rake_tasks do
-          path = File.expand_path('../../../../rails_generators/trackman_tasks/templates/trackman.rake', __FILE__)
-          load path
+          load File.expand_path('../../../../rails_generators/trackman_tasks/templates/trackman.rake', __FILE__)
         end
 
         initializer "trackman.hook" do |app|

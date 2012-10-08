@@ -1,5 +1,5 @@
 # Trackman
-[Trackman](https://www.trackman-addon.com) is a Heroku add-on that hosts your maintenance pages and their assets outside your app (S3).
+[Trackman](http://www.trackman-addon.com) is a Heroku add-on that hosts your maintenance pages and their assets outside your app (S3).
 You keep them within your project and Trackman syncs them to S3 when you deploy. 
 
 Works out of the box for Ruby(1.8.7 and 1.9.3) on 

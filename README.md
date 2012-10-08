@@ -1,5 +1,5 @@
 # Trackman
-Trackman is a Heroku add-on that hosts your maintenance pages and their assets outside your app (S3).
+[Trackman](https://www.trackman-addon.com) is a Heroku add-on that hosts your maintenance pages and their assets outside your app (S3).
 You keep them within your project and Trackman syncs them to S3 when you deploy. 
 
 Works out of the box for Ruby(1.8.7 and 1.9.3) on 
@@ -109,14 +109,13 @@ Executing this task will throw exceptions instead of silently failing like the n
 
 ### Bug reports
 
-Any bug report can be submitted here.
-https://github.com/SynApps/trackman/issues
+Any bug report can be submitted [here](https://github.com/SynApps/trackman/issues).
 
 
 ### Creators / Maintainers
 
-* Jeremy Fabre (https://github.com/jfabre)
-* Emanuel Petre (https://github.com/epetre)
+* [Jeremy Fabre](https://github.com/jfabre)
+* [Emanuel Petre](https://github.com/epetre)
 
 ### Copyright
 
@@ -124,7 +123,7 @@ Copyright © 2012 SynApps
 
 ## License
 
-  Trackman is released under the MIT license:
+  The trackman gem (client) is released under the MIT license:
 
   [LICENSE](https://github.com/jfabre/trackman/blob/master/LICENSE)
 

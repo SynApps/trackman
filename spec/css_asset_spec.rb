@@ -36,4 +36,12 @@ describe CssAsset do
 
     actual.should == expected
   end
+
+  it "does not return assets in comment" do
+    expected = []
+    asset = Asset.create(:path => 'spec/test_data/css/comments.css')
+    actual = asset.assets
+
+    actual.should == expected
+  end
 end

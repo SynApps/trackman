@@ -24,7 +24,10 @@ module Trackman
       end
       
       def inner_css_paths
-        data.scan(@@import).collect{|x| @@url.match(x)[1]}.select{|x| !x.embedded? }
+        #clean css comments
+        my_data = data.gsub(/\/\*.*\*\//m, '')
+        my_data = my_data.gsub(/\<\!\-\-.*\-\-\>/m, '')
+        my_data.scan(@@import).collect{|x| @@url.match(x)[1]}.select{|x| !x.embedded? }
       end
     end
   end

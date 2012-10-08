@@ -60,4 +60,13 @@ describe Trackman::Assets::HtmlAsset do
     
     actual.should == expected
   end
+
+  it "does not return assets in comments" do
+    asset = Asset.create(:path => 'spec/test_data/html/comments.html')
+    expected = []
+
+    actual = asset.children_paths
+    
+    actual.should == expected
+  end
 end

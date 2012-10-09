@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Trackman::VERSION
   s.authors     = ["Jeremy Fabre", "Emanuel Petre"]
   s.email       = ["jeremy.fabre@hotmail.com", "petreemanuel@gmail.com"]
-  s.homepage    = "https://github.com/SynApps/trackman"
+  s.homepage    = "http://www.trackman-addon.com"
   s.summary     = "Client version of the Trackman addon on Heroku"
   s.description = "Trackman hosts your maintenances and app-down pages (503s) and lets you keep them in your current development environment so that you can focus on delivering and not configuring."
 

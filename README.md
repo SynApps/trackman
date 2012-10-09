@@ -30,78 +30,17 @@ And the page to display if your app breaks during initialization:
 public/503-error.html
 ```
 
-## Getting started
-### Step 1 - Install the addon, add the gem and run bundle install
-
-
-```console
-heroku addons:add trackman
-```
-
-
-```ruby
-gem 'trackman'
-```
-
-
-```console
-bundle install
-```
-
-##### Step 1.5 (Rails 2 only) - Generate Trackman tasks 
-
-```console
-./script/generate trackman_tasks
-```
-
-
-This will add trackman.rake to lib/tasks/ 
-
-### Step 2 - Setup
-
-
-```console
-rake trackman:setup
-```
-
-
-This sets your initial heroku configurations and ensures that when your app is down or in maintenance your pages will be requested by heroku.
-If you already have maintenance or error pages configs for heroku, Trackman will copy with .bkp extensions before he overwrites them.  
-
-### Step 3 (optional) - Scaffold your static pages
-
-##### Rails 2.3
-
-```console
-./script/generate trackman_controller [name]  
-```
-
-##### Rails 3
-
-
-```console
-rails generate trackman:controller [name]
-```
-
-This will generate a special controller that, when on development, will create your maintenance pages for you when you execute its actions.
-Because Rails 3 can handle 500 and 404 pages dynamically, the controller also adds the required route to handle them.
-On Rails 2, it generates the 4 different static pages instead.
-
-The controller has class methods to filter the response output.  
-You can find examples on how to use them within the controller itself.
-
-### Step 4 -  Deploy
-Now that you have your maintenance pages, you can commit and push to Heroku.  
-Trackman will look for changes to your pages and linked assets and sync them on application boot.
-
 ### To troubleshoot the sync operation
+
 
 ```console
 heroku run rake trackman:sync
 ```
 
-
 Executing this task will throw exceptions instead of silently failing like the normal sync would.
+You can also turn debugging on by adding TRACKMAN_DEBUG_ON=true in your env.
+It will output every request done by restclient and also a diff about what is getting pushed.
+
 
 ### For best results, make sure you have those installed:
 * Heroku >= 2.26.2

@@ -5,7 +5,9 @@ You keep them within your project and Trackman syncs them to S3 when you deploy.
 Works out of the box for Ruby(1.8.7 and 1.9.3) on 
 * Rails 2.3
 * Rails 3
+* Sinatra
 
+For a detailed tutorial of each framework integration visit the [Wiki](https://github.com/SynApps/trackman/wiki).
 
 ## Quick peek  
 ### The first time
@@ -16,6 +18,8 @@ Works out of the box for Ruby(1.8.7 and 1.9.3) on
 ### Need to change your layout or assets?
 Simply edit your static pages, link different assets, go crazy!
 Trackman will sync upon application boot on your next deployment.
+
+## How to use
 
 ### Conventions
 We assume your maintenance page is located at:

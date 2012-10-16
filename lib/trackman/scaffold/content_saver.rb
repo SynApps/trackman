@@ -9,8 +9,7 @@ module Trackman
         base.nodes_to_edit = {}
 
         if defined?(Rails)
-          base.mappings = { :maintenance => '503', :maintenance_error => '503-error' }
-          base.mappings.merge!({:not_found => '404', :error => '500'}) if ::Rails::VERSION::STRING =~ /^2\./
+          base.mappings = { :maintenance => '503', :maintenance_error => '503-error', :not_found => '404', :error => '500' }
         else
           base.mappings = {}
         end

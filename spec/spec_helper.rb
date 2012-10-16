@@ -44,5 +44,4 @@ RemoteAsset = Trackman::Assets::RemoteAsset unless defined?(RemoteAsset)
 
 Resolver = Trackman::Path::Resolver unless defined?(Resolver)
 Rails32Resolver = Trackman::Path::Rails32Resolver unless defined?(Rails32Resolver)
-RailsResolver = Trackman::Path::RailsResolver unless defined?(RailsResolver)
 Configuration = Trackman::Utility::Configuration unless defined?(Configuration)

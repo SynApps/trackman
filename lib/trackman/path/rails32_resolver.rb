@@ -1,16 +1,16 @@
 module Trackman
   module Path  
     module Rails32Resolver
-      include RailsResolver
+      include Resolver
       
       alias old_rails_translate translate
 
       def translate url, parent_url 
         root = working_dir.realpath
-        
+   
         path = url.dup
-        path.slice! /^(\/assets|assets\/)/
-        path = Pathname.new path
+        path.slice! /^\/?assets/
+        path =  Pathname.new(path)
 
         path = prepare_for_sprocket(path, parent_url, root) if path.relative?
         begin

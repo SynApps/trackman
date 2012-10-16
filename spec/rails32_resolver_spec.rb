@@ -29,7 +29,18 @@ describe Trackman::Path::Rails32Resolver do
     
     result = @test.translate 'favicon.ico', 'spec/fixtures/rails32/happy-path/public/503.html'
     
-    #I know path is not good but I think this is what we want to achieve
-    result.should == 'public/spec/fixtures/rails32/happy-path/public/favicon.ico'
+    result.should == 'spec/fixtures/rails32/happy-path/public/favicon.ico'
+  end
+
+  it "returns nil it cannot find anything" do
+    sprocket = double "SprocketEnvironment"
+    sprocket.stub(:paths).and_return([])
+    sprocket.stub(:resolve).and_raise Sprockets::FileNotFound
+
+    @test.stub(:sprockets).and_return(sprocket)
+    
+    result = @test.translate 'non-existent.jpg', 'spec/fixtures/rails32/happy-path/public/503.html'
+    
+    result.should be_nil
   end
 end

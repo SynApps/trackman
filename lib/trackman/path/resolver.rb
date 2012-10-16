@@ -11,14 +11,15 @@ module Trackman
     			parent = parent_of(parent_url)
     			child = url
     		else
-    			parent = working_dir
-          s = url.to_s
-    			child = Pathname.new(s[1...s.length])
+    			parent = working_dir + 'public/'
+    			child = Pathname.new(url.to_s[1..-1])
     		end
-
-        (parent + child).relative_path_from(working_dir).to_s
-    	end
-
+        relative_path = (parent + child).relative_path_from(working_dir).to_s
+        file_exist?(relative_path) ? relative_path : nil
+      end
+      def file_exist? path
+        File.exists? path
+      end
     	def working_dir
     		Pathname.new Dir.pwd
     	end

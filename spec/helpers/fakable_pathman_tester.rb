@@ -1,5 +1,5 @@
 class FakablePathManTester  
-  @@modules = [Resolver, Rails32Resolver, RailsResolver]
+  @@modules = [Resolver, Rails32Resolver]
   Conventions = Trackman::Components::Conventions
 
   def self.switch_on prepath
@@ -18,9 +18,13 @@ class FakablePathManTester
     
     Resolver.module_eval do
       alias real_working_dir working_dir
+      alias real_file_exist file_exist?
 
       define_method :working_dir do
         real_working_dir + prepath
+      end
+      define_method :file_exist? do |path|
+        File.exist?(prepath + path)
       end
     end
    
@@ -84,6 +88,9 @@ class FakablePathManTester
     Resolver.module_eval do    
       alias :working_dir :real_working_dir
       remove_method :real_working_dir
+      
+      alias file_exist? real_file_exist
+      remove_method :real_file_exist 
     end
 
     @@modules.each do |m| 

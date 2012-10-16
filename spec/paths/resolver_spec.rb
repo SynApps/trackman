@@ -5,6 +5,20 @@ class PathTester
 end
 
 describe Resolver do
+  before :all do
+    module Resolver
+      alias old_exist file_exist?
+      def file_exist? path
+        true
+      end
+    end
+  end
+  after :all do
+    module Resolver
+      alias file_exist? old_exist
+    end
+  end
+  
   it 'gives a path at the same level as the parent if the url is relative and there is no parent specified' do
     parent_url = 'allo/home.html' 
     url = 'bob.jpg'
@@ -20,7 +34,7 @@ describe Resolver do
     url = '/bob.jpg'
 
     actual = PathTester.translate url, parent_url
-    expected = 'bob.jpg'
+    expected = 'public/bob.jpg'
 
     actual.should == expected
   end
@@ -37,7 +51,7 @@ describe Resolver do
     url = '/johnny/cash/likes/women/but/not/bob.jpg'
 
     actual = PathTester.translate url, parent_url
-    expected = 'johnny/cash/likes/women/but/not/bob.jpg'
+    expected = 'public/johnny/cash/likes/women/but/not/bob.jpg'
 
     actual.should == expected
   end

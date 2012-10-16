@@ -23,7 +23,7 @@ module Trackman
           instance.extend Trackman::Path::Rails32Resolver, BundledAsset
           return instance
         elsif rails_defined? #fallback to rails without asset pipeline
-          instance.extend Trackman::Path::RailsResolver
+          instance.extend Trackman::Path::Resolver
         end
         instance.extend Trackman::Components::Hashable
 

@@ -1,7 +1,7 @@
-class ErrorsController < ApplicationController
+class <%= controller_name.camelize %>Controller < ApplicationController
   include  Trackman::Scaffold::ContentSaver
-  after_filter :save_content if Rails.env.development?
-  
+  after_filter :save_filters if Rails.env.development?
+  after_filter :render_filters
   # ContentSaver defines two class methods for filtering the ouput of your pages
   #
   # Note that it uses nokogiri to parse the output.

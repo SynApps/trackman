@@ -17,7 +17,6 @@ module Trackman
         base.extend ClassMethods
       end
 
-      
       module ClassMethods
         def edit selector, &block
           raise 'block parameter is mandatory' unless block_given?
@@ -32,7 +31,10 @@ module Trackman
         def remove_nodes doc
           self.class.nodes_to_remove.each do |selector, predicate| 
             nodes = doc.search(selector)
-            nodes = nodes.select(&predicate) unless predicate.nil?
+            i = 0;
+            unless predicate.nil?
+              nodes = nodes.select { |n| r = predicate.call(n, i); i +=1;r } 
+            end
             nodes.each{|n| n.remove }
           end
           doc
@@ -40,24 +42,38 @@ module Trackman
 
         def edit_nodes doc
           self.class.nodes_to_edit.each do |selector, block|
-            doc.search(selector).each { |n| block.call(n) }
+            doc.search(selector).each_with_index { |n, i| block.call(n, i) }
           end
           doc
         end
-
-        def save_content
-          to_write = self.class.mappings[params[:action].to_sym]
+        def xslt
+          @xslt ||= Nokogiri::XSLT(File.open("#{File.dirname(__FILE__)}/pretty-print.xslt"))
+        end
+        
+        def new_content
+          html = Nokogiri::HTML(response.body)
           
+          edit_nodes html
+          remove_nodes html
+          
+          xslt.apply_to(html).to_s
+        end 
+        
+        def cache key
+          @cache ||= {}
+          @cache[key] || yield
+        end
+
+        def render_filters
+          response.body = cache(params[:action]) { new_content }
+        end
+        
+        def save_filters
+          to_write = self.class.mappings[params[:action].to_sym]
           unless to_write.nil?
             path = "/public/#{to_write}.html"
-
-            xsl = Nokogiri::XSLT(File.open("#{File.dirname(__FILE__)}/pretty-print.xslt"))
-            html = Nokogiri::HTML(response.body)
-          
-            edit_nodes html
-            remove_nodes html
-          
-            File.open(Rails.root.to_s + path, 'w') { |f| f.write(xsl.apply_to(html).to_s) } 
+            result = cache(params[:action]) { new_content }
+            File.open(Rails.root.to_s + path, 'w') { |f| f.write(result) } 
           end
         end
     end

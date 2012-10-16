@@ -7,7 +7,7 @@ module Trackman
     desc "Generates a controller to generate your static pages"
     
     @@actions = ['not_found', 'error', 'maintenance', 'maintenance_error']
-    @@routes = {'404' => 'not_found', '500' => 'error', 'maintenance' => 'maintenance', 'maintenance-error' => 'maintenance_error'}
+    @@routes = {'not-found' => 'not_found', 'error' => 'error', 'maintenance' => 'maintenance', 'maintenance-error' => 'maintenance_error'}
 
     def create_controller
       template "controller_layout.rb.erb", "app/controllers/#{controller_name}_controller.rb"
@@ -16,7 +16,7 @@ module Trackman
     def create_app_config
       puts "
     ------
-    Trackman added \"config.exceptions_app = self.routes\" in app/config/application.rb     
+    Trackman added \"config.exceptions_app = self.routes\" in config/application.rb     
     ------\n"
       application do
         "config.exceptions_app = self.routes"

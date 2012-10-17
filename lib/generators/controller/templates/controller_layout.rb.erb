@@ -1,7 +1,6 @@
 class <%= controller_name.camelize %>Controller < ApplicationController
   include  Trackman::Scaffold::ContentSaver
-  after_filter :save_filters if Rails.env.development?
-  after_filter :render_filters
+  after_filter :render_content if Rails.env.development?
   
   # ContentSaver defines two class methods for filtering the ouput of your pages
   #

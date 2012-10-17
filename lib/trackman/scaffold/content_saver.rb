@@ -58,21 +58,12 @@ module Trackman
           xslt.apply_to(html).to_s
         end 
         
-        def cache key
-          @cache ||= {}
-          @cache[key] || yield
-        end
-
-        def render_filters
-          response.body = cache(params[:action]) { new_content }
-        end
-        
-        def save_filters
+        def render_content
+          response.body = new_content
           to_write = self.class.mappings[params[:action].to_sym]
           unless to_write.nil?
             path = "/public/#{to_write}.html"
-            result = cache(params[:action]) { new_content }
-            File.open(Rails.root.to_s + path, 'w') { |f| f.write(result) } 
+            File.open(Rails.root.to_s + path, 'w') { |f| f.write(response.body) } 
           end
         end
     end

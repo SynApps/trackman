@@ -1,8 +1,8 @@
 module Trackman
   module Assets
     module CompositeAsset
-      @@url = /url\(['"]?([^'")]+)['"]?\)/
-      @@import = /url\(['"]?[^'"]+['"]?\)/
+      @@url ||= /url\(['"]?([^'"\)]+)['"]?\)/
+      @@import ||= /url\(['"]?[^'"\)]+['"]?\)/
       
       def self.included(mod)
         mod.send(:include, Path::Resolver)

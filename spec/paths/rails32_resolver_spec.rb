@@ -19,11 +19,13 @@ describe Rails32Resolver do
       end
     end
   end
+
   after :all do
     module Resolver
       alias file_exist? old_exist
     end
   end
+  
   it "serves an image linked by an html" do
     parent_url = 'public/503.html'
     url = '/assets/bombero.jpeg'
@@ -117,6 +119,16 @@ describe Rails32Resolver do
   it "can find this image" do
     parent_url = 'public/503.html'
     url = 'assets/trackman70x70.png'
+
+    actual = Rails32Tester.translate url, parent_url
+    expected = 'app/assets/images/trackman70x70.png'
+
+    actual.should == expected
+  end
+
+  it "can find a normal absolute path" do
+    parent_url = 'public/503.html'
+    url = '/assets/trackman70x70.png'
 
     actual = Rails32Tester.translate url, parent_url
     expected = 'app/assets/images/trackman70x70.png'

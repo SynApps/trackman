@@ -7,7 +7,6 @@ module Trackman
 
       def translate url, parent_url 
         root = working_dir.realpath
-   
         path = url.dup
         path.slice! /^\/?assets/
         path =  Pathname.new(path)

@@ -8,8 +8,9 @@ module Trackman
       def initialize attributes = {}
         @assets = []
         
-        self.virtual_path = attributes[:virtual_path]
+        
         self.path = attributes[:path]
+        self.virtual_path = attributes[:virtual_path]
       end
       
       attr_accessor :virtual_path

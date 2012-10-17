@@ -125,4 +125,31 @@ describe Trackman::Scaffold::ContentSaver do
     actual.should include('bobby')
     actual.should include('span')
   end
+
+  it "edits multiple things" do
+    TestSaver.gsub 'wallo', 'bobby'
+
+    TestSaver.gsub /ginette/, 'johnny'
+
+    html = "
+    <html>
+      <head></head>
+      <body>
+        <a href='wallo'></a>
+        <a href='ginette'></a>
+        <a href='/world'></a>
+
+        <div class='bobby'></div>
+        <div>
+          <p>allo</p>
+        </div>
+      </body>
+    </html>"
+
+    @saver.send(:gsub_html, html)
+
+    html.should_not include('/abc')
+    html.should include('bobby')
+    html.should include('johnny')
+  end
 end

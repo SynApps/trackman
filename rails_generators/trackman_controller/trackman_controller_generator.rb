@@ -8,7 +8,7 @@ class TrackmanControllerGenerator < ::Rails::Generator::Base
   attr_accessor :controller_name
 
   @@actions = ['not_found', 'error', 'maintenance', 'maintenance_error']
-  @@routes = {'not-found' => 'not_found', 'error' => 'error', 'maintenance' => 'maintenance', 'maintenance-error' => 'maintenance_error'}
+  @@routes = {'404' => 'not_found', '500' => 'error', '503' => 'maintenance', '503-error' => 'maintenance_error'}
 
   def manifest # this method is default entrance of generator
     puts route_doc false
@@ -27,15 +27,18 @@ class TrackmanControllerGenerator < ::Rails::Generator::Base
       @@actions.each do |n|
         m.template layout, "#{view_folder}/#{n}.html.#{engine}"
       end
-
+    end
 
     def route_doc show_as_comments = false
       char = show_as_comments ? '#' : ''
-"\n#{char} Don't forget to add the routes in config/routes.rb\n#{char} ------
-#{char} map.not_found '/not-found', :controller => '#{controller_name}', :action => :not_found
-#{char} map.error '/error', :controller => '#{controller_name}', :action => :error
-#{char} map.maintenance '/maintenance', :controller => '#{controller_name}', :action => :maintenance
-#{char} map.maintenance_error '/maintenance-error', :controller => '#{controller_name}', :action => :maintenance_error
-#{char} ------\n\n"
+      camelized = controller_name.camelize
+      
+      doc = "\n#{char} Don't forget to add the routes in config/routes.rb\n#{char} ------\n"
+      @@routes.each do |k, v|
+        doc << "#{char} map.#{v} '#{camelized}/#{k}', :controller => '#{controller_name}', :action => :#{v}\n"        
+      end
+      doc << "#{char} ------\n\n"
+
+      doc
     end
 end

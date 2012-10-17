@@ -4,9 +4,12 @@ module Trackman
   module Scaffold
     module ContentSaver      
       def self.included(base)
-        class << base; attr_accessor :nodes_to_remove, :nodes_to_edit, :mappings; end
+        class << base
+          attr_accessor :nodes_to_remove, :nodes_to_edit, :text_to_edit, :mappings 
+        end
         base.nodes_to_remove = {}
         base.nodes_to_edit = {}
+        base.text_to_edit = {}
 
         if defined?(Rails)
           base.mappings = { :maintenance => '503', :maintenance_error => '503-error', :not_found => '404', :error => '500' }
@@ -20,6 +23,9 @@ module Trackman
         def edit selector, &block
           raise 'block parameter is mandatory' unless block_given?
           nodes_to_edit[selector] = block
+        end
+        def gsub pattern, replacement
+          text_to_edit[pattern] = replacement
         end
         def remove selector, &predicate
           nodes_to_remove[selector] = predicate
@@ -45,6 +51,13 @@ module Trackman
           end
           doc
         end
+        def gsub_html text
+          self.class.text_to_edit.each do |pattern, replacement|
+            text.gsub! pattern, replacement
+          end
+          text 
+        end
+
         def xslt
           @xslt ||= Nokogiri::XSLT(File.open("#{File.dirname(__FILE__)}/pretty-print.xslt"))
         end
@@ -55,7 +68,8 @@ module Trackman
           edit_nodes html
           remove_nodes html
           
-          xslt.apply_to(html).to_s
+          html = xslt.apply_to(html).to_s
+          gsub_html(html)
         end 
         
         def render_content

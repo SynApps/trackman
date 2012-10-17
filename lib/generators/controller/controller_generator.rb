@@ -5,7 +5,7 @@ module Trackman
     argument :controller_name, :type => :string, :default => 'errors'
    
     @@actions = ['not_found', 'error', 'maintenance', 'maintenance_error']
-    @@routes = {'not-found' => 'not_found', 'error' => 'error', 'maintenance' => 'maintenance', 'maintenance-error' => 'maintenance_error'}
+    @@routes = {'404' => 'not_found', '500' => 'error', '503' => 'maintenance', '503-error' => 'maintenance_error'}
 
     def create_controller
       template "controller_layout.rb.erb", "app/controllers/#{controller_name}_controller.rb"
@@ -17,7 +17,7 @@ module Trackman
     
     def create_routes
       @@routes.each do |k, v|
-        route "match \"/#{k}\", :to => \"#{controller_name}##{v}\""
+        route "match \"#{controller_name.camelize}/#{k}\", :to => \"#{controller_name}##{v}\""
       end
     end
     

@@ -53,7 +53,7 @@ describe Trackman::Assets::HtmlAsset do
     asset = Asset.create(:path => 'spec/fixtures/composite_assets/query_string_in_path.html')
     expected = [
       '/assets/burndownchartslogo.png', '/assets/google.png', '/assets/facebook.png', 
-      '/assets/twitter.png', '/assets/application.js', '/assets/application.css'
+      '/assets/twitter.png', '/assets/favicon.png', '/assets/application.js', '/assets/application.css'
     ]
 
     actual = asset.children_paths
@@ -64,6 +64,15 @@ describe Trackman::Assets::HtmlAsset do
   it "does not return assets in comments" do
     asset = Asset.create(:path => 'spec/test_data/html/comments.html')
     expected = []
+
+    actual = asset.children_paths
+    
+    actual.should == expected
+  end
+
+  it "returns all link tags" do
+    asset = Asset.create(:path => 'spec/test_data/html/favicon.html')
+    expected = ['assets/trackman70x70.png', '/assets/application.css']
 
     actual = asset.children_paths
     

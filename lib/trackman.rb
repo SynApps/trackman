@@ -10,6 +10,7 @@ module Trackman
   autoload :Errors, 'trackman/errors'
   autoload :Path, 'trackman/path'
   autoload :Utility, 'trackman/utility'
+  autoload :Urls, 'trackman/urls'
 
 end
 require File.expand_path("../trackman/version", __FILE__)

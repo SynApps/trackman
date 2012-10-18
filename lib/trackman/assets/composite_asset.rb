@@ -1,9 +1,6 @@
 module Trackman
   module Assets
-    module CompositeAsset
-      @@url ||= /url\(['"]?([^'"\)]+)['"]?\)/
-      @@import ||= /url\(['"]?[^'"\)]+['"]?\)/
-      
+    module CompositeAsset 
       def self.included(mod)
         mod.send(:include, Path::Resolver)
       end
@@ -22,22 +19,6 @@ module Trackman
       def asset_from(virtual, physical)
         Asset.create(:virtual_path => virtual, :path => physical)  
       end
-      
-      def inner_css_paths
-        #clean css comments
-        my_data = data.gsub(/\/\*.*\*\//m, '')
-        my_data = my_data.gsub(/\<\!\-\-.*\-\-\>/m, '')
-        my_data.scan(@@import).collect{|x| @@url.match(x)[1]}.select{|x| !x.embedded? }
-      end
     end
   end
-end
-
-class String
-  def internal_path? 
-    self !~ /^http/
-  end
-  def embedded?
-    self.include? 'data:'
-  end 
 end

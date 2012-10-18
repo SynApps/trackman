@@ -8,6 +8,12 @@ class String
     word.downcase!
     word
   end
+  def internal_path? 
+    self !~ /^http/
+  end
+  def embedded?
+    self.include? 'data:'
+  end 
 end
 
 class Symbol

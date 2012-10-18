@@ -6,7 +6,7 @@ module Trackman
       
       def parse html
         doc = Nokogiri::HTML(html)
-        img(doc) + js(doc) + css(doc) + parse_css(html)
+        (img(doc) + js(doc) + css(doc) + parse_css(html)).uniq
       end
       
       def img doc

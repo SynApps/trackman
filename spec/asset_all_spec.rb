@@ -16,8 +16,8 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        TestAsset.create(:path => 'spec/test_data/all/1.css'), 
-        TestAsset.create(:path => 'spec/test_data/all/2.gif'),  
+        TestAsset.create(:path => 'spec/test_data/all/1.css', :virtual_path => '1.css'), 
+        TestAsset.create(:path => 'spec/test_data/all/2.gif', :virtual_path => '2.gif'),  
         TestAsset.maintenance_page
       ]
 
@@ -45,9 +45,9 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        TestAsset.create(:path => 'spec/test_data/all/1.css'),
-        TestAsset.create(:path => 'spec/test_data/all/2.gif'),
-        TestAsset.create(:path => 'spec/test_data/all/3.js'),
+        TestAsset.create(:path => 'spec/test_data/all/1.css', :virtual_path => '1.css'),
+        TestAsset.create(:path => 'spec/test_data/all/2.gif', :virtual_path => '2.gif'),
+        TestAsset.create(:path => 'spec/test_data/all/3.js', :virtual_path => '3.js'),
         TestAsset.maintenance_page,
         TestAsset.error_page
       ]
@@ -74,8 +74,8 @@ describe Trackman::Assets::Asset do
       end 
 
       expected = [
-        TestAsset.create(:path => 'spec/test_data/all/1.css'), 
-        TestAsset.create(:path => 'spec/test_data/all/2.gif'), 
+        TestAsset.create(:path => 'spec/test_data/all/1.css', :virtual_path => '1.css'), 
+        TestAsset.create(:path => 'spec/test_data/all/2.gif', :virtual_path => '2.gif'), 
         TestAsset.maintenance_page, 
         TestAsset.error_page
       ]
@@ -108,7 +108,7 @@ describe Trackman::Assets::Asset do
         end  
       end 
 
-      expected = [TestAsset.create(:path => 'spec/test_data/external_paths/1.css'), TestAsset.maintenance_page]
+      expected = [TestAsset.create(:path => 'spec/test_data/external_paths/1.css', :virtual_path => '1.css'), TestAsset.maintenance_page]
       
       TestAsset.all.should eq(expected)
     end
@@ -129,7 +129,7 @@ describe Trackman::Assets::Asset do
         end  
       end
      
-      expected = [TestAsset.create(:path => 'spec/test_data/external_paths/1.css'), TestAsset.maintenance_page] 
+      expected = [TestAsset.create(:path => 'spec/test_data/external_paths/1.css', :virtual_path => '1.css'), TestAsset.maintenance_page] 
       TestAsset.all.should eq(expected)
     end
   end

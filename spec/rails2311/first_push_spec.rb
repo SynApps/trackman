@@ -3,7 +3,7 @@ require 'helpers/app_creator'
 require 'helpers/fakable_pathman_tester'
 require 'helpers/act_like_rails2311'
 
-describe 'full path' do
+describe 'sync' do
   before :all do
     FakablePathManTester.switch_on 'spec/fixtures/rails2311/fully-loaded/'
     ActLikeRails2311.switch_on
@@ -25,6 +25,7 @@ describe 'full path' do
    remote = RemoteAsset.all
    
    remote.count.should == 8
+
    local.each{|l| remote.should include(l) }
   end
 end

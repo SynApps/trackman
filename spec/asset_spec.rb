@@ -26,6 +26,13 @@ describe Trackman::Assets::Asset do
 
     asset1.should == asset2
   end
+
+  it "is not equal if the virtual path is different" do
+    asset1 = RemoteAsset.create(:path => 'same/path', :virtual_path => '/different/virtual/path')
+    asset2 = RemoteAsset.create(:path => 'same/path', :virtual_path => 'different/virtual/path')
+
+    asset1.should_not == asset2
+  end
   
   describe "#data" do
     it "returns content of the file specified by path" do

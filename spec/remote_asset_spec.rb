@@ -14,7 +14,7 @@ describe Trackman::Assets::RemoteAsset do
   end
 
   it "creates assets on the server" do
-    expected = RemoteAsset.create(:path => 'spec/test_data/test2.png')
+    expected = RemoteAsset.create(:path => 'spec/test_data/test2.png', :virtual_path => 'spec/test_data/test2.png')
     expected.insert
     
     actual = RemoteAsset.find expected.id
@@ -48,7 +48,7 @@ describe Trackman::Assets::RemoteAsset do
   end
 
   it "updates assets on the server" do
-    expected = RemoteAsset.create(:path => 'spec/test_data/y.css')
+    expected = RemoteAsset.create(:path => 'spec/test_data/y.css', :virtual_path => 'spec/test_data/y.css')
     
     expected.insert
     

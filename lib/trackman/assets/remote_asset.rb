@@ -27,9 +27,8 @@ module Trackman
           if other.is_a? RemoteAsset
             result = other.id == id && other.file_hash == file_hash 
           end
-          return result
         end
-        false 
+        result 
       end
 
       private

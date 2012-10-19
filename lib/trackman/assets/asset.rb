@@ -8,7 +8,6 @@ module Trackman
       def initialize attributes = {}
         @assets = []
         
-        
         self.path = attributes[:path]
         self.virtual_path = attributes[:virtual_path]
       end
@@ -16,14 +15,17 @@ module Trackman
       attr_accessor :virtual_path
       attr_reader :path, :assets
 
-      def to_remote
-        RemoteAsset.create(:path => @path, :virtual_path => self.virtual_path)
+      def to_remote(id = nil)
+        RemoteAsset.create(:path => @path, :virtual_path => self.virtual_path, :id => id)
       end
 
       def ==(other)
         return false if other.nil?
         other_path = other.path.is_a?(Pathname) ? other.path : Pathname.new(other.path)
-        other_path.to_s == path.to_s || path.cleanpath == other_path.cleanpath
+        path_equal = other_path.to_s == path.to_s || path.cleanpath == other_path.cleanpath
+        vp_equal = virtual_path.to_s == other.virtual_path.to_s
+        
+        path_equal && vp_equal
       end
 
       def <=>(another)
@@ -50,7 +52,7 @@ module Trackman
       end
       
       def to_s
-        "<#{self.class}:\npath=#{path}\nfile_hash=#{file_hash}>"
+        "\n<#{self.class}>:\npath='#{path}'\nfile_hash='#{file_hash}'\nvirtual_path='#{virtual_path}'"
       end
       
       def self.all

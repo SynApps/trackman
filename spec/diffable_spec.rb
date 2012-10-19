@@ -5,7 +5,7 @@ describe Trackman::Components::Diffable do
     extend Trackman::Components::Diffable
   end
  
-  it "specify the html to update and the image to delete" do    
+  it "specifies the html to update and the image to delete" do    
     expected = { 
       :create => [], 
       :update => [Asset.create(:path => 'spec/test_data/sample.html')], 
@@ -54,4 +54,20 @@ describe Trackman::Components::Diffable do
 
     actual.should eq(expected)
   end
+
+  it "updates the asset if the virtual path is different" do
+    expected = { 
+      :create => [], 
+      :update => [RemoteAsset.create(:path => 'the/path/to/file', :virtual_path => '/path/file')], 
+      :delete => []
+    }
+
+    asset1 = RemoteAsset.create(:path => 'the/path/to/file', :virtual_path => '/path/file')
+    asset2 = RemoteAsset.create(:path => 'the/path/to/file', :virtual_path => 'path/file')
+
+    actual = TestDiff.diff([asset1], [asset2])
+
+    actual.should eq(expected)
+  end
+
 end

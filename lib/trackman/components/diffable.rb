@@ -6,7 +6,7 @@ module Trackman
         
         { 
           :create => to_create, 
-          :update => remote.select{|a| local.any?{ |s| a.path == s.path && a.file_hash != s.file_hash }},  
+          :update => remote.select{|a| local.any?{ |s| a.path == s.path && (a.file_hash != s.file_hash || a.virtual_path != s.virtual_path) }},  
           :delete => define_deleted(local, remote) do |a| 
             to_create.any?{ |c| c.path.basename == a.path.basename }
           end

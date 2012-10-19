@@ -27,9 +27,9 @@ module Trackman
         def define_update local, remote
           to_update = local.select do |l| 
             remote.any? do |r| 
-              path_eql = a.path == s.path
-              hash_eql = a.file_hash == s.file_hash 
-              vp_eql = a.virtual_path == s.virtual_path
+              path_eql = r.path == l.path
+              hash_eql = r.file_hash == l.file_hash 
+              vp_eql = r.virtual_path == l.virtual_path
 
               path_eql && (!hash_eql || !vp_eql)
             end
@@ -40,7 +40,6 @@ module Trackman
             a.to_remote(sibling.id)
           end
         end
-
     end
   end
 end

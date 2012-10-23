@@ -52,12 +52,8 @@ namespace :setup do
   end
 end
 
-namespace :ci do
-  task :bi do
-    puts `bundle install --without production`  
-  end
-  
-  task :server => 'ci:bi' do 
+namespace :ci do 
+  task :server do 
     to_unset = ENV.select{|k,v| k.include? 'BUNDLE' }
     to_unset.each_key { |k| to_unset[k] = nil }
     

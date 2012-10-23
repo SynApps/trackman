@@ -1,4 +1,6 @@
 require "bundler/gem_tasks"
+require 'rspec/core/rake_task'
+
 
 desc "creates a new app to the server and outputs the credentials"
 task :create_app do
@@ -49,3 +51,35 @@ namespace :setup do
     end
   end
 end
+
+namespace :ci do
+  task :bi do
+    puts `bundle install --without production`  
+  end
+  
+  task :server => 'ci:bi' do 
+    to_unset = ENV.select{|k,v| k.include? 'BUNDLE' }
+    to_unset.each_key { |k| to_unset[k] = nil }
+    
+    pid = spawn(to_unset, "update_trackman_server")
+    Process.wait(pid)
+    
+    spawn(to_unset, "start_trackman_server")
+    sleep(10)
+  end
+
+  task :tests => ['ci:bi', 'ci:server', :spec] do
+    result = `lsof -i :3000`
+    pid = result.match(/ruby\ +(\d+)/)[1].to_i
+
+    puts "Killing #{pid}"
+    Process.kill 9, pid
+  end
+end
+
+RSpec::Core::RakeTask.new do |task|
+  task.pattern = Dir['spec'].sort
+  task.rspec_opts = Dir.glob("[0-9][0-9][0-9]_*").collect { |x| "-I#{x}" }
+  task.rspec_opts << '--color -f d'
+end
+

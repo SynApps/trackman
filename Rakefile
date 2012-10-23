@@ -64,7 +64,7 @@ namespace :ci do
     sleep(10)
   end
 
-  task :tests => ['ci:bi', 'ci:server', :spec] do
+  task :tests => ['ci:server', :spec] do
     result = `lsof -i :3000`
     pid = result.match(/ruby\ +(\d+)/)[1].to_i
 

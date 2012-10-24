@@ -53,23 +53,27 @@ namespace :setup do
 end
 
 namespace :ci do 
-  task :server do 
-    to_unset = ENV.select{|k,v| k.include? 'BUNDLE' }
-    to_unset.each_key { |k| to_unset[k] = nil }
-    
-    pid = spawn(to_unset, "update_trackman_server")
-    Process.wait(pid)
-    
-    spawn(to_unset, "start_trackman_server")
-    sleep(10)
+  namespace :setup do
+    task :server do 
+      to_unset = ENV.select{|k,v| k.include? 'BUNDLE' }
+      to_unset.each_key { |k| to_unset[k] = nil }
+
+      pid = spawn(to_unset, "update_trackman_server")
+      Process.wait(pid)
+
+      spawn(to_unset, "start_trackman_server")
+      
+      sleep(10)
+    end
   end
+  namespace :kill do
+    task :server do
+      result = `lsof -i :3000`
+      pid = result.match(/ruby\ +(\d+)/)[1].to_i
 
-  task :tests => ['ci:server', :spec] do
-    result = `lsof -i :3000`
-    pid = result.match(/ruby\ +(\d+)/)[1].to_i
-
-    puts "Killing #{pid}"
-    Process.kill 9, pid
+      puts "Killing #{pid}"
+      Process.kill 9, pid
+    end
   end
 end
 

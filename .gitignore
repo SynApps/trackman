@@ -5,3 +5,4 @@ pkg/*
 *.orig
 *.DS_Store
 .rspec
+*.swp

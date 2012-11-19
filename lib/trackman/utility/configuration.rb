@@ -2,17 +2,17 @@ require 'versionomy'
 
 module Trackman
   module Utility
-  	class Configuration
-  		@@ERROR = 'ERROR_PAGE_URL'
-  	  @@MAINTENANCE = 'MAINTENANCE_PAGE_URL'
+    class Configuration
+      @@ERROR = 'ERROR_PAGE_URL'
+      @@MAINTENANCE = 'MAINTENANCE_PAGE_URL'
   	  @@TRACKMAN_ERROR = 'TRACKMAN_ERROR_PAGE_URL'
   	  @@TRACKMAN_MAINTENANCE = 'TRACKMAN_MAINTENANCE_PAGE_URL'
 
   	  attr_accessor :configs, :heroku_version, :options
 
-  	  def initialize(heroku_version, options = {})
+  	  def initialize(options = {})
   	  	self.options = options
-        self.heroku_version = heroku_version
+        self.heroku_version = get_version
         self.configs = get_configs
   	  end
 
@@ -23,11 +23,23 @@ module Trackman
         puts "Done!"
   	  end
 
-      def get_configs
-        result = run "heroku config -s" do |option|
-          "heroku config -s #{option}"
+      def get_version
+        Bundler.with_clean_env do
+          which_result = `which heroku`
+          raise 'Could not find heroku toolbelt or gem. Make sure you installed one of them.' unless which_result && which_result.length > 0
+        
+          heroku_version = `heroku --version`
+          heroku_version.match(/heroku-.*(\d+\.?\d+\.?\d+).*\(/)[1] 
         end
-        self.class.s_to_h(result)
+      end
+      
+      def get_configs
+        Bundler.with_clean_env do
+          result = run "heroku config -s" do |option|
+            "heroku config -s #{option}"
+          end
+          self.class.s_to_h(result)
+        end
       end
       
 
@@ -77,12 +89,14 @@ module Trackman
 
   		private
   		  def is_heroku_valid
-  		  	Versionomy.parse(heroku_version) >= Versionomy.parse("2.26.2")
+          Versionomy.parse(heroku_version) >= Versionomy.parse("2.26.2")
   		  end
 
   		  def add_config add
-          run "heroku config:add #{add}" do |option|
-            "heroku config:add #{option} #{add}"
+          Bundler.with_clean_env do
+            run "heroku config:add #{add}" do |option|
+              "heroku config:add #{option} #{add}"
+            end
           end
   		  end
 

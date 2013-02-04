@@ -12,3 +12,17 @@ namespace :trackman do
     Trackman::Utility::Configuration.new(:app => args[:app]).setup
   end
 end
+
+if Rake::Task.task_defined?("assets:precompile:nondigest")
+  Rake::Task["assets:precompile:nondigest"].enhance do
+    STDOUT.puts "Trackman: autosyncing..." 
+    Trackman::Assets::Asset.autosync
+    STDOUT.puts "Trackman: done." 
+end
+elsif Rake::Task.task_defined?("assets:precompile")
+  Rake::Task["assets:precompile"].enhance do
+    STDOUT.puts "Trackman: autosyncing..." 
+    Trackman::Assets::Asset.autosync
+    STDOUT.puts "Trackman: done." 
+  end
+end

@@ -20,7 +20,6 @@ module Trackman
   	    raise Trackman::Errors::ConfigSetupError, "Your heroku version is too low, trackman requires '~> 2.26'." unless is_heroku_valid
         rename_configs
         add_configs
-        puts "Done!"
   	  end
 
       def get_version

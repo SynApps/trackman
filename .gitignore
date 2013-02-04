@@ -6,3 +6,5 @@ pkg/*
 *.DS_Store
 .rspec
 *.swp
+*.config-store
+*.config

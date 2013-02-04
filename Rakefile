@@ -1,14 +1,13 @@
 require "bundler/gem_tasks"
 require 'rspec/core/rake_task'
 
-
 desc "creates a new app to the server and outputs the credentials"
 task :create_app do
   require 'trackman'
   RemoteAsset = Trackman::Assets::RemoteAsset  
 
   user = ENV['HEROKU_USERNAME']
-  pass = ENV['HEROKU_PASSWORD']
+  pass# = ENV['HEROKU_PASSWORD']
   server = RemoteAsset.class_variable_get :@@server
 
   url = "http://#{user}:#{pass}@#{server}/heroku/resources"

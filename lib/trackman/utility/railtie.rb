@@ -4,7 +4,7 @@ if defined?(Rails)
   if ::Rails::VERSION::STRING =~ /^2\.[1-9]/
     require './config/environment'
     Rails.configuration.middleware.use Trackman::Middleware 
-  elsif ::Rails::VERSION::STRING =~ /^[3-9]\.[0-9]/
+  elsif ::Rails::VERSION::STRING =~ /^3\.[1-9]/ || ::Rails::VERSION::STRING =~ /^[4-9]\.[0-9]/
     require 'generators/controller/controller_generator'
     module Trackman
       class Railtie < Rails::Railtie

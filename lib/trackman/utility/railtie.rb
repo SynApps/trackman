@@ -11,12 +11,6 @@ if defined?(Rails)
         rake_tasks do
           load File.expand_path('../../../../rails_generators/trackman_tasks/templates/trackman.rake', __FILE__)
         end
-
-        initializer "trackman.hook" do |app|
-          app.config.after_initialize do
-            Trackman::Assets::Asset.autosync
-          end
-        end
       end
     end
   end

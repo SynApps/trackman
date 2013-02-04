@@ -4,7 +4,7 @@ You keep them within your project and Trackman syncs them to S3 when you deploy.
 
 Works out of the box for Ruby(1.8.7 and 1.9.3) on 
 * Rails 2.3
-* Rails 3
+* Rails 3.2 and 4.0 beta
 * Sinatra
 
 For a detailed tutorial of each framework integration visit the [Wiki](https://github.com/SynApps/trackman/wiki).

@@ -13,6 +13,7 @@ namespace :trackman do
   end
 end
 
+RestClient.log = STDOUT
 if Rake::Task.task_defined?("assets:precompile:nondigest")
   Rake::Task["assets:precompile:nondigest"].enhance do
     STDOUT.puts "Trackman: autosyncing..." 

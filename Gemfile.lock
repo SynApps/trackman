@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trackman (0.6.15)
+    trackman (0.6.16)
       json
       nokogiri
       rack
